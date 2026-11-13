@@ -8,4 +8,5 @@
 4. 장표 이미지를 다시 찍으려면: 렌더러 `artifact-type/dc-runtime.js`를 아티팩트에서 받아 `tools/sync/.render/support.js`로 둬요(로컬 테스트용 · 커밋 금지, .gitignore 처리됨). 그다음
    `python3 tools/sync/serve.py tools/sync/.render docs/blobs 8765 &` → `node tools/sync/render.js`
 5. 장표 순서/개수가 바뀌면 `slides.txt`와 `docs/deck.html`(N, names)도 같이 고쳐요.
-6. `BrandSite.dc.html`(랜딩)이 바뀌었으면 `docs/index.html`에 같은 내용을 옮겨요(정적 버전이라 자동으로는 안 바뀌어요).
+6. `BrandSymbols.dc.html`이 바뀌었으면 `python3 tools/sync/symbols_section.py`로 랜딩의 심볼 섹션을 다시 만들어요.
+7. `BrandSite.dc.html`(랜딩)이 바뀌었으면 `docs/index.html`에 같은 내용을 옮겨요(정적 버전이라 자동으로는 안 바뀌어요).

@@ -201,6 +201,11 @@ body{margin:0;background:#000000}
     </div>
   </section>
 
+  <section id="symbols" class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 40px;">
+    <div class="reveal" style="display: flex; flex-direction: column; gap: 16px;"><span class="eyebrow">Symbols &amp; Motion</span><h2 class="h-l">모양마다<br>그려지는 방식이 달라요.</h2><p class="lead">올려보면 뜻이, 흩어보면 리듬이 보여요.</p></div>
+    <div class="reveal" data-symfit="1" style="position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; background: #050505; box-shadow: 0 0 0 1px #1c1c1e;"><div style="width: 1920px; height: 1080px; transform: scale(var(--ss, 0.5)); transform-origin: 0 0;"><dc-import name="BrandSymbols" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div></div>
+  </div></section>
+
   <section class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
     <div class="reveal" style="display: flex; flex-direction: column; gap: 16px;"><span class="eyebrow">Color</span><h2 class="h-l">색은 상태를 말해요.</h2><p class="lead">지금은 핑크, 먹었으면 민트, 미루면 노랑. 로봇 · 타일 · 워치 · 앱이 같은 색으로 말해요.</p></div>
     <div class="cols"><div class="col reveal" style="transition-delay: 0ms;"><div class="col-dot" style="background: #D5FF44; color: #111111;"><span>Lime</span><span style="font-size: 13px; opacity: .7;">#D5FF44</span></div><span class="col-m">브랜드</span></div><div class="col reveal" style="transition-delay: 90ms;"><div class="col-dot" style="background: #FF64CF; color: #111111;"><span>Pink</span><span style="font-size: 13px; opacity: .7;">#FF64CF</span></div><span class="col-m">지금</span></div><div class="col reveal" style="transition-delay: 180ms;"><div class="col-dot" style="background: #72E5B5; color: #111111;"><span>Mint</span><span style="font-size: 13px; opacity: .7;">#72E5B5</span></div><span class="col-m">먹었어</span></div><div class="col reveal" style="transition-delay: 270ms;"><div class="col-dot" style="background: #FFC447; color: #111111;"><span>Yellow</span><span style="font-size: 13px; opacity: .7;">#FFC447</span></div><span class="col-m">미룸</span></div><div class="col reveal" style="transition-delay: 360ms;"><div class="col-dot" style="background: #FF6A32; color: #111111;"><span>Orange</span><span style="font-size: 13px; opacity: .7;">#FF6A32</span></div><span class="col-m">놓침</span></div><div class="col reveal" style="transition-delay: 450ms;"><div class="col-dot" style="background: #7960FF; color: #ffffff;"><span>Violet</span><span style="font-size: 13px; opacity: .7;">#7960FF</span></div><span class="col-m">듣는 중</span></div></div>
@@ -253,6 +258,8 @@ class Component extends DCLogic {
         const t = el.querySelector('.track');
         if (t) el.style.setProperty('--shift', Math.max(0, t.scrollWidth - el.clientWidth) + 'px');
       });
+      const sy = site.querySelector('[data-symfit]');
+      if (sy) sy.style.setProperty('--ss', (sy.clientWidth / 1920).toFixed(5));
       if (book) {
         const one = window.innerWidth <= 760;
         const w = one ? book.clientWidth : (book.clientWidth - 24) / 2;
