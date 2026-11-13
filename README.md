@@ -7,6 +7,7 @@
 
 ## 사이트
 
+- Vercel(추천 주소): https://rumo-brand.vercel.app · 앱 https://rumo-brand.vercel.app/app/ · 장표 https://rumo-brand.vercel.app/deck.html
 - 랜딩페이지: https://dasomkim-create.github.io/rumo/
 - 장표 넘겨 보기: https://dasomkim-create.github.io/rumo/deck.html
 - 앱 프로토타입(직접 눌러 보기): https://dasomkim-create.github.io/rumo/app/
