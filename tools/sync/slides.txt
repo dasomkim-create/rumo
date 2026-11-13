@@ -1,0 +1,17 @@
+BrandCover	Cover
+BrandPhilosophy	Philosophy
+BrandStrategy	Positioning
+BrandPersona	Persona
+BrandPersona2	Family
+BrandJourney	Journey
+BrandAI	Meet Rumo
+BrandFace	Expressions
+BrandFeatures	How it works
+BrandLogo	Logo
+BrandUsage	Logo guide
+BrandLogoColor	Logo color
+BrandSymbols	Symbols
+BrandColor	Color
+BrandType	Type
+BrandVoice	Voice
+BrandMVP	MVP demo
