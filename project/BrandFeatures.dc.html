@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>RUMO 기능 · 영양제 챙김</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 600ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:90ms}.rise>*:nth-child(3){animation-delay:180ms}.rise>*:nth-child(4){animation-delay:270ms}
+@keyframes rumo-spin{to{transform:rotate(360deg)}}
+.spin{transform-box:fill-box;transform-origin:center;animation:rumo-spin 14s linear infinite}
+
+@keyframes rumo-dash{to{stroke-dashoffset:-28}}
+.flow{stroke-dasharray:6 8;animation:rumo-dash 1.2s linear infinite}
+@keyframes rumo-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:rumo-pulse 2.4s ease-in-out infinite}
+.fx{transform-box:fill-box;transform-origin:center}
+@keyframes fx-blink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(.1)}}
+@keyframes fx-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes fx-look{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes fx-wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1.1)}}
+@keyframes fx-nod{0%,60%,100%{transform:translateY(0)}20%{transform:translateY(9px)}40%{transform:translateY(-2px)}}
+@keyframes fx-half{0%,80%,100%{transform:scaleY(1)}90%{transform:scaleY(.3)}}
+.fx-blink{animation:fx-blink 4s ease-in-out infinite}.fx-bob{animation:fx-bob 1.6s ease-in-out infinite}.fx-look{animation:fx-look 2.4s ease-in-out infinite}
+.fx-wave{animation:fx-wave .7s ease-in-out infinite}.fx-wave2{animation:fx-wave .7s ease-in-out .35s infinite}.fx-nod{animation:fx-nod 1.8s ease-in-out infinite}.fx-half{animation:fx-half 5s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+.bi-toc a{color:#6b6b6b;text-decoration:none;transition:color 160ms ease}.bi-toc a:hover{color:#ffffff}.bi-arrow{width:44px;height:44px;border-radius:999px;box-shadow:inset 0 0 0 1.5px #4a4a4a;color:#ffffff;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:box-shadow 160ms ease,background 160ms ease}.bi-arrow:hover{box-shadow:inset 0 0 0 1.5px #ffffff;background:#1a1a1a}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; box-sizing: border-box; position: relative; overflow: hidden; background: #050505; color: #ffffff; font-family: Pretendard, -apple-system, system-ui, sans-serif; padding: 120px 120px 0;">
+  <div class="rise" style="display: flex; flex-direction: column; gap: 40px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 80px;">
+      <h1 style="margin: 0; font-size: 56px; line-height: 1; font-weight: 600; letter-spacing: -1.6px;">How It Works</h1>
+      <p style="margin: 0; max-width: 900px; font-size: 24px; line-height: 36px; color: #a3a3a3;">루모가 부르고, 한 번 확인하면 끝. 핵심 기능은 이 하나예요.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 24px; height: 720px;">
+      <div style="border-radius: 28px; background: #141414; padding: 30px 40px 34px; display: flex; flex-direction: column; gap: 22px;">
+        <span style="font-size: 16px; line-height: 24px; font-weight: 600; color: #4d8df6;">한 번의 알림 — 루모가 부르면, 한 번에 확인</span>
+        <div style="position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+          <svg aria-hidden="true" viewBox="0 0 1000 10" preserveAspectRatio="none" style="position: absolute; left: 10%; right: 10%; top: 51px; width: 80%; height: 10px;"><path class="flow" d="M0 5H1000" stroke="#4a4a4a" stroke-width="3" fill="none" vector-effect="non-scaling-stroke"></path></svg>
+          <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;">
+          <div style="width: 168px; height: 112px; border-radius: 28px; background: #050505; box-shadow: 0 0 0 3px #ff64cf; display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 200 120" aria-hidden="true" style="width: 136px; height: 82px; display: block; flex: none;"><rect width="200" height="120" rx="28" fill="#000000" stroke="#2a2a2a" stroke-width="2"></rect><rect class="fx fx-blink" x="60.0" y="38.0" width="20" height="44" rx="10.0" fill="#ffffff"></rect><rect class="fx fx-blink" x="120.0" y="38.0" width="20" height="44" rx="10.0" fill="#ffffff"></rect></svg></div>
+          <span style="font-size: 15px; font-weight: 600; color: #ff64cf; font-variant-numeric: tabular-nums;">01</span>
+          <span style="font-size: 26px; line-height: 32px; font-weight: 600; margin-top: -8px;">시간이 되면</span>
+          <span style="font-size: 16px; line-height: 22px; color: #8a8a8a;">루모가 나를 찾아와요</span>
+        </div><div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;">
+          <div style="width: 168px; height: 112px; border-radius: 28px; background: #050505; box-shadow: 0 0 0 3px #ff64cf; display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 200 120" aria-hidden="true" style="width: 136px; height: 82px; display: block; flex: none;"><rect width="200" height="120" rx="28" fill="#000000" stroke="#2a2a2a" stroke-width="2"></rect><g class="fx fx-look"><circle cx="70" cy="60" r="18" fill="#ff64cf"></circle><circle cx="130" cy="60" r="18" fill="#ff64cf"></circle></g></svg></div>
+          <span style="font-size: 15px; font-weight: 600; color: #ff64cf; font-variant-numeric: tabular-nums;">02</span>
+          <span style="font-size: 26px; line-height: 32px; font-weight: 600; margin-top: -8px;">먼저 불러요</span>
+          <span style="font-size: 16px; line-height: 22px; color: #8a8a8a;">말 · 바닥 표식 · 타일 불</span>
+        </div><div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;">
+          <div style="width: 168px; height: 112px; border-radius: 28px; background: #050505; box-shadow: 0 0 0 3px #7960ff; display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 200 120" aria-hidden="true" style="width: 136px; height: 82px; display: block; flex: none;"><rect width="200" height="120" rx="28" fill="#000000" stroke="#2a2a2a" stroke-width="2"></rect><rect class="fx fx-wave" x="60.0" y="38.0" width="20" height="44" rx="10.0" fill="#7960ff"></rect><rect class="fx fx-wave2" x="120.0" y="38.0" width="20" height="44" rx="10.0" fill="#7960ff"></rect></svg></div>
+          <span style="font-size: 15px; font-weight: 600; color: #7960ff; font-variant-numeric: tabular-nums;">03</span>
+          <span style="font-size: 26px; line-height: 32px; font-weight: 600; margin-top: -8px;">한 번 확인</span>
+          <span style="font-size: 16px; line-height: 22px; color: #8a8a8a;">말 · 타일 · 워치 · 앱</span>
+        </div><div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;">
+          <div style="width: 168px; height: 112px; border-radius: 28px; background: #050505; box-shadow: 0 0 0 3px #72e5b5; display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 200 120" aria-hidden="true" style="width: 136px; height: 82px; display: block; flex: none;"><rect width="200" height="120" rx="28" fill="#000000" stroke="#2a2a2a" stroke-width="2"></rect><g class="fx fx-nod"><path d="M55 68A15 15 0 0 1 85 68" fill="none" stroke="#72e5b5" stroke-width="10" stroke-linecap="round"></path><path d="M115 68A15 15 0 0 1 145 68" fill="none" stroke="#72e5b5" stroke-width="10" stroke-linecap="round"></path></g></svg></div>
+          <span style="font-size: 15px; font-weight: 600; color: #72e5b5; font-variant-numeric: tabular-nums;">04</span>
+          <span style="font-size: 26px; line-height: 32px; font-weight: 600; margin-top: -8px;">같이 닫혀요</span>
+          <span style="font-size: 16px; line-height: 22px; color: #8a8a8a;">모든 알림 끝, 기록 1개</span>
+        </div><div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;">
+          <div style="width: 168px; height: 112px; border-radius: 28px; background: #050505; box-shadow: 0 0 0 3px #ffc447; display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 200 120" aria-hidden="true" style="width: 136px; height: 82px; display: block; flex: none;"><rect width="200" height="120" rx="28" fill="#000000" stroke="#2a2a2a" stroke-width="2"></rect><g class="fx fx-bob"><path d="M55 68A15 15 0 0 1 85 68" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round"></path><path d="M115 68A15 15 0 0 1 145 68" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round"></path></g></svg></div>
+          <span style="font-size: 15px; font-weight: 600; color: #ffc447; font-variant-numeric: tabular-nums;">05</span>
+          <span style="font-size: 26px; line-height: 32px; font-weight: 600; margin-top: -8px;">돌아봐요</span>
+          <span style="font-size: 16px; line-height: 22px; color: #8a8a8a;">주간 기록 · 리포트</span>
+        </div>
+        </div>
+      </div>
+      <div style="flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; min-height: 0;">
+        <div style="border-radius: 28px; background: #141414; padding: 28px 36px; display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-size: 16px; line-height: 24px; font-weight: 600; color: #4d8df6;">네 가지로 확인 → 결과는 하나</span>
+          <svg role="img" aria-label="말, 체크 타일, 워치, 앱 어디서 확인해도 먹었어 하나로 모이고 모든 알림이 닫힌다" viewBox="0 0 780 296" style="width: 100%; flex-grow: 1; min-height: 0;"><rect x="0" y="8" width="236" height="52" rx="26" fill="#1f1f1f"></rect><circle cx="28" cy="34" r="7" fill="#7960ff"></circle><text x="46" y="41" font-family="Pretendard, sans-serif" font-size="20" font-weight="600" fill="#ffffff">말</text><text x="220" y="40" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="end">"먹었어"</text><path class="flow" d="M240 34C340 34 340 148 420 148" fill="none" stroke="#7960ff" stroke-width="2.5" stroke-linecap="round"></path><rect x="0" y="84" width="236" height="52" rx="26" fill="#1f1f1f"></rect><circle cx="28" cy="110" r="7" fill="#d5ff44"></circle><text x="46" y="117" font-family="Pretendard, sans-serif" font-size="20" font-weight="600" fill="#ffffff">체크 타일</text><text x="220" y="116" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="end">현관 칸 톡</text><path class="flow" d="M240 110C340 110 340 148 420 148" fill="none" stroke="#d5ff44" stroke-width="2.5" stroke-linecap="round"></path><rect x="0" y="160" width="236" height="52" rx="26" fill="#1f1f1f"></rect><circle cx="28" cy="186" r="7" fill="#ff64cf"></circle><text x="46" y="193" font-family="Pretendard, sans-serif" font-size="20" font-weight="600" fill="#ffffff">워치</text><text x="220" y="192" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="end">탭 한 번</text><path class="flow" d="M240 186C340 186 340 148 420 148" fill="none" stroke="#ff64cf" stroke-width="2.5" stroke-linecap="round"></path><rect x="0" y="236" width="236" height="52" rx="26" fill="#1f1f1f"></rect><circle cx="28" cy="262" r="7" fill="#ffffff"></circle><text x="46" y="269" font-family="Pretendard, sans-serif" font-size="20" font-weight="600" fill="#ffffff">앱</text><text x="220" y="268" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="end">지금 카드</text><path class="flow" d="M240 262C340 262 340 148 420 148" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"></path><g class="pulse"><circle cx="478" cy="148" r="62" fill="#72e5b5"></circle></g><text x="478" y="156" font-family="Pretendard, sans-serif" font-size="24" font-weight="700" fill="#111111" text-anchor="middle">먹었어</text><path class="flow" d="M546 148H600" stroke="#72e5b5" stroke-width="2.5" fill="none"></path><path d="M596 140l10 8-10 8" fill="none" stroke="#72e5b5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><text x="620" y="136" font-family="Pretendard, sans-serif" font-size="20" font-weight="600" fill="#ffffff">알림 모두 닫힘</text><text x="620" y="166" font-family="Pretendard, sans-serif" font-size="16" fill="#8a8a8a">기록은 하나만</text></svg>
+        </div>
+        <div style="border-radius: 28px; background: #141414; padding: 28px 36px; display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-size: 16px; line-height: 24px; font-weight: 600; color: #4d8df6;">대답이 없으면 — 점점 멀리, 점점 조용히</span>
+          <svg role="img" aria-label="정시 루모, 15분 뒤 워치, 30분 뒤 폰, 90분 뒤 놓침 기록. 갈수록 알림이 작아진다" viewBox="0 0 780 320" style="width: 100%; flex-grow: 1; min-height: 0;"><path d="M40 226H740" stroke="#333333" stroke-width="2"></path><rect x="36" y="46" width="68" height="150" rx="18" fill="#ff64cf"></rect><circle cx="70" cy="226" r="8" fill="#ff64cf" stroke="#141414" stroke-width="4"></circle><text x="70" y="262" font-family="Pretendard, sans-serif" font-size="14" font-weight="600" fill="#8a8a8a" text-anchor="middle">정시</text><text x="70" y="290" font-family="Pretendard, sans-serif" font-size="22" font-weight="600" fill="#ffffff" text-anchor="middle">루모</text><text x="70" y="314" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="middle">말 + 표정 + 타일 불</text><rect x="236" y="92" width="68" height="104" rx="18" fill="#c08bff"></rect><circle cx="270" cy="226" r="8" fill="#c08bff" stroke="#141414" stroke-width="4"></circle><text x="270" y="262" font-family="Pretendard, sans-serif" font-size="14" font-weight="600" fill="#8a8a8a" text-anchor="middle">+15분</text><text x="270" y="290" font-family="Pretendard, sans-serif" font-size="22" font-weight="600" fill="#ffffff" text-anchor="middle">워치</text><text x="270" y="314" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="middle">가볍게 진동</text><rect x="436" y="134" width="68" height="62" rx="18" fill="#8a8a8a"></rect><circle cx="470" cy="226" r="8" fill="#8a8a8a" stroke="#141414" stroke-width="4"></circle><text x="470" y="262" font-family="Pretendard, sans-serif" font-size="14" font-weight="600" fill="#8a8a8a" text-anchor="middle">+30분</text><text x="470" y="290" font-family="Pretendard, sans-serif" font-size="22" font-weight="600" fill="#ffffff" text-anchor="middle">폰</text><text x="470" y="314" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="middle">집에 없으면 푸시</text><rect x="636" y="174" width="68" height="22" rx="18" fill="#4a4a4a"></rect><circle cx="670" cy="226" r="8" fill="#6b6b6b" stroke="#141414" stroke-width="4"></circle><text x="670" y="262" font-family="Pretendard, sans-serif" font-size="14" font-weight="600" fill="#8a8a8a" text-anchor="middle">+90분</text><text x="670" y="290" font-family="Pretendard, sans-serif" font-size="22" font-weight="600" fill="#ffffff" text-anchor="middle">기록</text><text x="670" y="314" font-family="Pretendard, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="middle">놓침, 혼내지 않기</text></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <sc-if value="{{showFoot}}" hint-placeholder-val="{{true}}">
+  <div style="position: absolute; left: 120px; right: 120px; bottom: 40px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; line-height: 22px;">
+    <nav class="bi-toc" aria-label="Contents" style="display: flex; align-items: center; gap: 16px;"><a href="BrandCover.dc.html" title="Cover" aria-label="01 Cover" style="font-variant-numeric: tabular-nums;">01</a><a href="BrandPhilosophy.dc.html" title="Philosophy" aria-label="02 Philosophy" style="font-variant-numeric: tabular-nums;">02</a><a href="BrandStrategy.dc.html" title="Positioning" aria-label="03 Positioning" style="font-variant-numeric: tabular-nums;">03</a><a href="BrandPersona.dc.html" title="Persona" aria-label="04 Persona" style="font-variant-numeric: tabular-nums;">04</a><a href="BrandPersona2.dc.html" title="Family" aria-label="05 Family" style="font-variant-numeric: tabular-nums;">05</a><a href="BrandJourney.dc.html" title="Journey" aria-label="06 Journey" style="font-variant-numeric: tabular-nums;">06</a><a href="BrandAI.dc.html" title="Meet Rumo" aria-label="07 Meet Rumo" style="font-variant-numeric: tabular-nums;">07</a><a href="BrandFace.dc.html" title="Expressions" aria-label="08 Expressions" style="font-variant-numeric: tabular-nums;">08</a><a href="BrandFeatures.dc.html" aria-current="page" style="color: #ffffff; font-weight: 600; white-space: nowrap;"><span style="font-variant-numeric: tabular-nums;">09</span> How it works</a><a href="BrandLogo.dc.html" title="Logo" aria-label="10 Logo" style="font-variant-numeric: tabular-nums;">10</a><a href="BrandUsage.dc.html" title="Logo guide" aria-label="11 Logo guide" style="font-variant-numeric: tabular-nums;">11</a><a href="BrandLogoColor.dc.html" title="Logo color" aria-label="12 Logo color" style="font-variant-numeric: tabular-nums;">12</a><a href="BrandSymbols.dc.html" title="Symbols" aria-label="13 Symbols" style="font-variant-numeric: tabular-nums;">13</a><a href="BrandColor.dc.html" title="Color" aria-label="14 Color" style="font-variant-numeric: tabular-nums;">14</a><a href="BrandType.dc.html" title="Type" aria-label="15 Type" style="font-variant-numeric: tabular-nums;">15</a><a href="BrandVoice.dc.html" title="Voice" aria-label="16 Voice" style="font-variant-numeric: tabular-nums;">16</a><a href="BrandMVP.dc.html" title="MVP demo" aria-label="17 MVP demo" style="font-variant-numeric: tabular-nums;">17</a></nav>
+    <div style="display: flex; align-items: center; gap: 16px;"><a class="bi-arrow" href="BrandFace.dc.html" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 6l-6 6 6 6"></path></svg></a><span style="font-variant-numeric: tabular-nums; color: #a3a3a3; min-width: 64px; text-align: center;"><span style="color: #ffffff; font-weight: 600;">09</span> / 17</span><a class="bi-arrow" href="BrandLogo.dc.html" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6l6 6-6 6"></path></svg></a></div>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { const v = this._rv() || {}; v.showFoot = this.props.embed !== true && this.props.embed !== 'true'; return v; }
+  _rv() { return {}; }
+}
+</script>
+</body>
+</html>

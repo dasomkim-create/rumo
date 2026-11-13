@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>섹션 제목</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 100%; display: flex; align-items: center; gap: 6px; padding-bottom: 4px; border-bottom: {{rule}}; font-family: Pretendard, -apple-system, system-ui, sans-serif; color: #6b7079;">
+  <sc-if value="{{hasIcon}}" hint-placeholder-val="{{false}}">
+    <img src="{{icon}}" alt="" style="width: 16px; height: 16px;">
+  </sc-if>
+  <span style="flex-grow: 1; font-size: 13px; line-height: 19px; font-weight: 600;">{{label}}</span>
+  <sc-if value="{{hasHint}}" hint-placeholder-val="{{false}}">
+    <span style="font-size: 12px; line-height: 16px;">{{hint}}</span>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"섹션"},"icon":{"editor":"text","default":""},"hint":{"editor":"text","default":""},"line":{"editor":"boolean","default":false},"$preview":{"width":350,"height":30}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    return { label: p.label ?? '섹션', icon: p.icon ?? '', hasIcon: !!p.icon, hint: p.hint ?? '', hasHint: !!p.hint, rule: p.line === true ? '1px solid #e4e6ea' : '0' };
+  }
+}
+</script>
+</body>
+</html>

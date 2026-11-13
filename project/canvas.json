@@ -1,0 +1,583 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AddDose.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "03 영양제 등록 · 검색과 표식",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "Alert.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "A 지금 알림",
+      "w": 390,
+      "x": 0,
+      "y": 1264
+    },
+    "BrandCover.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 01 Cover",
+      "w": 1920,
+      "x": 920,
+      "y": 0
+    },
+    "BrandLogo.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 10 Logo",
+      "w": 1920,
+      "x": 2920,
+      "y": 5200
+    },
+    "BrandLogoColor.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 12 Logo Color & Misuse",
+      "w": 1920,
+      "x": 2920,
+      "y": 6500
+    },
+    "BrandPersona.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 04 Persona",
+      "w": 1920,
+      "x": 2920,
+      "y": 1300
+    },
+    "BrandPhilosophy.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 02 Brand Philosophy",
+      "w": 1920,
+      "x": 2920,
+      "y": 0
+    },
+    "BrandStrategy.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 03 Purpose & Positioning",
+      "w": 1920,
+      "x": 920,
+      "y": 1300
+    },
+    "BrandSymbols.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 13 Symbols & Motion",
+      "w": 1920,
+      "x": 920,
+      "y": 7800
+    },
+    "BrandUsage.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 11 Logo Guide",
+      "w": 1920,
+      "x": 920,
+      "y": 6500
+    },
+    "Button.dc.html": {
+      "h": 56,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "Button",
+      "w": 350,
+      "x": 470,
+      "y": 184
+    },
+    "CheckTile.dc.html": {
+      "h": 112,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "CheckTile",
+      "w": 112,
+      "x": 470,
+      "y": 508
+    },
+    "Chip.dc.html": {
+      "h": 40,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "Chip",
+      "w": 160,
+      "x": 470,
+      "y": 360
+    },
+    "Connect.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "02 루모 연결 · 권한",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "Done.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "C 먹었어",
+      "w": 390,
+      "x": 940,
+      "y": 1264
+    },
+    "Health.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "06-2 건강 리포트",
+      "w": 390,
+      "x": 3290,
+      "y": 0
+    },
+    "ListRow.dc.html": {
+      "h": 64,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "ListRow · 행",
+      "w": 350,
+      "x": 470,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "04 오늘 (홈)",
+      "w": 390,
+      "x": 1410,
+      "y": 0
+    },
+    "Meds.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "05 영양제",
+      "w": 390,
+      "x": 1880,
+      "y": 0
+    },
+    "NavBar.dc.html": {
+      "h": 44,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "NavBar",
+      "w": 350,
+      "x": 0,
+      "y": 186
+    },
+    "Onboarding.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "01 시작",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "Report.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "06 기록",
+      "w": 390,
+      "x": 2350,
+      "y": 0
+    },
+    "Robot.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "07 루모 설정",
+      "w": 390,
+      "x": 2820,
+      "y": 0
+    },
+    "ScreenHeader.dc.html": {
+      "h": 80,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "ScreenHeader",
+      "w": 350,
+      "x": 0,
+      "y": 350
+    },
+    "SectionHeader.dc.html": {
+      "h": 40,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "SectionHeader",
+      "w": 350,
+      "x": 0,
+      "y": 550
+    },
+    "Segmented.dc.html": {
+      "h": 40,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "Segmented · 보기 전환",
+      "w": 350,
+      "x": 470,
+      "y": 700
+    },
+    "SheetProduct.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "03-2 바텀시트 · 영양제 찾기",
+      "w": 390,
+      "x": 3220,
+      "y": 1264
+    },
+    "SheetSymbol.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "03-1 바텀시트 · 표식 고르기",
+      "w": 390,
+      "x": 2750,
+      "y": 1264
+    },
+    "TabBar.dc.html": {
+      "h": 66,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "TabBar · 글래스 탭 바",
+      "w": 350,
+      "x": 0,
+      "y": 0
+    },
+    "TextField.dc.html": {
+      "h": 100,
+      "is_interactive": true,
+      "page": "page-components",
+      "title": "TextField · 텍스트 필드",
+      "w": 350,
+      "x": 0,
+      "y": 700
+    },
+    "Voice.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "B 말로 확인",
+      "w": 390,
+      "x": 470,
+      "y": 1264
+    },
+    "Watch.dc.html": {
+      "h": 242,
+      "is_interactive": true,
+      "radius": 56,
+      "title": "W 워치 알림",
+      "w": 198,
+      "x": 2400,
+      "y": 1264
+    },
+    "BrandFeatures.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 09 How It Works",
+      "w": 1920,
+      "x": 920,
+      "y": 5200
+    },
+    "BrandFace.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 08 Expressions",
+      "w": 1920,
+      "x": 2920,
+      "y": 3900
+    },
+    "BrandColor.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 14 Color",
+      "w": 1920,
+      "x": 2920,
+      "y": 7800
+    },
+    "BrandType.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 15 Typography",
+      "w": 1920,
+      "x": 920,
+      "y": 9100
+    },
+    "BrandVoice.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 16 Voice & Tone",
+      "w": 1920,
+      "x": 2920,
+      "y": 9100
+    },
+    "BrandMVP.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "title": "BI 17 MVP Demo",
+      "w": 1920,
+      "x": 920,
+      "y": 10400
+    },
+    "EditDose.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "05-1 영양제 수정 · 삭제",
+      "w": 390,
+      "x": 3690,
+      "y": 1264
+    },
+    "HomeOffline.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "04-1 오늘 · 루모 연결 끊김",
+      "w": 390,
+      "x": 4160,
+      "y": 1264
+    },
+    "HomeEmpty.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "04-2 오늘 · 처음 (영양제 0개)",
+      "w": 390,
+      "x": 4630,
+      "y": 1264
+    },
+    "AlertNoMic.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "A-1 지금 알림 · 마이크 꺼짐",
+      "w": 390,
+      "x": 5100,
+      "y": 1264
+    },
+    "BrandAI.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "w": 1920,
+      "title": "BI 07 Meet Rumo",
+      "x": 920,
+      "y": 3900
+    },
+    "BrandSite.dc.html": {
+      "h": 900,
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "expand": "fill",
+      "is_interactive": true,
+      "page": "page-landing",
+      "title": "RUMO 브랜드 사이트 · 장표와 같은 원본"
+    },
+    "BrandPersona2.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "w": 1920,
+      "title": "BI 05 Family Persona",
+      "x": 920,
+      "y": 2600
+    },
+    "BrandJourney.dc.html": {
+      "h": 1080,
+      "is_interactive": true,
+      "page": "page-statq4",
+      "w": 1920,
+      "title": "BI 06 User Journey",
+      "x": 2920,
+      "y": 2600
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-11T04:42:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/AXdmd49sFJYgXTBsKwU3Dx",
+      "copiedAt": "2026-11-11T06:36:00Z",
+      "namespace": "rumo",
+      "title": "RUMO Design System",
+      "version": "1794378018-65a1"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "noteOrder": [
+    "row1",
+    "row2",
+    "flow",
+    "review",
+    "comp-title",
+    "bi-title",
+    "exceptions",
+    "site-note"
+  ],
+  "notes": {
+    "bi-title": {
+      "kind": "title1",
+      "maxW": 3920,
+      "page": "page-statq4",
+      "text": "RUMO 브랜드 아이덴티티",
+      "w": 240,
+      "x": 920,
+      "y": -300
+    },
+    "comp-title": {
+      "kind": "title1",
+      "maxW": 820,
+      "page": "page-components",
+      "text": "컴포넌트 — 화면은 모두 이 조각으로 조립",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "flow": {
+      "fill": "orange",
+      "size": 24,
+      "text": "알림 흐름\n\nT  루모가 거실에서 \"오메가3 먹을 시간이야\" — 30초 듣기 창이 열림\nT+15분  확인 없으면 워치 햅틱\nT+30분  루모가 사람을 못 찾으면 폰 푸시\nT+90분  '놓침'으로 기록, 혼내지 않음\n\n어디서든 \"먹었어\" 한 번이면 모든 기기 알림이 같이 닫힌다.\n\nPlay ▶로 A 지금 알림에서 시작하면 말로 확인 → 먹었어까지 흐름을 따라가 볼 수 있어요. 워치(W)는 T+15분에 뜨는 화면이에요.",
+      "w": 380,
+      "x": 1410,
+      "y": 1264
+    },
+    "review": {
+      "fill": "blue",
+      "size": 24,
+      "text": "필라이즈와 비교한 흐름 점검\n\n1. 기기 연결이 없었다 → 02 루모 연결 추가 (Wi-Fi, 이름 짓기, 알림·마이크 권한을 쓰임새 설명과 함께)\n2. 영양제 이름을 직접 쳐야 했다 → 03에 제품 검색과 사진으로 찾기 추가 (필라이즈처럼 성분은 자동 입력)\n3. 다 먹은 뒤가 없었다 → 06 기록에 남은 수량과 재구매 알림 추가\n4. 등록한 영양제를 다시 볼 곳이 없었다 → 탭에 '영양제' 추가 (05)\n5. 제품을 고르기 어려웠다 → 03에 필라이즈식 '영양제 찾기' 시트 (성분 칩 · 시간대 추천 · 사진으로 찾기)\n\nRUMO가 가져가지 않은 것: 영양제 추천·점수·랭킹. RUMO의 핵심은 '먹었는지 확인'이라 분석은 범위 밖으로 둔다.",
+      "w": 420,
+      "x": 1880,
+      "y": 1264
+    },
+    "row1": {
+      "kind": "title1",
+      "maxW": 3210,
+      "text": "앱 구조 — 처음 만남부터 매일의 루틴까지",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "row2": {
+      "kind": "title1",
+      "maxW": 1330,
+      "text": "알림 흐름 — 루모가 말하면, 한 번에 확인",
+      "w": 240,
+      "x": 0,
+      "y": 964
+    },
+    "exceptions": {
+      "fill": "green",
+      "size": 24,
+      "text": "예외 상황 — 발표 질문 대비\n\n04-1 루모가 꺼지거나 Wi-Fi가 끊기면: 홈 위에 상태 카드, 알림은 폰 푸시로 대신. 기록은 그대로.\n04-2 처음 설치해 영양제가 0개면: 반가운 표정 + '첫 영양제 등록' 하나만.\nA-1 마이크를 꺼 두면: 말로 확인 버튼을 숨기고 버튼·체크 타일로 안내.\n\n세 화면 모두 원래 화면의 같은 컴포넌트를 props(mode, mic)로만 바꿔요.",
+      "w": 420,
+      "x": 4160,
+      "y": 2180
+    },
+    "site-note": {
+      "fill": "blue",
+      "size": 24,
+      "page": "page-landing",
+      "text": "애플식 랜딩페이지 — 스크롤하면 장면이 바뀌어요.\n\n히어로: 로고가 스케치로 그려지고, 스크롤하면 작아지며 카피 등장\n문제: 글자가 스크롤 따라 한 단어씩 밝아짐\nMeet Rumo: 화면 고정, 스크롤로 표정 6개 전환\nHow it works: 실제 앱 화면 4장이 폰 안에서 전환 (앱 시안과 같은 원본)\nConfirm: 세로 스크롤 → 가로로 카드 이동\nIdentity: 스크롤로 로고가 그려짐\nBrand Book: 장표 17장 원본 (장표 고치면 같이 바뀜)\n\n전체 화면(Play)으로 열어 스크롤해 보세요.",
+      "w": 420,
+      "x": 1520,
+      "y": 0
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Onboarding.dc.html",
+    "Connect.dc.html",
+    "AddDose.dc.html",
+    "Meds.dc.html",
+    "Report.dc.html",
+    "Health.dc.html",
+    "Robot.dc.html",
+    "Alert.dc.html",
+    "Voice.dc.html",
+    "Done.dc.html",
+    "Watch.dc.html",
+    "SheetSymbol.dc.html",
+    "SheetProduct.dc.html",
+    "EditDose.dc.html",
+    "AlertNoMic.dc.html",
+    "HomeEmpty.dc.html",
+    "HomeOffline.dc.html",
+    "TabBar.dc.html",
+    "NavBar.dc.html",
+    "ScreenHeader.dc.html",
+    "SectionHeader.dc.html",
+    "ListRow.dc.html",
+    "Button.dc.html",
+    "Chip.dc.html",
+    "CheckTile.dc.html",
+    "TextField.dc.html",
+    "Segmented.dc.html",
+    "BrandCover.dc.html",
+    "BrandPhilosophy.dc.html",
+    "BrandStrategy.dc.html",
+    "BrandPersona.dc.html",
+    "BrandPersona2.dc.html",
+    "BrandJourney.dc.html",
+    "BrandAI.dc.html",
+    "BrandFace.dc.html",
+    "BrandFeatures.dc.html",
+    "BrandLogo.dc.html",
+    "BrandUsage.dc.html",
+    "BrandLogoColor.dc.html",
+    "BrandSymbols.dc.html",
+    "BrandColor.dc.html",
+    "BrandType.dc.html",
+    "BrandVoice.dc.html",
+    "BrandMVP.dc.html",
+    "BrandSite.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "page-1",
+      "name": "Page 1"
+    },
+    {
+      "id": "page-statq4",
+      "name": "Page 2"
+    },
+    {
+      "id": "page-components",
+      "name": "Components"
+    },
+    {
+      "id": "page-landing",
+      "name": "Landing"
+    }
+  ],
+  "title": "RUMO App"
+}

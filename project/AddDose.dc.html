@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>영양제 등록</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 560ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:60ms}.rise>*:nth-child(3){animation-delay:120ms}.rise>*:nth-child(4){animation-delay:180ms}.rise>*:nth-child(5){animation-delay:240ms}.rise>*:nth-child(6){animation-delay:300ms}.rise>*:nth-child(7){animation-delay:360ms}.rise>*:nth-child(8){animation-delay:420ms}.rise>*:nth-child(9){animation-delay:480ms}
+@media (prefers-reduced-motion: reduce){.rise>*{animation:none!important}}
+@keyframes rumo-pop{0%{transform:scale(.2) rotate(-140deg);opacity:0}70%{transform:scale(1.08) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes rumo-sheet{from{transform:translateY(calc(100% + 16px))}to{transform:none}}
+@keyframes rumo-fade{from{opacity:0}to{opacity:1}}
+@keyframes ri-pop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes ri-rise{0%{transform:scale(0);opacity:0}62%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes ri-wipe-b{0%{clip-path:inset(100% 0 0 0)}100%{clip-path:inset(0 0 0 0)}}
+@keyframes ri-wave{0%{clip-path:inset(0 100% 0 0);transform:none}25%{transform:translateY(-6px)}50%{transform:translateY(6px)}75%{transform:translateY(-3px)}100%{clip-path:inset(0 0 0 0);transform:none}}
+@keyframes ri-spin-in{0%{transform:rotate(-180deg) scale(0);opacity:0}100%{transform:none;opacity:1}}
+@keyframes ri-twinkle{0%{transform:rotate(60deg) scale(0);opacity:0}50%{transform:scale(1.35);opacity:1}75%{transform:scale(.88)}100%{transform:none;opacity:1}}
+@keyframes ri-flip{0%{transform:rotate(180deg) scale(.4);opacity:0}100%{transform:none;opacity:1}}
+@keyframes ri-stretch{0%{transform:scale(.1);opacity:0}30%{opacity:1}70%{transform:scale(1.18)}100%{transform:none;opacity:1}}
+@keyframes ri-moon{0%{transform:rotate(-80deg) translate(-18px,12px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes ri-drop{0%{transform:translateY(-70px) scale(.8,1.2);opacity:0}30%{opacity:1}50%{transform:translateY(0) scale(1.25,.75)}75%{transform:scale(.9,1.1)}100%{transform:none;opacity:1}}
+@keyframes ri-bloom{0%{transform:rotate(-140deg) scale(0);opacity:0}100%{transform:none;opacity:1}}
+@keyframes ri-flap{0%{transform:scaleX(0);opacity:0}27%{transform:scaleX(1);opacity:1}45%{transform:scaleX(.25)}64%{transform:scaleX(1)}82%{transform:scaleX(.5)}100%{transform:none;opacity:1}}
+@keyframes ri-fan{0%{transform:rotate(-90deg);opacity:0}23%{opacity:1}100%{transform:none;opacity:1}}
+@keyframes ri-beat{0%{transform:scale(0);opacity:0}36%{transform:scale(1.22);opacity:1}55%{transform:scale(.94)}73%{transform:scale(1.14)}100%{transform:none;opacity:1}}
+@keyframes ri-sprout{0%{transform:scale(0) rotate(-35deg);opacity:0}23%{opacity:1}100%{transform:none;opacity:1}}
+@keyframes ri-roll{0%{transform:translateX(-60px) rotate(-240deg);opacity:0}100%{transform:none;opacity:1}}
+@keyframes ri-hop-in{0%{transform:translateY(30px) scale(1,0);opacity:0}36%{transform:translateY(-22px) scale(.9,1.15);opacity:1}64%{transform:scale(1.18,.82)}82%{transform:scale(.95,1.05)}100%{transform:none;opacity:1}}
+@keyframes ri-zap{0%{clip-path:inset(0 0 100% 0);opacity:1}47%{clip-path:inset(0 0 0 0)}60%{opacity:.15}73%{opacity:1}87%{opacity:.3}100%{opacity:1;clip-path:inset(0 0 0 0)}}
+@keyframes ri-drift{0%{transform:translateX(-50px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes ri-grow-x{0%{transform:scaleX(0)}100%{transform:none;opacity:1}}
+@keyframes ri-boing{0%{transform:translateY(40px) scale(.5);opacity:0}27%{opacity:1}55%{transform:translateY(-16px) scale(1.05,.95)}77%{transform:translateY(4px) scale(.96,1.04)}100%{transform:none;opacity:1}}
+@keyframes ri-stroke{0%{stroke-dashoffset:1;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+@keyframes ri-fill{0%,58%{opacity:0}100%{opacity:1}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+a{color:#5b3fe0}a:hover{color:#3d24b8}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+.scroll{scrollbar-width:none}.scroll::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #ffffff; color: #111111; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div class="rise scroll" style="height: 100%; box-sizing: border-box; overflow-y: auto; padding: 56px 20px 32px; display: flex; flex-direction: column; gap: 20px;">
+    <dc-import name="NavBar" back="{{navBack}}" back-label="이전" title="{{navTitle}}" step="{{navStep}}" hint-size="100%,44px"></dc-import>
+
+    <div style="border-radius: 24px; background: #f3ffd1; padding: 16px 20px; display: flex; align-items: center; gap: 16px;">
+      <img src="{{picked.src}}" alt="{{picked.label}}" style="width: 72px; height: 72px; animation: rumo-pop 600ms cubic-bezier(.2,.8,.2,1) both;">
+      <div style="display: flex; flex-direction: column; min-width: 0;">
+        <span style="font-size: 13px; line-height: 19px; font-weight: 500; color: #4b5059;">루모는 이렇게 알려줘요</span>
+        <span style="font-size: 22px; line-height: 31px; font-weight: 600; letter-spacing: -0.4px;">{{prod.short}}</span>
+        <span style="font-size: 15px; line-height: 22px; color: #4b5059;">{{slot.label}} {{slot.time}} · {{picked.label}} 표식</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <span style="font-size: 13px; line-height: 19px; font-weight: 500; color: #6b7079;">제품</span>
+      <button type="button" onClick="{{openProduct}}" style="height: 48px; border: 0; border-radius: 14px; background: #f3f4f6; padding: 0 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-family: inherit; font-size: 17px; color: #8a9099; text-align: left;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a9099" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>제품명이나 성분으로 찾기
+      </button>
+      <dc-import name="ListRow" icon="{{prod.icon}}" title="{{prod.name}}" sub="{{prod.sub}}" trail="check" hint-size="100%,60px"></dc-import>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <dc-import name="SectionHeader" label="먹는 시간" hint-size="100%,23px"></dc-import>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px;">
+        <sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
+          <button type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="height: 52px; border: 0; border-radius: 14px; cursor: pointer; font-family: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; background: {{s.bg}}; color: {{s.fg}};">
+            <span style="font-size: 15px; line-height: 21px; font-weight: 500;">{{s.label}}</span>
+            <span style="font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; opacity: 0.8;">{{s.time}}</span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{custom}}" hint-placeholder-val="{{false}}">
+        <div style="display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px; border-radius: 14px; background: #f3f4f6; box-shadow: inset 0 0 0 2px #111111; animation: rumo-in 300ms cubic-bezier(.2,.8,.2,1) both;">
+          <label for="dose-time" style="font-size: 15px; font-weight: 500; color: #6b7079;">먹는 시간</label>
+          <input id="dose-time" type="time" value="{{customTime}}" onInput="{{onTime}}" style="flex-grow: 1; min-width: 0; border: 0; background: transparent; font-family: inherit; font-size: 20px; font-weight: 600; color: #111111; text-align: right; outline: none;">
+        </div>
+        <span style="font-size: 13px; line-height: 19px; color: #6b7079;">{{customNote}}</span>
+      </sc-if>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <dc-import name="SectionHeader" label="표식" hint="체크 타일·워치에 같은 모양으로 떠요" hint-size="100%,23px"></dc-import>
+      <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px;">
+        <sc-for list="{{quick}}" as="sh" hint-placeholder-count="5">
+          <button type="button" onClick="{{sh.pick}}" title="{{sh.label}}" aria-label="{{sh.label}}" aria-pressed="{{sh.pressed}}" style="aspect-ratio: 1; border: 0; border-radius: 12px; padding: 8px; cursor: pointer; background: {{sh.bg}}; box-shadow: {{sh.ring}};">
+            <img src="{{sh.src}}" alt="" style="width: 100%; height: 100%; display: block;">
+          </button>
+        </sc-for>
+        <button type="button" onClick="{{openSheet}}" style="aspect-ratio: 1; border: 0; border-radius: 12px; cursor: pointer; background: #f3f4f6; color: #111111; font-family: inherit; font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>더 보기
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <div style="align-self: stretch;"><dc-import name="Button" label="{{ctaLabel}}" href="{{ctaHref}}" variant="primary" size="lg" hint-size="100%,56px"></dc-import></div>
+      <sc-if value="{{isEdit}}" hint-placeholder-val="{{false}}">
+        <sc-if value="{{askDelete}}" hint-placeholder-val="{{false}}">
+          <div role="alert" style="align-self: stretch; display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 48px; padding: 0 6px 0 16px; border-radius: 14px; background: #ffe4d9; animation: rumo-in 260ms cubic-bezier(.2,.8,.2,1) both;">
+            <span style="font-size: 15px; font-weight: 500;">기록은 남고, 알림만 멈춰요</span>
+            <span style="display: flex; gap: 4px;"><button type="button" onClick="{{cancelDelete}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: #111111; cursor: pointer;">취소</button><a href="Meds.dc.html" class="press" style="height: 36px; padding: 0 14px; border-radius: 999px; background: #111111; color: #ffffff; font-size: 14px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center;">지우기</a></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{showDelete}}" hint-placeholder-val="{{false}}">
+          <button type="button" onClick="{{startDelete}}" style="height: 44px; padding: 0 16px; border: 0; background: transparent; font-family: inherit; font-size: 15px; font-weight: 500; color: #c2410c; cursor: pointer;">이 영양제 지우기</button>
+        </sc-if>
+      </sc-if>
+    </div>
+  </div>
+
+  <sc-if value="{{sheet}}" hint-placeholder-val="{{false}}">
+    <div onClick="{{closeSheet}}" aria-hidden="true" style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.36); cursor: pointer; animation: rumo-fade 200ms ease both;"></div>
+    <div role="dialog" aria-modal="true" aria-label="표식 고르기" style="position: absolute; left: 8px; right: 8px; bottom: 8px; height: 620px; box-sizing: border-box; border-radius: 34px; background: #ffffff; padding: 10px 16px 16px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18); animation: rumo-sheet 360ms cubic-bezier(.2,.8,.2,1) both;">
+      <div aria-hidden="true" style="align-self: center; width: 36px; height: 5px; border-radius: 999px; background: #dfe2e6;"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px;">
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 20px; line-height: 29px; font-weight: 600; letter-spacing: -0.3px;">표식 고르기</span>
+          <span style="font-size: 13px; line-height: 19px; color: #6b7079;">{{countText}}</span>
+        </div>
+        <button type="button" aria-label="닫기" onClick="{{closeSheet}}" style="width: 32px; height: 32px; border: 0; border-radius: 999px; background: #f3f4f6; color: #111111; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+      </div>
+      <dc-import name="TextField" label="" value="" type="search" variant="box" help="" placeholder="하트, 별, 잎, 해, 잠…" input-id="symbol-search" on-change="{{onSearch}}" hint-size="100%,48px"></dc-import>
+      <div style="flex-grow: 1; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: min-content; gap: 8px;">
+        <sc-for list="{{matches}}" as="m" hint-placeholder-count="12">
+          <button type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" aria-label="{{m.label}}" style="border: 0; border-radius: 18px; padding: 12px 4px 8px; overflow: hidden; cursor: pointer; font-family: inherit; display: flex; flex-direction: column; align-items: center; gap: 6px; background: {{m.bg}}; box-shadow: {{m.ring}}; color: #111111;">
+            <span aria-hidden="true" style="position: relative; display: block; width: 44px; height: 44px;">
+              <sc-for list="{{m.parts}}" as="pt" hint-placeholder-count="1">
+                <svg viewBox="0 0 92 92" style="position: absolute; inset: 0; width: 44px; height: 44px; overflow: visible;">
+                  <g transform="{{m.tr}}">
+                    <path d="{{pt.d}}" fill="none" stroke="{{pt.sc}}" stroke-width="3" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" style="animation: {{pt.sa}};"></path>
+                    <path d="{{pt.d}}" fill="{{pt.fill}}" fill-rule="{{pt.fr}}" style="transform-box: fill-box; transform-origin: {{pt.o}}; animation: {{pt.a}};"></path>
+                  </g>
+                </svg>
+              </sc-for>
+            </span>
+            <span style="font-size: 13px; line-height: 19px; font-weight: 500;">{{m.label}}</span>
+          </button>
+        </sc-for>
+        <sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+          <p style="grid-column: 1 / -1; margin: 24px 0 0; text-align: center; font-size: 15px; line-height: 22px; color: #6b7079;">찾는 표식이 없어요.<br>다른 말로 찾아볼까요?</p>
+        </sc-if>
+      </div>
+      <dc-import name="Button" label="{{sheetCta}}" href="" on-press="{{closeSheet}}" variant="primary" size="lg" shape="rounded" hint-size="100%,56px"></dc-import>
+    </div>
+  </sc-if>
+  <sc-if value="{{pSheet}}" hint-placeholder-val="{{false}}">
+    <div onClick="{{closeProduct}}" aria-hidden="true" style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.36); cursor: pointer; animation: rumo-fade 200ms ease both;"></div>
+    <div role="dialog" aria-modal="true" aria-label="영양제 찾기" style="position: absolute; left: 8px; right: 8px; bottom: 8px; height: 680px; box-sizing: border-box; border-radius: 34px; background: #ffffff; padding: 10px 16px 16px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18); animation: rumo-sheet 360ms cubic-bezier(.2,.8,.2,1) both;">
+      <div aria-hidden="true" style="align-self: center; width: 36px; height: 5px; border-radius: 999px; background: #dfe2e6;"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px;">
+        <span style="font-size: 20px; line-height: 29px; font-weight: 600; letter-spacing: -0.3px;">영양제 찾기</span>
+        <button type="button" aria-label="닫기" onClick="{{closeProduct}}" style="width: 32px; height: 32px; border: 0; border-radius: 999px; background: #f3f4f6; color: #111111; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+      </div>
+      <div style="height: 48px; border-radius: 14px; background: #f3f4f6; padding: 0 14px; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 0 0 2px #111111;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a9099" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>
+        <input id="product-search" type="search" value="{{pq}}" onInput="{{onPq}}" placeholder="제품명이나 성분으로 찾기" aria-label="영양제 검색" style="flex-grow: 1; min-width: 0; height: 100%; border: 0; padding: 0; background: transparent; font-family: inherit; font-size: 17px; color: #111111; outline: none;">
+      </div>
+      <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+        <sc-for list="{{ingr}}" as="g" hint-placeholder-count="6">
+          <button type="button" onClick="{{g.pick}}" aria-pressed="{{g.pressed}}" style="height: 34px; padding: 0 12px 0 8px; border: 0; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; background: {{g.bg}}; color: {{g.fg}};"><img src="{{g.icon}}" alt="" style="width: 18px; height: 18px;">{{g.label}}</button>
+        </sc-for>
+      </div>
+      <div style="flex-grow: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-size: 13px; line-height: 19px; font-weight: 600; color: #6b7079;">{{listTitle}}</span>
+        <sc-for list="{{results}}" as="r" hint-placeholder-count="4">
+          <button type="button" onClick="{{r.pick}}" style="min-height: 60px; border: 0; padding: 0; background: transparent; display: flex; align-items: center; gap: 14px; cursor: pointer; font-family: inherit; text-align: left; color: #111111;">
+            <img src="{{r.icon}}" alt="" style="width: 28px; height: 28px; flex: none;">
+            <span style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0;">
+              <span style="font-size: 17px; line-height: 24px; font-weight: 500; letter-spacing: -0.2px;">{{r.name}}</span>
+              <span style="font-size: 13px; line-height: 19px; color: #6b7079;">{{r.brand}} · {{r.dose}}</span>
+            </span>
+            <span style="font-size: 13px; line-height: 19px; font-weight: 500; color: {{r.tagColor}};">{{r.tag}}</span>
+          </button>
+        </sc-for>
+        <sc-if value="{{noResult}}" hint-placeholder-val="{{false}}">
+          <p style="margin: 20px 0 0; text-align: center; font-size: 15px; line-height: 22px; color: #6b7079;">찾는 제품이 없어요.<br>사진으로 찾거나 직접 입력해 보세요.</p>
+        </sc-if>
+      </div>
+      <button type="button" style="height: 56px; border: 0; border-radius: 18px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; font-family: inherit; font-size: 17px; font-weight: 600; color: #111111;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>사진으로 찾기
+      </button>
+      <span style="font-size: 12px; line-height: 16px; color: #8a9099; text-align: center;">제품 정보는 시연용 예시예요</span>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"open":{"editor":"enum","options":["none","symbol","product"],"default":"none"},"mode":{"editor":"enum","options":["add","edit"],"default":"add"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const o = props.open ?? 'none';
+    this.edit = (props.mode ?? 'add') === 'edit';
+    this.state = { shape: 0, slot: 3, ct: '', sheet: o === 'symbol', del: false, q: '', pSheet: o === 'product', pq: o === 'product' ? '' : '', prod: 0 };
+  }
+  renderVals() {
+    const S = [
+      { label: '꽃', tags: '꽃 노랑 오메가 피부', src: '/_blob/090e19df98d02b97d3da074df29f0464' },
+      { label: '나비', tags: '나비 곤충', src: '/_blob/d513e23a477d5280f5568955d8cc67f2' },
+      { label: '물결 원', tags: '물결 원 동그라미', src: '/_blob/4da6be375f50b2899f7022aaaef22523' },
+      { label: '하트', tags: '하트 사랑 심장', src: '/_blob/a8661634517bacd6088daf34fd473242' },
+      { label: '해', tags: '해 태양 햇빛 비타민 아침', src: '/_blob/4f09d3617e69995832560c4998771e80' },
+      { label: '잎', tags: '잎 자연 식물 허브', src: '/_blob/5e9761d53e7178469e1b8d82893baf92' },
+      { label: '별', tags: '별 스타 반짝', src: '/_blob/9043b000aa88c877dfdd177be758a507' },
+      { label: '별표', tags: '별표 애스터리스크', src: '/_blob/c4be25edc9c4f89fa15ccaecd65ba08a' },
+      { label: '육각형', tags: '육각형 벌집 도형', src: '/_blob/32fb53c7e1351ec84083b83f97b12a97' },
+      { label: '링', tags: '링 도넛 동그라미', src: '/_blob/4c1731d6faeb8681d22f87f369e5e99a' },
+      { label: '세모', tags: '세모 삼각형', src: '/_blob/2f8d87e6928df6028819fbb08162310e' },
+      { label: '플러스', tags: '플러스 더하기 십자', src: '/_blob/3d898d193810a80e127abeb840554149' },
+      { label: '다이아', tags: '다이아 마름모', src: '/_blob/7625475d0fd9f7af1140fa2d92e3d3f0' },
+      { label: '달걀', tags: '달걀 타원 계란', src: '/_blob/add37f25abe7a4e4585156f9d9e852dd' },
+      { label: '번개', tags: '번개 에너지 활력', src: '/_blob/7f47d644fe898216564e5b1bfa1142d0' },
+      { label: '구름', tags: '구름 하늘 수면 잠 밤', src: '/_blob/4d8a22a1fc1e846e59f389ce792a4197' },
+      { label: '부채', tags: '부채 사분원', src: '/_blob/8bd21e2ebbbc067c769ff8fc187ab54d' },
+      { label: '리본', tags: '리본 기역자', src: '/_blob/d4757d4d8d2fcc97cb2c4b5a34f950fa' },
+      { label: '물결 블록', tags: '물결 블록 네모', src: '/_blob/7809dd2538066535cdf013d1ca57e9b4' },
+      { label: '바람개비', tags: '바람개비 바람 회전', src: '/_blob/dd5939c2e223f5458aa6a1309c32bb5d' },
+      { label: '아홉 점', tags: '아홉 점 도트 점점', src: '/_blob/82731aeb64287c96a9dfd692cd91ca9c' },
+      { label: '광선', tags: '광선 빛 햇살 비타민', src: '/_blob/f3b41191c4fefa3576a768000629e041' },
+      { label: '여덟 잎', tags: '여덟 잎 꽃 꽃잎', src: '/_blob/dbe92ec8d68f000c29eba4bbebf4c20b' },
+      { label: '겹 세모', tags: '겹 세모 삼각형 위로', src: '/_blob/ebd8f1b32d82bffa6e502312bbf46354' },
+      { label: '나비 리본', tags: '나비 리본 넥타이', src: '/_blob/15d0657013723378403cf4178b2c94a0' },
+      { label: '둥근 세모', tags: '둥근 세모 삼각형', src: '/_blob/f83986729801454c05901cacd18a886a' },
+      { label: '둥근 네모', tags: '둥근 네모 사각형 박스', src: '/_blob/ed4c26d8e3c90c990c428ae6672cc7ea' },
+      { label: '다섯 점', tags: '다섯 점 도트 주사위', src: '/_blob/a07b6a07853186ecc11824fd09c11019' },
+      { label: '쪼갠 원', tags: '쪼갠 원 반쪽 동그라미', src: '/_blob/a23d7585768952c6117d4b99f963a504' },
+      { label: '원과 반달', tags: '원 반달 달 동그라미', src: '/_blob/99a1faddb5754b16d9c76815f2384ba9' },
+      { label: '여덟 꼭지 별', tags: '별 여덟 꼭지 스타 반짝', src: '/_blob/727f50ce5fbabcc54a10526ef2d986e8' }
+    ];
+    const ANIM = {"꽃": {"tr": "translate(1.0 4.5)", "parts": [{"d": "M44.7486 12.5983C53.8986 -6.9217 74.0286 0.398299 74.0286 13.8183C74.0286 19.3083 71.5886 23.5783 67.9286 27.2383C89.2786 25.4083 95.9886 46.1483 82.5686 53.4683C78.2986 55.9083 72.8086 56.5183 67.9286 55.2983C80.7386 72.3783 67.3186 87.6283 54.5086 80.9183C50.2386 78.4783 46.5786 74.2083 44.7486 69.9383C35.5986 89.4583 15.4686 82.1383 15.4686 68.7183C15.4686 63.2283 17.9086 58.9583 21.5686 55.2983C0.218609 57.1283 -6.49139 36.3883 6.92861 29.0683C11.1986 26.6283 16.6886 26.0183 21.5686 27.2383C8.75861 10.1583 22.1786 -5.0917 34.9886 1.6183C39.2586 4.0583 42.9186 8.3283 44.7486 12.5983Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-bloom 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "나비": {"tr": "translate(5.0 4.5)", "parts": [{"d": "M40.5772 31.72C31.4272 16.47 15.5672 0 7.0272 0C-5.1728 0 -0.2928 28.67 12.5172 41.48C-0.2928 54.29 -5.1728 82.96 7.0272 82.96C15.5672 82.96 31.4272 66.49 40.5772 51.24C49.7272 66.49 65.5872 82.96 74.1272 82.96C86.3272 82.96 81.4472 54.29 68.6372 41.48C81.4472 28.67 86.3272 0 74.1272 0C65.5872 0 49.7272 16.47 40.5772 31.72Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-flap 1.1s ease-in-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "물결 원": {"tr": "translate(0.0 1.5)", "parts": [{"d": "M46.0631 5.23045C53.9931 -3.30955 63.7532 0.35045 66.8032 8.89045C77.7831 5.84045 86.3231 14.3805 83.2731 25.3605C93.6432 29.6305 93.6432 39.3904 86.3231 45.4905C93.6432 54.6405 88.7631 64.4005 80.2231 66.8405C81.4431 78.4305 72.9032 85.1404 62.5331 81.4805C57.0432 91.2405 47.2831 90.0205 41.7932 82.7005C32.6432 90.0205 22.8832 85.7505 20.4431 76.6004C9.46315 78.4305 2.75315 69.8904 6.41315 59.5205C-2.73685 54.0305 -1.51685 44.2705 6.41315 38.7805C-0.906851 29.6305 3.36315 19.8704 13.1231 17.4305C11.2931 6.45045 20.4431 -0.259551 30.8132 4.01045C35.6931 -2.08955 41.7932 -0.86955 46.0631 5.23045Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-fill 1.1s ease {D}s 1 both", "sa": "ri-stroke 1.1s cubic-bezier(.4,0,.2,1) {D}s 1 both", "sc": "#FF6A32", "rel": 0.0}]}, "하트": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42 78C20 62 3 48 3 28A21 21 0 0 1 42 16A21 21 0 0 1 81 28C81 48 64 62 42 78Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 60%", "a": "ri-beat 1.1s ease-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "해": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M22.0 42.0a20 20 0 1 0 40 0a20 20 0 1 0 -40 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-rise 1.1s cubic-bezier(.3,1.4,.5,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M68.0 42.0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.35}, {"d": "M58.3 65.3a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.44}, {"d": "M35.0 75.0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.53}, {"d": "M11.7 65.3a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.62}, {"d": "M2.0 42.0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.71}, {"d": "M11.7 18.7a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.8}, {"d": "M35.0 9.0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.89}, {"d": "M58.3 18.7a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.98}]}, "잎": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M8 76C8 30 38 6 78 6C78 46 54 76 8 76Z", "fill": "#72E5B5", "fr": "nonzero", "o": "0% 100%", "a": "ri-sprout 1.1s cubic-bezier(.3,1.4,.5,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "별": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M40.1 8.6Q42 4 43.9 8.6L50.7 24.8Q52.6 29.4 57.6 29.8L75.1 31.2Q80 31.6 76.2 34.9L62.9 46.3Q59.1 49.6 60.3 54.4L64.4 71.5Q65.5 76.4 61.2 73.8L46.3 64.6Q42 62 37.7 64.6L22.8 73.8Q18.5 76.4 19.6 71.5L23.7 54.4Q24.9 49.6 21.1 46.3L7.8 34.9Q4 31.6 8.9 31.2L26.4 29.8Q31.4 29.4 33.3 24.8Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-twinkle 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "별표": {"tr": "translate(2.5 3.0)", "parts": [{"d": "M49.7892 0H36.3692C33.3371 0 30.8792 2.45796 30.8792 5.49V79.91C30.8792 82.942 33.3371 85.4 36.3692 85.4H49.7892C52.8212 85.4 55.2792 82.942 55.2792 79.91V5.49C55.2792 2.45796 52.8212 0 49.7892 0Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M83.4135 27.1612L76.7035 15.5391C75.1875 12.9133 71.8298 12.0136 69.204 13.5297L4.7544 50.7397C2.12858 52.2557 1.2289 55.6133 2.74493 58.2391L9.45493 69.8612C10.9709 72.487 14.3286 73.3867 16.9544 71.8707L81.404 34.6607C84.0298 33.1447 84.9295 29.787 83.4135 27.1612Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.14}, {"d": "M76.7034 69.8612L83.4134 58.2391C84.9295 55.6133 84.0298 52.2556 81.404 50.7396L16.9544 13.5296C14.3285 12.0136 10.9709 12.9133 9.45488 15.5391L2.74488 27.1612C1.22886 29.787 2.12853 33.1446 4.75435 34.6606L69.204 71.8706C71.8298 73.3867 75.1874 72.487 76.7034 69.8612Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.28}]}, "육각형": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M76.6 52Q76.6 62 68 67L50.7 77Q42 82 33.3 77L16 67Q7.4 62 7.4 52L7.4 32Q7.4 22 16 17L33.3 7Q42 2 50.7 7L68 17Q76.6 22 76.6 32Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 50%", "a": "ri-roll 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "링": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42 4A38 38 0 1 1 41.99 4ZM42 24A18 18 0 1 0 42.01 24Z", "fill": "#FF6A32", "fr": "evenodd", "o": "50% 50%", "a": "ri-fill 1.1s ease {D}s 1 both", "sa": "ri-stroke 1.1s cubic-bezier(.4,0,.2,1) {D}s 1 both", "sc": "#FF6A32", "rel": 0.0}]}, "세모": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M36.1 16.5Q42 6 47.9 16.5L74.1 63.5Q80 74 68 74L16 74Q4 74 9.9 63.5Z", "fill": "#D5FF44", "fr": "nonzero", "o": "50% 100%", "a": "ri-hop-in 1.1s ease-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "플러스": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M30 12Q30 6 36 6L48 6Q54 6 54 12L54 24Q54 30 60 30L72 30Q78 30 78 36L78 48Q78 54 72 54L60 54Q54 54 54 60L54 72Q54 78 48 78L36 78Q30 78 30 72L30 60Q30 54 24 54L12 54Q6 54 6 48L6 36Q6 30 12 30L24 30Q30 30 30 24Z", "fill": "#72E5B5", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "다이아": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M33.7 10.7Q42 2 50.3 10.7L71.7 33.3Q80 42 71.7 50.7L50.3 73.3Q42 82 33.7 73.3L12.3 50.7Q4 42 12.3 33.3Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-roll 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "달걀": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42 4C64 4 76 34 76 52A34 30 0 0 1 8 52C8 34 20 4 42 4Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 100%", "a": "ri-drop 1.1s ease-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "번개": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M49.2 5.9Q50 2 47.5 5.2L16.5 44.8Q14 48 18 48L36 48Q40 48 39.1 51.9L32.9 78.1Q32 82 34.4 78.8L67.6 35.2Q70 32 66 32L48 32Q44 32 44.8 28.1Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 50%", "a": "ri-zap 1.1s linear {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "구름": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M22 70A18 18 0 0 1 20 34A22 22 0 0 1 62 28A18 18 0 0 1 66 70Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 50%", "a": "ri-drift 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "부채": {"tr": "translate(4.5 4.5)", "parts": [{"d": "M0 0C45.75 0 82.96 37.21 82.96 82.96H0V0Z", "fill": "#D5FF44", "fr": "nonzero", "o": "0% 100%", "a": "ri-fan 1.1s cubic-bezier(.3,1.3,.5,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "리본": {"tr": "translate(4.5 4.5)", "parts": [{"d": "M8.54 0H24.4C29.28 0 32.94 3.66 32.94 8.54V50.02H74.42C79.3 50.02 82.96 53.68 82.96 58.56V74.42C82.96 79.3 79.3 82.96 74.42 82.96H17.08C7.93 82.96 0 75.03 0 65.88V8.54C0 3.66 3.66 0 8.54 0Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 50%", "a": "ri-fill 1.1s ease {D}s 1 both", "sa": "ri-stroke 1.1s cubic-bezier(.4,0,.2,1) {D}s 1 both", "sc": "#7960FF", "rel": 0.0}]}, "물결 블록": {"tr": "translate(4.5 4.5)", "parts": [{"d": "M0 17.995C0 -0.305 18.3 -3.965 27.45 11.895C36.6 -3.965 54.9 -3.965 64.05 11.895C73.2 -3.965 82.96 2.135 82.96 17.995V64.355C82.96 82.655 64.66 86.315 55.51 70.455C46.36 86.315 28.06 86.315 18.91 70.455C9.76 86.315 0 80.215 0 64.355V17.995Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 50%", "a": "ri-wave 1.1s linear {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "바람개비": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42.0 42.0L42.0 4.0A19 19 0 0 1 42.0 42.0Z", "fill": "#72E5B5", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M42.0 42.0L80.0 42.0A19 19 0 0 1 42.0 42.0Z", "fill": "#72E5B5", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.14}, {"d": "M42.0 42.0L42.0 80.0A19 19 0 0 1 42.0 42.0Z", "fill": "#72E5B5", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.28}, {"d": "M42.0 42.0L4.0 42.0A19 19 0 0 1 42.0 42.0Z", "fill": "#72E5B5", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.42}]}, "아홉 점": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M6.0 16.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M32.0 16.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.16}, {"d": "M58.0 16.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.32}, {"d": "M6.0 42.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.48}, {"d": "M32.0 42.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.64}, {"d": "M58.0 42.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.8}, {"d": "M6.0 68.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.96}, {"d": "M32.0 68.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 1.12}, {"d": "M58.0 68.0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 1.28}]}, "광선": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M37.5 8.5A4.5 4.5 0 0 1 46.5 8.5L46.5 75.5A4.5 4.5 0 0 1 37.5 75.5Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M62.5 15.1A4.5 4.5 0 0 1 68.9 21.5L21.5 68.9A4.5 4.5 0 0 1 15.1 62.5Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.14}, {"d": "M75.5 37.5A4.5 4.5 0 0 1 75.5 46.5L8.5 46.5A4.5 4.5 0 0 1 8.5 37.5Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.28}, {"d": "M68.9 62.5A4.5 4.5 0 0 1 62.5 68.9L15.1 21.5A4.5 4.5 0 0 1 21.5 15.1Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-spin-in 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.42}]}, "여덟 잎": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42.0 42.0C33.0 30.0 33.0 9.0 42.0 3.0C51.0 9.0 51.0 30.0 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M42.0 42.0C44.1 27.2 59.0 12.3 69.6 14.4C71.7 25.0 56.8 39.9 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.16}, {"d": "M42.0 42.0C54.0 33.0 75.0 33.0 81.0 42.0C75.0 51.0 54.0 51.0 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.32}, {"d": "M42.0 42.0C56.8 44.1 71.7 59.0 69.6 69.6C59.0 71.7 44.1 56.8 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.48}, {"d": "M42.0 42.0C51.0 54.0 51.0 75.0 42.0 81.0C33.0 75.0 33.0 54.0 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.64}, {"d": "M42.0 42.0C39.9 56.8 25.0 71.7 14.4 69.6C12.3 59.0 27.2 44.1 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.8}, {"d": "M42.0 42.0C30.0 51.0 9.0 51.0 3.0 42.0C9.0 33.0 30.0 33.0 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.96}, {"d": "M42.0 42.0C27.2 39.9 12.3 25.0 14.4 14.4C25.0 12.3 39.9 27.2 42.0 42.0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 1.12}]}, "겹 세모": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42 4L72 38H12Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 100%", "a": "ri-hop-in 1.1s ease-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M42 42L78 80H6Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 100%", "a": "ri-hop-in 1.1s ease-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "나비 리본": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M4 8L42 42L4 76Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-flap 1.1s ease-in-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M80 8L42 42L80 76Z", "fill": "#FF64CF", "fr": "nonzero", "o": "50% 50%", "a": "ri-flap 1.1s ease-in-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "둥근 세모": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42 8Q46 8 49 13L79 65Q83 74 72 76H12Q1 74 5 65L35 13Q38 8 42 8Z", "fill": "#72E5B5", "fr": "nonzero", "o": "50% 100%", "a": "ri-hop-in 1.1s ease-out {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "둥근 네모": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M16 4H68Q80 4 80 16V68Q80 80 68 80H16Q4 80 4 68V16Q4 4 16 4Z", "fill": "#7960FF", "fr": "nonzero", "o": "50% 100%", "a": "ri-wipe-b 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}, "다섯 점": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M27.0 42.0a15 15 0 1 0 30 0a15 15 0 1 0 -30 0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M4.0 12.0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.16}, {"d": "M64.0 12.0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.32}, {"d": "M64.0 72.0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.48}, {"d": "M4.0 72.0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0Z", "fill": "#FFC447", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.64}]}, "쪼갠 원": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M38 4A38 38 0 0 0 38 80Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M46 4A38 38 0 0 1 46 80Z", "fill": "#FF6A32", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.16}]}, "원과 반달": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M4.0 42.0a16 16 0 1 0 32 0a16 16 0 1 0 -32 0Z", "fill": "#D5FF44", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}, {"d": "M44 4A38 38 0 0 1 44 80Z", "fill": "#D5FF44", "fr": "nonzero", "o": "50% 50%", "a": "ri-pop 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.16}]}, "여덟 꼭지 별": {"tr": "translate(4.0 4.0)", "parts": [{"d": "M42.0 1.0L51.6 18.9L71.0 13.0L65.1 32.4L83.0 42.0L65.1 51.6L71.0 71.0L51.6 65.1L42.0 83.0L32.4 65.1L13.0 71.0L18.9 51.6L1.0 42.0L18.9 32.4L13.0 13.0L32.4 18.9Z", "fill": "#72E5B5", "fr": "nonzero", "o": "50% 50%", "a": "ri-twinkle 1.1s cubic-bezier(.2,.8,.2,1) {D}s 1 both", "sa": "none", "sc": "none", "rel": 0.0}]}};
+    const PR = [
+      { name: 'rTG 오메가3', short: '오메가3', brand: '하루온', dose: '1일 1캡슐', g: '오메가3', icon: '/_blob/090e19df98d02b97d3da074df29f0464', tag: '저녁에 많이 등록', rec: true },
+      { name: '알티지 오메가3 듀얼', short: '오메가3', brand: '그린팜', dose: '1일 2캡슐', g: '오메가3', icon: '/_blob/090e19df98d02b97d3da074df29f0464', tag: '', rec: false },
+      { name: '마그네슘 300', short: '마그네슘', brand: '그린팜', dose: '1일 1정', g: '마그네슘', icon: '/_blob/d513e23a477d5280f5568955d8cc67f2', tag: '자기 전 추천', rec: true },
+      { name: '생유산균 19', short: '유산균', brand: '데일리랩', dose: '1일 1포', g: '유산균', icon: '/_blob/56f7bbd221e0dbea56b60be13f10a06b', tag: '', rec: false },
+      { name: '비타민D 2000IU', short: '비타민D', brand: '하루온', dose: '1일 1정', g: '비타민D', icon: '/_blob/4f09d3617e69995832560c4998771e80', tag: '', rec: false },
+      { name: '루테인 지아잔틴', short: '루테인', brand: '데일리랩', dose: '1일 1캡슐', g: '루테인', icon: '/_blob/5e9761d53e7178469e1b8d82893baf92', tag: '', rec: false },
+      { name: '칼슘 마그네슘 아연', short: '칼슘', brand: '하루온', dose: '1일 2정', g: '칼슘', icon: '/_blob/add37f25abe7a4e4585156f9d9e852dd', tag: '저녁에 많이 등록', rec: true },
+      { name: '멀티비타민 데일리', short: '멀티비타민', brand: '데일리랩', dose: '1일 1정', g: '멀티비타민', icon: '/_blob/4f09d3617e69995832560c4998771e80', tag: '', rec: false }
+    ];
+    const ING = [['오메가3', '/_blob/090e19df98d02b97d3da074df29f0464'], ['유산균', '/_blob/56f7bbd221e0dbea56b60be13f10a06b'], ['비타민D', '/_blob/4f09d3617e69995832560c4998771e80'], ['마그네슘', '/_blob/d513e23a477d5280f5568955d8cc67f2'], ['루테인', '/_blob/5e9761d53e7178469e1b8d82893baf92'], ['칼슘', '/_blob/add37f25abe7a4e4585156f9d9e852dd']];
+    const pq = (this.state.pq || '').trim();
+    const hits = pq ? PR.map((p, i) => [p, i]).filter(([p]) => (p.name + p.brand + p.g).indexOf(pq) >= 0) : PR.map((p, i) => [p, i]).filter(([p]) => p.rec);
+    const pp = PR[this.state.prod];
+    const T = [
+      { label: '아침', time: '08:00' },
+      { label: '점심', time: '12:30' },
+      { label: '오후', time: '15:00' },
+      { label: '저녁', time: '20:00' },
+      { label: '밤', time: '22:30' },
+      { label: '직접', time: this.state.ct || '시간 입력' }
+    ];
+    const band = (t) => { const h = parseInt((t || '0').split(':')[0], 10); return h >= 5 && h < 11 ? '아침' : h < 15 && h >= 11 ? '점심' : h < 18 && h >= 15 ? '오후' : h < 22 && h >= 18 ? '저녁' : '밤'; };
+    const cur = this.state.shape;
+    const item = (s, i) => ({
+      label: s.label, src: s.src,
+      pressed: i === cur ? 'true' : 'false',
+      bg: i === cur ? '#ffffff' : '#f3f4f6',
+      ring: i === cur ? 'inset 0 0 0 2px #111111' : 'none',
+      pick: () => this.setState({ shape: i })
+    });
+    const quickIdx = [0, 1, 2, 3, 4];
+    if (quickIdx.indexOf(cur) < 0) quickIdx[4] = cur;
+    const quick = quickIdx.map((i) => item(S[i], i));
+    const q = (this.state.q || '').trim();
+    const matches = S.map(item).filter((m, i) => !q || S[i].tags.indexOf(q) >= 0 || S[i].label.indexOf(q) >= 0).map((m, k) => {
+      const A = ANIM[m.label];
+      const d0 = 0.12 + k * 0.045;
+      return Object.assign({}, m, {
+        tr: A.tr,
+        parts: A.parts.map((pt) => ({ d: pt.d, fill: pt.fill, fr: pt.fr, o: pt.o, sc: pt.sc,
+          a: pt.a.replace('{D}', (d0 + pt.rel).toFixed(2)), sa: pt.sa.replace('{D}', (d0 + pt.rel).toFixed(2)) }))
+      });
+    });
+    const slots = T.map((t, i) => ({
+      label: t.label, time: t.time,
+      pressed: i === this.state.slot ? 'true' : 'false',
+      bg: i === this.state.slot ? '#111111' : '#f3f4f6',
+      fg: i === this.state.slot ? '#ffffff' : '#111111',
+      pick: () => this.setState({ slot: i })
+    }));
+    return {
+      quick, matches, slots,
+      picked: S[cur], slot: this.state.slot === 5 ? { label: this.state.ct ? band(this.state.ct) : '직접', time: this.state.ct || '' } : T[this.state.slot],
+      custom: this.state.slot === 5, customTime: this.state.ct,
+      customNote: this.state.ct ? ('영양제 탭에서 ' + band(this.state.ct) + ' 묶음에 들어가요') : '원하는 시간을 직접 정할 수 있어요',
+      onTime: (e) => this.setState({ ct: e && e.target ? e.target.value : '' }),
+      sheet: this.state.sheet, q: this.state.q,
+      countText: q ? ('"' + q + '" 검색 결과 ' + matches.length + '개') : ('표식 ' + S.length + '개 · 이름이나 뜻으로 찾아보세요'),
+      empty: matches.length === 0,
+      sheetCta: S[cur].label + ' 표식으로 할게요',
+      no: false,
+      prod: { name: pp.name, short: pp.short, icon: pp.icon, sub: pp.brand + ' · ' + pp.dose + ' · 성분은 자동으로 채웠어요' },
+      pSheet: this.state.pSheet, pq: this.state.pq,
+      openProduct: () => this.setState({ pSheet: true }),
+      closeProduct: () => this.setState({ pSheet: false }),
+      onPq: (e) => this.setState({ pq: e && e.target ? e.target.value : '' }),
+      listTitle: pq ? ('"' + pq + '" 검색 결과 ' + hits.length + '개') : '지금 많이 등록하는 영양제',
+      noResult: hits.length === 0,
+      results: hits.map(([p, i]) => ({ name: p.name, brand: p.brand, dose: p.dose, icon: p.icon, tag: pq ? (i === this.state.prod ? '선택됨' : '') : p.tag, tagColor: i === this.state.prod && pq ? '#111111' : '#1f9d68', pick: () => this.setState({ prod: i, pSheet: false, pq: '' }) })),
+      ingr: ING.map(([l, ic]) => ({ label: l, icon: ic, pressed: pq === l ? 'true' : 'false', bg: pq === l ? '#111111' : '#f3f4f6', fg: pq === l ? '#ffffff' : '#111111', pick: () => this.setState({ pq: pq === l ? '' : l }) })),
+      isEdit: this.edit, navTitle: this.edit ? '영양제 수정' : '영양제 등록', navBack: this.edit ? 'Meds.dc.html' : 'Connect.dc.html', navStep: this.edit ? '' : '2 / 2',
+      ctaLabel: this.edit ? '저장' : '등록하기', ctaHref: this.edit ? 'Meds.dc.html' : 'Main.dc.html',
+      askDelete: this.state.del, showDelete: !this.state.del,
+      startDelete: () => this.setState({ del: true }), cancelDelete: () => this.setState({ del: false }),
+      openSheet: () => this.setState({ sheet: true }),
+      closeSheet: () => this.setState({ sheet: false }),
+      onSearch: (v) => this.setState({ q: typeof v === 'string' ? v : (v && v.target ? v.target.value : '') })
+    };
+  }
+}
+</script>
+</body>
+</html>

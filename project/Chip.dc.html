@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>칩</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 28px; box-sizing: border-box; padding: {{pad}}; border-radius: 999px; white-space: nowrap; font-family: Pretendard, -apple-system, system-ui, sans-serif; font-size: 13px; line-height: 19px; font-weight: {{fw}}; color: #111111; background: {{bg}};">
+  <sc-if value="{{hasIcon}}" hint-placeholder-val="{{true}}">
+    <img src="{{icon}}" alt="" style="width: {{iz}}; height: {{iz}}; filter: {{filter}};">
+  </sc-if>{{label}}
+</span>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"지금 · 20:00"},"icon":{"editor":"text","default":"/_blob/cd10fb660700a66544d1f0c65db1e189"},"tone":{"editor":"enum","options":["now","soft","plain"],"default":"now"},"$preview":{"width":160,"height":28}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const tone = p.tone ?? 'now';
+    const icon = p.icon ?? '/_blob/cd10fb660700a66544d1f0c65db1e189';
+    const T = {
+      now: { bg: '#ff64cf', pad: '0 12px 0 10px', fw: 600, filter: 'brightness(0)', iz: '14px' },
+      soft: { bg: '#ffffff', pad: '0 12px 0 10px', fw: 500, filter: 'none', iz: '14px' },
+      plain: { bg: 'transparent', pad: '0', fw: 500, filter: 'none', iz: '18px' }
+    };
+    const t = T[tone] || T.now;
+    return Object.assign({ label: p.label ?? '지금 · 20:00', icon: icon, hasIcon: !!icon }, t);
+  }
+}
+</script>
+</body>
+</html>

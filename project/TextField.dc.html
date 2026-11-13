@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>텍스트 필드</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+.tf-input::placeholder{color:#afb4bb}
+.tf-input:focus{outline:none}
+.tf-input::-webkit-search-cancel-button{display:none}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 100%; display: flex; flex-direction: column; gap: 8px; font-family: Pretendard, -apple-system, system-ui, sans-serif; color: #111111;">
+  <sc-if value="{{hasLabel}}" hint-placeholder-val="{{true}}">
+    <label for="{{inputId}}" style="font-size: 13px; line-height: 19px; font-weight: 500; color: {{labelColor}}; transition: color 160ms ease;">{{label}}</label>
+  </sc-if>
+  <div style="position: relative; display: flex; align-items: center; gap: 10px; height: {{h}}; box-sizing: border-box; padding: {{pad}}; border-radius: {{radius}}; background: {{bg}}; box-shadow: {{ring}}; transition: box-shadow 160ms ease, background 160ms ease;">
+    <sc-if value="{{isSearch}}" hint-placeholder-val="{{false}}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a9099" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" style="flex: none;"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>
+    </sc-if>
+    <input class="tf-input" id="{{inputId}}" type="{{type}}" value="{{v}}" placeholder="{{placeholder}}" aria-invalid="{{invalid}}" aria-describedby="{{helpId}}" onInput="{{onInput}}" onFocus="{{onFocus}}" onBlur="{{onBlur}}" style="flex-grow: 1; min-width: 0; height: 100%; border: 0; padding: 0; background: transparent; font-family: inherit; font-size: {{fs}}; font-weight: {{fw}}; letter-spacing: -0.3px; color: #111111;">
+    <sc-if value="{{showClear}}" hint-placeholder-val="{{false}}">
+      <button type="button" aria-label="지우기" onMouseDown="{{clear}}" style="width: 22px; height: 22px; flex: none; border: 0; border-radius: 999px; padding: 0; background: #c4c8ce; color: #ffffff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </sc-if>
+  </div>
+  <sc-if value="{{hasHelp}}" hint-placeholder-val="{{true}}">
+    <span id="{{helpId}}" style="font-size: 13px; line-height: 19px; color: {{helpColor}};">{{helpText}}</span>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"이름"},"value":{"editor":"text","default":"루모"},"placeholder":{"editor":"text","default":""},"help":{"editor":"text","default":"루모를 부를 때 쓰는 이름이에요"},"error":{"editor":"text","default":""},"variant":{"editor":"enum","options":["line","box"],"default":"line"},"type":{"editor":"enum","options":["text","search"],"default":"text"},"inputId":{"editor":"text","default":"tf"},"maxLength":{"editor":"number","default":0},"$preview":{"width":350,"height":96}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { v: props.value ?? '루모', focus: false };
+  }
+  renderVals() {
+    const p = this.props;
+    const st = this.state;
+    const box = (p.variant ?? 'line') === 'box';
+    const type = p.type ?? 'text';
+    const max = p.maxLength ?? 0;
+    const tooLong = max > 0 && st.v.length > max;
+    const err = p.error || (tooLong ? (max + '자까지 쓸 수 있어요') : '');
+    const label = p.label ?? '이름';
+    const help = p.help ?? '루모를 부를 때 쓰는 이름이에요';
+    const id = p.inputId ?? 'tf';
+    const ink = err ? '#d92d20' : (st.focus ? '#111111' : '#e4e6ea');
+    return {
+      label, hasLabel: !!label, inputId: id, helpId: id + '-help',
+      type, isSearch: type === 'search',
+      v: st.v, placeholder: p.placeholder ?? '',
+      invalid: err ? 'true' : 'false',
+      labelColor: err ? '#d92d20' : (st.focus ? '#111111' : '#6b7079'),
+      h: box ? '48px' : '52px',
+      pad: box ? '0 14px' : '0',
+      radius: box ? '14px' : '0',
+      bg: box ? '#f3f4f6' : 'transparent',
+      ring: box ? (st.focus || err ? ('inset 0 0 0 2px ' + ink) : 'none') : ('inset 0 ' + (st.focus || err ? '-2px' : '-1px') + ' 0 0 ' + ink),
+      fs: box ? '17px' : '22px',
+      fw: box ? '400' : '600',
+      showClear: st.v.length > 0 && st.focus,
+      hasHelp: !!(err || help),
+      helpText: err || help,
+      helpColor: err ? '#d92d20' : '#6b7079',
+      onInput: (e) => { const val = e && e.target ? e.target.value : ''; this.setState({ v: val }); if (typeof p.onChange === 'function') p.onChange(val); },
+      onFocus: () => this.setState({ focus: true }),
+      onBlur: () => this.setState({ focus: false }),
+      clear: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ v: '' }); if (typeof p.onChange === 'function') p.onChange(''); }
+    };
+  }
+}
+</script>
+</body>
+</html>

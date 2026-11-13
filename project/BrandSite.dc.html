@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>RUMO 브랜드 사이트</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0;background:#000000}
+.site{--ink:#ffffff;--sub:#a1a1a6;--bg:#000000;--card:#121214;width:100%;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,4vw);padding-right:max(20px,4vw);box-sizing:border-box}
+.eyebrow{font-size:clamp(15px,1.25vw,19px);line-height:1.4;font-weight:600;color:#4d8df6}
+.h-xl{margin:0;font-size:clamp(44px,7.4vw,120px);line-height:1.04;font-weight:600;letter-spacing:-0.045em;text-wrap:balance}
+.h-l{margin:0;font-size:clamp(34px,5.2vw,80px);line-height:1.08;font-weight:600;letter-spacing:-0.04em;text-wrap:balance}
+.lead{margin:0;font-size:clamp(18px,1.55vw,24px);line-height:1.55;color:var(--sub);text-wrap:pretty}
+.tall{position:relative}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.reveal{opacity:0;transform:translateY(48px);transition:opacity 1000ms cubic-bezier(.16,1,.3,1),transform 1000ms cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+/* nav */
+.nav{position:sticky;top:0;z-index:20;height:52px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 max(20px,4vw);background:rgba(0,0,0,.72);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
+.nav a.l{color:#d4d4d4;text-decoration:none;font-size:14px;font-weight:500;padding:6px 10px;border-radius:999px;transition:color 160ms ease;white-space:nowrap}.nav a.l:hover{color:#ffffff}
+.pill{height:34px;padding:0 16px;border-radius:999px;background:#ffffff;color:#000000;text-decoration:none;font-size:14px;font-weight:600;display:inline-flex;align-items:center;white-space:nowrap;transition:transform 180ms cubic-bezier(.2,.8,.2,1)}.pill:active{transform:scale(.96)}
+.pill-ghost{background:transparent;color:#ffffff;box-shadow:inset 0 0 0 1.5px #3a3a3c}
+.prog{position:absolute;left:0;bottom:0;height:2px;width:100%;background:linear-gradient(90deg,#d5ff44,#ff64cf,#7960ff);transform-origin:0 50%;transform:scaleX(var(--gp,0))}
+.nav-links{display:flex;gap:4px}
+@media (max-width:760px){.nav-links{display:none}}
+/* hero */
+.hero{height:240vh}
+.hero .stage{flex-direction:column;gap:clamp(24px,4vh,48px)}
+.hero-glow{position:absolute;inset:-20%;filter:blur(90px);opacity:calc(.35 + var(--p,0)*.5);pointer-events:none}
+.hero-glow i{position:absolute;border-radius:999px;animation:drift 18s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,-4vh) scale(1.15)}}
+.hero-logo{position:absolute;left:50%;top:50%;width:min(78vw,1080px);height:auto;transform:translate(-50%,-50%) translateY(calc(min(1,var(--p,0) * 2.4) * -30vh)) scale(calc(1 - min(1,var(--p,0) * 2.4) * .62));transform-origin:50% 50%;will-change:transform}
+.hero-col{position:absolute;left:0;right:0;top:calc(50% - 6vh);display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3.5vh,40px)}
+.hs{stroke-dasharray:1;stroke-dashoffset:1;animation:hs 1.2s cubic-bezier(.6,0,.2,1) both}
+@keyframes hs{to{stroke-dashoffset:0}}
+.h-sk{animation:fadeout 800ms ease 3.2s both}@keyframes fadeout{to{opacity:0}}
+.h-fill{animation:fadein 900ms ease 2.6s both}@keyframes fadein{from{opacity:0}to{opacity:1}}
+.spin-slow{transform-box:fill-box;transform-origin:center;animation:spin 14s linear 3.4s infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.hero-copy{position:relative;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;padding:0 20px;opacity:clamp(0,(var(--p,0) - .3) * 4,1);transform:translateY(calc((1 - clamp(0,(var(--p,0) - .3) * 4,1)) * 60px))}
+.hero-sub{opacity:clamp(0,(var(--p,0) - .45) * 4,1)}
+.hero-face{width:clamp(120px,14vw,200px);height:auto;opacity:clamp(0,(var(--p,0) - .58) * 4,1);transform:scale(calc(.6 + clamp(0,(var(--p,0) - .58) * 4,1) * .4))}
+.hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;color:#8a8a8a;opacity:calc(1 - var(--p,0) * 6)}
+.hint i{width:2px;height:28px;border-radius:2px;background:linear-gradient(#ffffff,transparent);animation:hint 1.8s ease-in-out infinite}@keyframes hint{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* problem */
+.prob{height:220vh}
+.prob p{margin:0;font-size:clamp(32px,4.6vw,72px);line-height:1.22;font-weight:600;letter-spacing:-0.035em;text-wrap:balance}
+.w{opacity:calc(.16 + .84 * clamp(0,var(--p,0) * var(--n) * 1.25 - var(--i),1));transition:opacity 120ms linear}
+/* meet */
+.meet{height:460vh}
+.meet .grid{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,5vw,80px);align-items:center}
+@media (max-width:860px){.meet .grid{grid-template-columns:1fr}.meet .mc{display:none}}
+.mstage{position:relative;aspect-ratio:5/3;width:100%}
+.mglow{position:absolute;inset:-10%;border-radius:999px;filter:blur(80px);opacity:.55;background:#3a3a3a;transition:background 700ms ease}
+.mf{position:absolute;inset:0;width:100%;height:100%;opacity:0;transform:scale(.92);transition:opacity 500ms ease,transform 700ms cubic-bezier(.16,1,.3,1)}
+.mc{display:flex;gap:16px;align-items:flex-start;padding:14px 0;opacity:.28;transition:opacity 400ms ease}
+.mc-dot{width:12px;height:12px;border-radius:999px;margin-top:10px;flex:none}
+.mc-t{font-size:clamp(22px,2vw,30px);font-weight:600;letter-spacing:-0.02em}.mc-d{font-size:clamp(15px,1.2vw,18px);color:var(--sub)}
+.mnow{font-size:clamp(17px,1.4vw,20px);color:var(--sub);min-height:1.5em}
+.mdots{display:flex;gap:8px}.mdots i{width:8px;height:8px;border-radius:999px;background:#3a3a3c;transition:background 300ms ease,width 300ms ease}
+/* how */
+.how{height:460vh}
+.how .grid{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,6vw,96px);align-items:center}
+@media (max-width:860px){.how .grid{grid-template-columns:1fr;justify-items:center}.how .hcaps .hc{display:none}.how .phone{transform:scale(.72);margin:-90px 0}}
+.phone{position:relative;width:312px;height:675px;border-radius:48px;overflow:hidden;background:#ffffff;box-shadow:0 0 0 10px #1c1c1e,0 40px 120px rgba(255,100,207,.18)}
+.hs-scr{position:absolute;inset:0;opacity:0;transform:scale(1.04);transition:opacity 500ms ease,transform 700ms cubic-bezier(.16,1,.3,1)}
+.hc{display:flex;flex-direction:column;gap:8px;padding:18px 0 18px 24px;border-left:2px solid #2c2c2e;opacity:.3;transition:opacity 400ms ease,border-color 400ms ease}
+.hc-t{font-size:clamp(22px,2.2vw,34px);font-weight:600;letter-spacing:-0.02em}.hc-d{font-size:clamp(15px,1.25vw,19px);color:var(--sub)}
+/* confirm horizontal */
+.conf{height:360vh}
+.conf .stage{flex-direction:column;align-items:stretch;justify-content:center;gap:40px}
+.track{display:flex;gap:24px;padding:0 max(20px,4vw);transform:translateX(calc(var(--p,0) * var(--shift,0px) * -1));will-change:transform}
+.cc{position:relative;overflow:hidden;flex:none;width:min(78vw,480px);height:min(62vh,560px);border-radius:32px;background:var(--card);display:flex;flex-direction:column;justify-content:space-between;padding:32px;box-sizing:border-box}
+.cc-glow{position:absolute;width:70%;height:55%;left:15%;top:8%;border-radius:999px;filter:blur(70px);opacity:.3}
+.cc-vis{position:relative;flex-grow:1;display:flex;align-items:center;justify-content:center}
+.cc-txt{position:relative;display:flex;flex-direction:column;gap:8px}
+.cc-k{font-size:15px;font-weight:600}.cc-t{font-size:clamp(28px,2.6vw,40px);line-height:1.15;font-weight:600;letter-spacing:-0.03em}.cc-d{font-size:16px;line-height:1.5;color:var(--sub)}
+.tiles{display:grid;grid-template-columns:repeat(3,64px);gap:8px}.tile{width:64px;height:64px;border-radius:16px;background:#2c2c2e}
+.tile-on{background:#d5ff44;animation:tile 2.4s ease-in-out infinite}@keyframes tile{0%,100%{box-shadow:0 0 0 0 rgba(213,255,68,.6)}50%{box-shadow:0 0 0 14px rgba(213,255,68,0)}}
+.pulse{animation:pulse 1.6s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.chk{stroke-dasharray:1;stroke-dashoffset:calc(1 - clamp(0,(var(--p,0) - .7) * 4,1))}
+/* escalation */
+.esc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,32px);align-items:end;height:min(46vh,420px)}
+.es{height:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:12px}
+.es-bar{width:100%;height:0;border-radius:24px;transition:height 1200ms cubic-bezier(.16,1,.3,1)}
+.es.in .es-bar{height:var(--h)}
+.es-k{font-size:14px;font-weight:600;color:#8a8a8a}.es-t{font-size:clamp(17px,1.6vw,24px);font-weight:600}
+/* logo scroll */
+.lg{height:300vh}
+.lg .stage{flex-direction:column;gap:40px}
+.s-logo{width:min(84vw,1100px);height:auto}
+.sg{stroke-dasharray:1;stroke-dashoffset:calc(1 - min(1,var(--p,0) * 3 + .2))}
+.s-guides,.s-dims{opacity:calc(1 - clamp(0,(var(--p,0) - .72) * 5,1))}
+.s-dims{opacity:calc(clamp(0,(var(--p,0) - .3) * 5,1) - clamp(0,(var(--p,0) - .72) * 5,1))}
+.sl{stroke-dasharray:1;stroke-dashoffset:calc(1 - clamp(0,(var(--p,0) - .1) * 2,1))}
+.s-lines{opacity:calc(1 - clamp(0,(var(--p,0) - .78) * 5,1))}
+.s-fill{opacity:clamp(0,(var(--p,0) - .62) * 4,1)}
+.lcap{display:flex;gap:clamp(16px,4vw,64px);flex-wrap:wrap;justify-content:center;text-align:center}
+.lcap span{font-size:clamp(20px,2vw,30px);font-weight:600;letter-spacing:-0.02em}
+.lc0{opacity:clamp(0,(var(--p,0) - .2) * 5,1)}.lc1{opacity:clamp(0,(var(--p,0) - .45) * 5,1)}.lc2{opacity:clamp(0,(var(--p,0) - .7) * 5,1)}
+/* colors */
+.cols{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(10px,1.6vw,24px)}
+@media (max-width:860px){.cols{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.col{display:flex;flex-direction:column;gap:12px}
+.col-dot{aspect-ratio:1;border-radius:999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:clamp(14px,1.3vw,20px);font-weight:600;transition:transform 500ms cubic-bezier(.16,1,.3,1)}
+.col-dot:hover{transform:scale(1.08)}
+.col-m{text-align:center;font-size:15px;color:var(--sub)}
+/* chat */
+.chat{display:flex;flex-direction:column;gap:14px;max-width:640px;margin:0 auto}
+.bub{max-width:80%;padding:16px 22px;border-radius:26px;font-size:clamp(18px,1.6vw,24px);font-weight:500;line-height:1.4}
+.bub-rumo{align-self:flex-start;background:#1c1c1e;border-bottom-left-radius:8px}
+.bub-me{align-self:flex-end;background:#d5ff44;color:#111111;border-bottom-right-radius:8px}
+/* book */
+.book{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media (max-width:760px){.book{grid-template-columns:1fr}}
+.bk-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#050505;box-shadow:0 0 0 1px #1c1c1e;transition:transform 500ms cubic-bezier(.16,1,.3,1),box-shadow 300ms ease}
+.bk-frame:hover{transform:translateY(-6px);box-shadow:0 0 0 1px #3a3a3c,0 24px 60px rgba(0,0,0,.6)}
+.bk-inner{width:1920px;height:1080px;transform:scale(var(--bs,.3));transform-origin:0 0;pointer-events:none}
+.bk-open{position:absolute;inset:0}
+.bk-cap{margin-top:12px;display:flex;gap:10px;font-size:15px;font-weight:500;color:#d4d4d4}.bk-cap span{color:#4d8df6;font-variant-numeric:tabular-nums}
+.sec{padding:clamp(96px,16vh,180px) 0}
+.fx{transform-box:fill-box;transform-origin:center}
+@keyframes fx-blink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(.1)}}@keyframes fx-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes fx-look{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes fx-wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1.1)}}
+@keyframes fx-nod{0%,60%,100%{transform:translateY(0)}20%{transform:translateY(9px)}40%{transform:translateY(-2px)}}@keyframes fx-half{0%,80%,100%{transform:scaleY(1)}90%{transform:scaleY(.3)}}
+.fx-blink{animation:fx-blink 4s ease-in-out infinite}.fx-bob{animation:fx-bob 1.6s ease-in-out infinite}.fx-look{animation:fx-look 2.4s ease-in-out infinite}.fx-wave{animation:fx-wave .7s ease-in-out infinite}.fx-wave2{animation:fx-wave .7s ease-in-out .35s infinite}.fx-nod{animation:fx-nod 1.8s ease-in-out infinite}.fx-half{animation:fx-half 5s ease-in-out infinite}
+.meet[data-step="0"] .mf-0{opacity:1;transform:none}.meet[data-step="0"] .mc-0{opacity:1}.meet[data-step="0"] .mglow{background:#3a3a3a}.meet[data-step="0"] .md-0{background:#ffffff;width:24px}.meet[data-step="1"] .mf-1{opacity:1;transform:none}.meet[data-step="1"] .mc-1{opacity:1}.meet[data-step="1"] .mglow{background:#d5ff44}.meet[data-step="1"] .md-1{background:#ffffff;width:24px}.meet[data-step="2"] .mf-2{opacity:1;transform:none}.meet[data-step="2"] .mc-2{opacity:1}.meet[data-step="2"] .mglow{background:#ff64cf}.meet[data-step="2"] .md-2{background:#ffffff;width:24px}.meet[data-step="3"] .mf-3{opacity:1;transform:none}.meet[data-step="3"] .mc-3{opacity:1}.meet[data-step="3"] .mglow{background:#7960ff}.meet[data-step="3"] .md-3{background:#ffffff;width:24px}.meet[data-step="4"] .mf-4{opacity:1;transform:none}.meet[data-step="4"] .mc-4{opacity:1}.meet[data-step="4"] .mglow{background:#72e5b5}.meet[data-step="4"] .md-4{background:#ffffff;width:24px}.meet[data-step="5"] .mf-5{opacity:1;transform:none}.meet[data-step="5"] .mc-5{opacity:1}.meet[data-step="5"] .mglow{background:#ffc447}.meet[data-step="5"] .md-5{background:#ffffff;width:24px}.how[data-step="0"] .hs-0{opacity:1;transform:none}.how[data-step="0"] .hc-0{opacity:1;border-color:#ffffff}.how[data-step="1"] .hs-1{opacity:1;transform:none}.how[data-step="1"] .hc-1{opacity:1;border-color:#ffffff}.how[data-step="2"] .hs-2{opacity:1;transform:none}.how[data-step="2"] .hc-2{opacity:1;border-color:#ffffff}.how[data-step="3"] .hs-3{opacity:1;transform:none}.how[data-step="3"] .hc-3{opacity:1;border-color:#ffffff}@media (max-width:860px){.meet[data-step="0"] .mc-0{display:flex}.meet[data-step="1"] .mc-1{display:flex}.meet[data-step="2"] .mc-2{display:flex}.meet[data-step="3"] .mc-3{display:flex}.meet[data-step="4"] .mc-4{display:flex}.meet[data-step="5"] .mc-5{display:flex}.how[data-step="0"] .hc-0{display:flex;border:0;padding:0;text-align:center;align-items:center}.how[data-step="1"] .hc-1{display:flex;border:0;padding:0;text-align:center;align-items:center}.how[data-step="2"] .hc-2{display:flex;border:0;padding:0;text-align:center;align-items:center}.how[data-step="3"] .hc-3{display:flex;border:0;padding:0;text-align:center;align-items:center}}@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}.hs,.h-sk,.h-fill,.spin-slow,.hero-glow i,.fx,.pulse,.tile-on,.hint i{animation:none!important}.h-sk{display:none}.h-fill{opacity:1}.es-bar{height:var(--h);transition:none}}
+</style>
+</helmet>
+<div class="site" data-site="1">
+  <header class="nav">
+    <a href="#top" aria-label="RUMO 처음으로" style="display: inline-flex; align-items: center;"><svg role="img" aria-label="rumo" viewBox="0 0 512 100" style="width: 84px; height: 17px; display: block;"><path fill="#ffffff" d="M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100ZM104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50ZM228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100ZM298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z"></path><path fill="#ffc447" d="M425.02 56.65L490.70 74.25A16.0 16.0 0 0 0 498.98 43.35L433.30 25.75A16.0 16.0 0 0 0 425.02 56.65ZM437.75 21.30L455.35 86.98A16.0 16.0 0 0 0 486.25 78.70L468.65 13.02A16.0 16.0 0 0 0 437.75 21.30ZM474.73 14.64L426.64 62.73A16.0 16.0 0 0 0 449.27 85.36L497.36 37.27A16.0 16.0 0 0 0 474.73 14.64Z"></path></svg></a>
+    <nav class="nav-links" aria-label="섹션"><a class="l" href="#meet-rumo">Meet Rumo</a><a class="l" href="#how">How it works</a><a class="l" href="#confirm">Confirm</a><a class="l" href="#identity">Identity</a><a class="l" href="#book">Brand Book</a></nav>
+    <a class="pill" href="BrandCover.dc.html">장표로 보기</a>
+    <span class="prog" aria-hidden="true"></span>
+  </header>
+
+  <section id="top" class="tall hero" data-sc="1">
+    <div class="stage">
+      <div class="hero-glow" aria-hidden="true"><i style="left: 10%; top: 20%; width: 40%; height: 50%; background: #d5ff44; opacity: .35;"></i><i style="right: 8%; top: 30%; width: 36%; height: 46%; background: #ff64cf; opacity: .3; animation-delay: -6s;"></i><i style="left: 35%; bottom: 5%; width: 30%; height: 40%; background: #7960ff; opacity: .3; animation-delay: -12s;"></i></div>
+      <svg class="hero-logo" role="img" aria-label="rumo 로고" viewBox="-20 -20 552 140" style="overflow: visible;"><g class="h-fill"><path fill="#ffffff" d="M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100ZM104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50ZM228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100ZM298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z"></path><g class="spin-slow"><path fill="#ffc447" d="M425.02 56.65L490.70 74.25A16.0 16.0 0 0 0 498.98 43.35L433.30 25.75A16.0 16.0 0 0 0 425.02 56.65ZM437.75 21.30L455.35 86.98A16.0 16.0 0 0 0 486.25 78.70L468.65 13.02A16.0 16.0 0 0 0 437.75 21.30ZM474.73 14.64L426.64 62.73A16.0 16.0 0 0 0 449.27 85.36L497.36 37.27A16.0 16.0 0 0 0 474.73 14.64Z"></path></g></g><g class="h-sk" stroke-linecap="butt"><path class="hs" pathLength="1" d="M-10 100H522" fill="none" stroke="#4d8df6" stroke-width="0.6" style="animation-delay: 0.00s"></path><path class="hs" pathLength="1" d="M-10 0H522" fill="none" stroke="#4d8df6" stroke-width="0.6" style="animation-delay: 0.08s"></path><path class="hs" pathLength="1" d="M50 0A50 50 0 1 1 49.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" style="animation-delay: 0.16s"></path><path class="hs" pathLength="1" d="M154 0A50 50 0 1 1 153.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" style="animation-delay: 0.24s"></path><path class="hs" pathLength="1" d="M273 0A45 45 0 1 1 272.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" style="animation-delay: 0.32s"></path><path class="hs" pathLength="1" d="M343 0A45 45 0 1 1 342.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" style="animation-delay: 0.40s"></path><path class="hs" pathLength="1" d="M462 0A50 50 0 1 1 461.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" style="animation-delay: 0.48s"></path><path class="hs" pathLength="1" d="M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100Z" fill="none" stroke="#ffffff" stroke-width="1.2" style="animation-delay: 0.60s"></path><path class="hs" pathLength="1" d="M104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50Z" fill="none" stroke="#ffffff" stroke-width="1.2" style="animation-delay: 0.90s"></path><path class="hs" pathLength="1" d="M228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100Z" fill="none" stroke="#ffffff" stroke-width="1.2" style="animation-delay: 1.20s"></path><path class="hs" pathLength="1" d="M298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z" fill="none" stroke="#ffffff" stroke-width="1.2" style="animation-delay: 1.50s"></path><path class="hs" pathLength="1" d="M425.02 56.65L490.70 74.25A16.0 16.0 0 0 0 498.98 43.35L433.30 25.75A16.0 16.0 0 0 0 425.02 56.65Z" fill="none" stroke="#ffc447" stroke-width="1.2" style="animation-delay: 1.80s"></path><path class="hs" pathLength="1" d="M437.75 21.30L455.35 86.98A16.0 16.0 0 0 0 486.25 78.70L468.65 13.02A16.0 16.0 0 0 0 437.75 21.30Z" fill="none" stroke="#ffc447" stroke-width="1.2" style="animation-delay: 1.95s"></path><path class="hs" pathLength="1" d="M474.73 14.64L426.64 62.73A16.0 16.0 0 0 0 449.27 85.36L497.36 37.27A16.0 16.0 0 0 0 474.73 14.64Z" fill="none" stroke="#ffc447" stroke-width="1.2" style="animation-delay: 2.10s"></path></g></svg>
+      <div class="hero-col"><div class="hero-copy">
+        <span class="eyebrow">AI Health Companion</span>
+        <h1 class="h-xl">A Little Care,<br>Every Day.</h1>
+        <p class="lead hero-sub">영양제 먹을 시간이 되면 먼저 불러 주는,<br>집 안에 사는 작은 AI 로봇 루모.</p>
+      </div>
+      <svg class="hero-face" viewBox="0 0 200 120" aria-hidden="true" style=""><rect width="200" height="120" rx="28" fill="#000000"></rect><g class="fx fx-bob"><path d="M55 68A15 15 0 0 1 85 68" fill="none" stroke="#d5ff44" stroke-width="10" stroke-linecap="round"></path><path d="M115 68A15 15 0 0 1 145 68" fill="none" stroke="#d5ff44" stroke-width="10" stroke-linecap="round"></path></g></svg></div>
+      <div class="hint" aria-hidden="true"><i></i>스크롤</div>
+    </div>
+  </section>
+
+  <section id="problem" class="tall prob" data-sc="1">
+    <div class="stage"><div class="wrap" style="display: flex; flex-direction: column; gap: 28px;"><span class="eyebrow">The problem</span><p style="--n: 18;"><span class="w" style="--i: 0;">영양제는 </span><span class="w" style="--i: 1;">사는 </span><span class="w" style="--i: 2;">것보다 </span><span class="w" style="--i: 3;">매일 </span><span class="w" style="--i: 4;">먹는 </span><span class="w" style="--i: 5;">게 </span><span class="w" style="--i: 6;">어려워요. </span><span class="w" style="--i: 7;">알림은 </span><span class="w" style="--i: 8;">끄면 </span><span class="w" style="--i: 9;">끝이고, </span><span class="w" style="--i: 10;">먹었는지는 </span><span class="w" style="--i: 11;">기억이 </span><span class="w" style="--i: 12;">안 </span><span class="w" style="--i: 13;">나요. </span><span class="w" style="--i: 14;">그래서 </span><span class="w" style="--i: 15;">루모가 </span><span class="w" style="--i: 16;">먼저 </span><span class="w" style="--i: 17;">불러요. </span></p></div></div>
+  </section>
+
+  <section id="meet-rumo" class="tall meet" data-sc="1" data-steps="6">
+    <div class="stage"><div class="wrap grid">
+      <div style="display: flex; flex-direction: column; gap: 28px;">
+        <span class="eyebrow">Meet Rumo</span>
+        <h2 class="h-l">눈만으로<br>마음을 전해요.</h2>
+        <div class="mcaps"><div class="mc mc-0"><span class="mc-dot" style="background: #3a3a3a;"></span><span style="display: flex; flex-direction: column; gap: 4px;"><span class="mc-t">기본</span><span class="mc-d">도크에서 쉬다가, 가끔 깜빡여요.</span></span></div><div class="mc mc-1"><span class="mc-dot" style="background: #d5ff44;"></span><span style="display: flex; flex-direction: column; gap: 4px;"><span class="mc-t">반가움</span><span class="mc-d">집에 돌아오면 먼저 알아봐요.</span></span></div><div class="mc mc-2"><span class="mc-dot" style="background: #ff64cf;"></span><span style="display: flex; flex-direction: column; gap: 4px;"><span class="mc-t">부름</span><span class="mc-d">먹을 시간이면 눈이 커지고 주위를 살펴요.</span></span></div><div class="mc mc-3"><span class="mc-dot" style="background: #7960ff;"></span><span style="display: flex; flex-direction: column; gap: 4px;"><span class="mc-t">듣는 중</span><span class="mc-d">알림 뒤 30초만 귀를 열어요.</span></span></div><div class="mc mc-4"><span class="mc-dot" style="background: #72e5b5;"></span><span style="display: flex; flex-direction: column; gap: 4px;"><span class="mc-t">끄덕</span><span class="mc-d">"먹었어" 하면 웃으며 끄덕여요.</span></span></div><div class="mc mc-5"><span class="mc-dot" style="background: #ffc447;"></span><span style="display: flex; flex-direction: column; gap: 4px;"><span class="mc-t">기다림</span><span class="mc-d">"이따가" 하면 30분 뒤에 다시.</span></span></div></div>
+        <div class="mdots" aria-hidden="true"><i class="md-0"></i><i class="md-1"></i><i class="md-2"></i><i class="md-3"></i><i class="md-4"></i><i class="md-5"></i></div>
+      </div>
+      <div class="mstage"><div class="mglow" aria-hidden="true"></div><svg class="mf mf-0" viewBox="0 0 200 120" aria-hidden="true" style=""><rect width="200" height="120" rx="28" fill="#000000"></rect><rect class="fx fx-blink" x="60.0" y="38.0" width="20" height="44" rx="10.0" fill="#ffffff"></rect><rect class="fx fx-blink" x="120.0" y="38.0" width="20" height="44" rx="10.0" fill="#ffffff"></rect></svg><svg class="mf mf-1" viewBox="0 0 200 120" aria-hidden="true" style=""><rect width="200" height="120" rx="28" fill="#000000"></rect><g class="fx fx-bob"><path d="M55 68A15 15 0 0 1 85 68" fill="none" stroke="#d5ff44" stroke-width="10" stroke-linecap="round"></path><path d="M115 68A15 15 0 0 1 145 68" fill="none" stroke="#d5ff44" stroke-width="10" stroke-linecap="round"></path></g></svg><svg class="mf mf-2" viewBox="0 0 200 120" aria-hidden="true" style=""><rect width="200" height="120" rx="28" fill="#000000"></rect><g class="fx fx-look"><circle cx="70" cy="60" r="18" fill="#ff64cf"></circle><circle cx="130" cy="60" r="18" fill="#ff64cf"></circle></g></svg><svg class="mf mf-3" viewBox="0 0 200 120" aria-hidden="true" style=""><rect width="200" height="120" rx="28" fill="#000000"></rect><rect class="fx fx-wave" x="60.0" y="38.0" width="20" height="44" rx="10.0" fill="#7960ff"></rect><rect class="fx fx-wave2" x="120.0" y="38.0" width="20" height="44" rx="10.0" fill="#7960ff"></rect></svg><svg class="mf mf-4" viewBox="0 0 200 120" aria-hidden="true" style=""><rect width="200" height="120" rx="28" fill="#000000"></rect><g class="fx fx-nod"><path d="M55 68A15 15 0 0 1 85 68" fill="none" stroke="#72e5b5" stroke-width="10" stroke-linecap="round"></path><path d="M115 68A15 15 0 0 1 145 68" fill="none" stroke="#72e5b5" stroke-width="10" stroke-linecap="round"></path></g></svg><svg class="mf mf-5" viewBox="0 0 200 120" aria-hidden="true" style=""><rect width="200" height="120" rx="28" fill="#000000"></rect><rect class="fx fx-half" x="56.0" y="52.0" width="28" height="16" rx="8.0" fill="#ffc447"></rect><rect class="fx fx-half" x="116.0" y="52.0" width="28" height="16" rx="8.0" fill="#ffc447"></rect></svg></div>
+    </div></div>
+  </section>
+
+  <section id="how" class="tall how" data-sc="1" data-steps="4">
+    <div class="stage"><div class="wrap grid">
+      <div style="display: flex; flex-direction: column; gap: 28px;">
+        <span class="eyebrow">How it works</span>
+        <h2 class="h-l">부르고, 대답하면,<br>끝.</h2>
+        <div class="hcaps"><div class="hc hc-0"><span class="hc-t">01 시간이 되면</span><span class="hc-d">20:00, 홈에 지금 카드가 떠요.</span></div><div class="hc hc-1"><span class="hc-t">02 루모가 불러요</span><span class="hc-d">"오메가3 먹을 시간이야" — 거실에서 먼저.</span></div><div class="hc hc-2"><span class="hc-t">03 말로 확인</span><span class="hc-d">"먹었어" 한 마디. 알림 뒤 30초만 들어요.</span></div><div class="hc hc-3"><span class="hc-t">04 한 번이면 끝</span><span class="hc-d">모든 기기의 알림이 같이 닫혀요.</span></div></div>
+      </div>
+      <div class="phone" role="img" aria-label="실제 앱 화면: 홈, 지금 알림, 말로 확인, 먹었어"><div class="hs-scr hs-0"><div style="width: 390px; height: 844px; transform: scale(0.8); transform-origin: 0 0; pointer-events: none;"><dc-import name="Main" hint-size="390px,844px"></dc-import></div></div><div class="hs-scr hs-1"><div style="width: 390px; height: 844px; transform: scale(0.8); transform-origin: 0 0; pointer-events: none;"><dc-import name="Alert" hint-size="390px,844px"></dc-import></div></div><div class="hs-scr hs-2"><div style="width: 390px; height: 844px; transform: scale(0.8); transform-origin: 0 0; pointer-events: none;"><dc-import name="Voice" hint-size="390px,844px"></dc-import></div></div><div class="hs-scr hs-3"><div style="width: 390px; height: 844px; transform: scale(0.8); transform-origin: 0 0; pointer-events: none;"><dc-import name="Done" hint-size="390px,844px"></dc-import></div></div></div>
+    </div></div>
+  </section>
+
+  <section id="confirm" class="tall conf" data-sc="1" data-track="1">
+    <div class="stage">
+      <div class="wrap" style="width: 100%;"><span class="eyebrow">Confirm anywhere</span><h2 class="h-l" style="margin-top: 16px;">어디서 확인해도,<br>한 번이면 끝.</h2></div>
+      <div class="track"><article class="cc reveal-x"><div class="cc-glow" style="background: #7960ff;"></div><div class="cc-vis"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#ffffff"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"></path></svg></div><div class="cc-txt"><span class="cc-k" style="color: #7960ff;">말</span><span class="cc-t">"먹었어" 한 마디</span><span class="cc-d">루모가 알아듣고 끄덕여요. 알림 뒤 30초만 들어요.</span></div></article><article class="cc reveal-x"><div class="cc-glow" style="background: #d5ff44;"></div><div class="cc-vis"><div class="tiles"><span class="tile"></span><span class="tile"></span><span class="tile"></span><span class="tile tile-on"></span><span class="tile"></span><span class="tile"></span></div></div><div class="cc-txt"><span class="cc-k" style="color: #d5ff44;">체크 타일</span><span class="cc-t">현관 칸을 톡</span><span class="cc-d">말하기 어려운 밤엔 하우스 현관 바닥을 눌러요.</span></div></article><article class="cc reveal-x"><div class="cc-glow" style="background: #ff64cf;"></div><div class="cc-vis"><div style="width: 132px; height: 160px; border-radius: 40px; background: #000000; box-shadow: 0 0 0 6px #2a2a2a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;"><span style="width: 56px; height: 56px; border-radius: 999px; background: #ff64cf;" class="pulse"></span><span style="font-size: 15px; font-weight: 600; color: #ffffff;">먹었어</span></div></div><div class="cc-txt"><span class="cc-k" style="color: #ff64cf;">워치</span><span class="cc-t">탭 한 번</span><span class="cc-d">밖에 있을 땐 손목에서 바로.</span></div></article><article class="cc reveal-x"><div class="cc-glow" style="background: #ffffff;"></div><div class="cc-vis"><div style="width: 220px; border-radius: 28px; background: #ffffff; padding: 18px; display: flex; flex-direction: column; gap: 12px; color: #111111;"><span style="font-size: 12px; font-weight: 600; color: #ff64cf;">지금 · 20:00</span><span style="font-size: 22px; line-height: 28px; font-weight: 600;">오메가3<br>먹을 시간</span><span style="height: 44px; border-radius: 999px; background: #111111; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">먹었어</span></div></div><div class="cc-txt"><span class="cc-k" style="color: #ffffff;">앱</span><span class="cc-t">지금 카드에서</span><span class="cc-d">폰을 들었다면 버튼 하나로.</span></div></article><article class="cc cc-end"><div class="cc-glow" style="background: #72e5b5; opacity: .55;"></div><div class="cc-vis"><svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#72e5b5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="chk" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div><div class="cc-txt"><span class="cc-k" style="color: #72e5b5;">그리고</span><span class="cc-t">모든 알림이<br>같이 닫혀요</span><span class="cc-d">어디서 확인해도 기록은 하나만 남아요.</span></div></article></div>
+    </div>
+  </section>
+
+  <section class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
+    <div class="reveal" style="display: flex; flex-direction: column; gap: 16px;"><span class="eyebrow">Gentle escalation</span><h2 class="h-l">대답이 없으면,<br>점점 조용히.</h2><p class="lead">루모가 먼저 부르고, 15분 뒤엔 워치, 30분 뒤엔 폰. 90분이 지나면 놓침으로만 남기고 혼내지 않아요.</p></div>
+    <div class="esc"><div class="es reveal" style="transition-delay: 0ms;"><div class="es-bar" style="--h: 100%; background: #ff64cf; transition-delay: 300ms;"></div><span class="es-k">정시</span><span class="es-t">루모</span></div><div class="es reveal" style="transition-delay: 140ms;"><div class="es-bar" style="--h: 66%; background: #c08bff; transition-delay: 460ms;"></div><span class="es-k">+15분</span><span class="es-t">워치</span></div><div class="es reveal" style="transition-delay: 280ms;"><div class="es-bar" style="--h: 38%; background: #8a8a8a; transition-delay: 620ms;"></div><span class="es-k">+30분</span><span class="es-t">폰</span></div><div class="es reveal" style="transition-delay: 420ms;"><div class="es-bar" style="--h: 12%; background: #4a4a4a; transition-delay: 780ms;"></div><span class="es-k">+90분</span><span class="es-t">기록 · 혼내지 않기</span></div></div>
+  </div></section>
+
+  <section id="identity" class="tall lg" data-sc="1">
+    <div class="stage">
+      <span class="eyebrow">Identity</span>
+      <svg class="s-logo" role="img" aria-label="rumo 로고가 스케치처럼 그려진다" viewBox="-30 -40 572 180" style="overflow: visible;"><g class="s-fill"><path fill="#ffffff" d="M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100ZM104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50ZM228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100ZM298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z"></path><path fill="#ffc447" d="M425.02 56.65L490.70 74.25A16.0 16.0 0 0 0 498.98 43.35L433.30 25.75A16.0 16.0 0 0 0 425.02 56.65ZM437.75 21.30L455.35 86.98A16.0 16.0 0 0 0 486.25 78.70L468.65 13.02A16.0 16.0 0 0 0 437.75 21.30ZM474.73 14.64L426.64 62.73A16.0 16.0 0 0 0 449.27 85.36L497.36 37.27A16.0 16.0 0 0 0 474.73 14.64Z"></path></g><g class="s-guides"><path class="sg" pathLength="1" d="M-10 100H522" fill="none" stroke="#4d8df6" stroke-width="0.6" ></path><path class="sg" pathLength="1" d="M-10 0H522" fill="none" stroke="#4d8df6" stroke-width="0.6" ></path><path class="sg" pathLength="1" d="M50 0A50 50 0 1 1 49.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" ></path><path class="sg" pathLength="1" d="M154 0A50 50 0 1 1 153.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" ></path><path class="sg" pathLength="1" d="M273 0A45 45 0 1 1 272.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" ></path><path class="sg" pathLength="1" d="M343 0A45 45 0 1 1 342.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" ></path><path class="sg" pathLength="1" d="M462 0A50 50 0 1 1 461.9 0" fill="none" stroke="#4d8df6" stroke-width="0.5" ></path></g><g class="s-lines"><path class="sl" pathLength="1" d="M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100Z" fill="none" stroke="#ffffff" stroke-width="1.2" ></path><path class="sl" pathLength="1" d="M104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50Z" fill="none" stroke="#ffffff" stroke-width="1.2" ></path><path class="sl" pathLength="1" d="M228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100Z" fill="none" stroke="#ffffff" stroke-width="1.2" ></path><path class="sl" pathLength="1" d="M298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z" fill="none" stroke="#ffffff" stroke-width="1.2" ></path><path class="sl" pathLength="1" d="M425.02 56.65L490.70 74.25A16.0 16.0 0 0 0 498.98 43.35L433.30 25.75A16.0 16.0 0 0 0 425.02 56.65Z" fill="none" stroke="#ffc447" stroke-width="1.2" ></path><path class="sl" pathLength="1" d="M437.75 21.30L455.35 86.98A16.0 16.0 0 0 0 486.25 78.70L468.65 13.02A16.0 16.0 0 0 0 437.75 21.30Z" fill="none" stroke="#ffc447" stroke-width="1.2" ></path><path class="sl" pathLength="1" d="M474.73 14.64L426.64 62.73A16.0 16.0 0 0 0 449.27 85.36L497.36 37.27A16.0 16.0 0 0 0 474.73 14.64Z" fill="none" stroke="#ffc447" stroke-width="1.2" ></path></g><g class="s-dims" fill="#4d8df6" font-family="Pretendard, sans-serif" font-size="8" font-weight="600"><text x="-24" y="54" text-anchor="end">X</text><text x="530" y="3">x-height</text><text x="530" y="103">baseline</text><text x="462" y="-14" text-anchor="middle">petal 32 · 15°</text></g></svg>
+      <div class="lcap"><span class="lc0">한 두께, 한 높이.</span><span class="lc1">별처럼 핀 꽃.</span><span class="lc2">천천히 도는 o.</span></div>
+    </div>
+  </section>
+
+  <section class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
+    <div class="reveal" style="display: flex; flex-direction: column; gap: 16px;"><span class="eyebrow">Color</span><h2 class="h-l">색은 상태를 말해요.</h2><p class="lead">지금은 핑크, 먹었으면 민트, 미루면 노랑. 로봇 · 타일 · 워치 · 앱이 같은 색으로 말해요.</p></div>
+    <div class="cols"><div class="col reveal" style="transition-delay: 0ms;"><div class="col-dot" style="background: #D5FF44; color: #111111;"><span>Lime</span><span style="font-size: 13px; opacity: .7;">#D5FF44</span></div><span class="col-m">브랜드</span></div><div class="col reveal" style="transition-delay: 90ms;"><div class="col-dot" style="background: #FF64CF; color: #111111;"><span>Pink</span><span style="font-size: 13px; opacity: .7;">#FF64CF</span></div><span class="col-m">지금</span></div><div class="col reveal" style="transition-delay: 180ms;"><div class="col-dot" style="background: #72E5B5; color: #111111;"><span>Mint</span><span style="font-size: 13px; opacity: .7;">#72E5B5</span></div><span class="col-m">먹었어</span></div><div class="col reveal" style="transition-delay: 270ms;"><div class="col-dot" style="background: #FFC447; color: #111111;"><span>Yellow</span><span style="font-size: 13px; opacity: .7;">#FFC447</span></div><span class="col-m">미룸</span></div><div class="col reveal" style="transition-delay: 360ms;"><div class="col-dot" style="background: #FF6A32; color: #111111;"><span>Orange</span><span style="font-size: 13px; opacity: .7;">#FF6A32</span></div><span class="col-m">놓침</span></div><div class="col reveal" style="transition-delay: 450ms;"><div class="col-dot" style="background: #7960FF; color: #ffffff;"><span>Violet</span><span style="font-size: 13px; opacity: .7;">#7960FF</span></div><span class="col-m">듣는 중</span></div></div>
+  </div></section>
+
+  <section class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
+    <div class="reveal" style="display: flex; flex-direction: column; gap: 16px; text-align: center; align-items: center;"><span class="eyebrow">Voice</span><h2 class="h-l">반말로 한 문장.<br>혼내지 않아요.</h2></div>
+    <div class="chat"><div class="bub bub-rumo reveal" style="transition-delay: 0ms;">오메가3 먹을 시간이야</div><div class="bub bub-me reveal" style="transition-delay: 260ms;">먹었어</div><div class="bub bub-rumo reveal" style="transition-delay: 520ms;">좋아, 오늘도 챙겼다!</div><div class="bub bub-rumo reveal" style="transition-delay: 780ms;">놓쳐도 괜찮아, 내일 같이 하자</div></div>
+  </div></section>
+
+  <section id="book" class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 40px;">
+    <div class="reveal" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;"><div style="display: flex; flex-direction: column; gap: 16px;"><span class="eyebrow">Brand Book</span><h2 class="h-l">장표 17장.</h2><p class="lead">이 섹션은 장표 원본을 그대로 불러와요. 장표를 고치면 여기도 바뀌어요.</p></div><a class="pill" href="BrandCover.dc.html" style="height: 44px; padding: 0 22px; font-size: 16px;">처음부터 넘겨 보기</a></div>
+    <div class="book" data-book="1"><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandCover" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandCover.dc.html" aria-label="Cover 장표 열기"></a></div><div class="bk-cap"><span>01</span>Cover</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandPhilosophy" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandPhilosophy.dc.html" aria-label="Philosophy 장표 열기"></a></div><div class="bk-cap"><span>02</span>Philosophy</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandStrategy" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandStrategy.dc.html" aria-label="Positioning 장표 열기"></a></div><div class="bk-cap"><span>03</span>Positioning</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandPersona" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandPersona.dc.html" aria-label="Persona 장표 열기"></a></div><div class="bk-cap"><span>04</span>Persona</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandPersona2" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandPersona2.dc.html" aria-label="Family 장표 열기"></a></div><div class="bk-cap"><span>05</span>Family</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandJourney" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandJourney.dc.html" aria-label="Journey 장표 열기"></a></div><div class="bk-cap"><span>06</span>Journey</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandAI" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandAI.dc.html" aria-label="Meet Rumo 장표 열기"></a></div><div class="bk-cap"><span>07</span>Meet Rumo</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandFace" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandFace.dc.html" aria-label="Expressions 장표 열기"></a></div><div class="bk-cap"><span>08</span>Expressions</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandFeatures" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandFeatures.dc.html" aria-label="How it works 장표 열기"></a></div><div class="bk-cap"><span>09</span>How it works</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandLogo" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandLogo.dc.html" aria-label="Logo 장표 열기"></a></div><div class="bk-cap"><span>10</span>Logo</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandUsage" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandUsage.dc.html" aria-label="Logo guide 장표 열기"></a></div><div class="bk-cap"><span>11</span>Logo guide</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandLogoColor" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandLogoColor.dc.html" aria-label="Logo color 장표 열기"></a></div><div class="bk-cap"><span>12</span>Logo color</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandSymbols" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandSymbols.dc.html" aria-label="Symbols 장표 열기"></a></div><div class="bk-cap"><span>13</span>Symbols</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandColor" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandColor.dc.html" aria-label="Color 장표 열기"></a></div><div class="bk-cap"><span>14</span>Color</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandType" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandType.dc.html" aria-label="Type 장표 열기"></a></div><div class="bk-cap"><span>15</span>Type</div></div><div class="bk reveal" style="transition-delay: 120ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandVoice" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandVoice.dc.html" aria-label="Voice 장표 열기"></a></div><div class="bk-cap"><span>16</span>Voice</div></div><div class="bk reveal" style="transition-delay: 0ms;"><div class="bk-frame"><div class="bk-inner"><dc-import name="BrandMVP" embed="{{yes}}" hint-size="1920px,1080px"></dc-import></div><a class="bk-open" href="BrandMVP.dc.html" aria-label="MVP demo 장표 열기"></a></div><div class="bk-cap"><span>17</span>MVP demo</div></div></div>
+  </div></section>
+
+  <section class="sec" style="text-align: center;"><div class="wrap reveal" style="display: flex; flex-direction: column; align-items: center; gap: 28px;">
+    <svg class="" viewBox="0 0 200 120" aria-hidden="true" style="width: 160px; height: auto;"><rect width="200" height="120" rx="28" fill="#000000"></rect><g class="fx fx-nod"><path d="M55 68A15 15 0 0 1 85 68" fill="none" stroke="#72e5b5" stroke-width="10" stroke-linecap="round"></path><path d="M115 68A15 15 0 0 1 145 68" fill="none" stroke="#72e5b5" stroke-width="10" stroke-linecap="round"></path></g></svg>
+    <h2 class="h-xl">A Little Care,<br>Every Day.</h2>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;"><a class="pill" href="BrandCover.dc.html" style="height: 48px; padding: 0 24px; font-size: 16px;">장표로 보기</a><a class="pill pill-ghost" href="Main.dc.html" style="height: 48px; padding: 0 24px; font-size: 16px;">앱 시안 보기</a></div>
+    <span style="font-size: 14px; color: #6e6e73;">패키지 디자인 · 김다솜</span>
+  </div></section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    const doc = document;
+    const site = doc.querySelector('[data-site]');
+    if (!site) return;
+    const secs = Array.from(site.querySelectorAll('[data-sc]'));
+    const book = site.querySelector('[data-book]');
+    const tick = () => {
+      this.raf = 0;
+      const vh = window.innerHeight || 900;
+      secs.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        const total = r.height - vh;
+        let p = total > 0 ? -r.top / total : 0;
+        p = Math.min(1, Math.max(0, p));
+        el.style.setProperty('--p', p.toFixed(4));
+        const n = +el.dataset.steps || 0;
+        if (n) { const s = String(Math.min(n - 1, Math.floor(p * n * 0.999))); if (el.dataset.step !== s) el.dataset.step = s; }
+      });
+      const sr = site.getBoundingClientRect();
+      const gp = Math.min(1, Math.max(0, -sr.top / Math.max(1, sr.height - vh)));
+      site.style.setProperty('--gp', gp.toFixed(4));
+    };
+    const measure = () => {
+      site.querySelectorAll('[data-track]').forEach((el) => {
+        const t = el.querySelector('.track');
+        if (t) el.style.setProperty('--shift', Math.max(0, t.scrollWidth - el.clientWidth) + 'px');
+      });
+      if (book) {
+        const one = window.innerWidth <= 760;
+        const w = one ? book.clientWidth : (book.clientWidth - 24) / 2;
+        book.style.setProperty('--bs', (w / 1920).toFixed(5));
+      }
+      tick();
+    };
+    this.onScroll = () => { if (!this.raf) this.raf = requestAnimationFrame(tick); };
+    this.onResize = () => measure();
+    doc.addEventListener('scroll', this.onScroll, true);
+    window.addEventListener('resize', this.onResize);
+    this.io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); this.io.unobserve(e.target); } }), { threshold: 0.18 });
+    site.querySelectorAll('.reveal').forEach((el) => this.io.observe(el));
+    secs.forEach((el) => { if (+el.dataset.steps) el.dataset.step = '0'; });
+    measure();
+    this.t1 = setTimeout(measure, 600);
+    this.t2 = setTimeout(measure, 2000);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.onScroll, true);
+    window.removeEventListener('resize', this.onResize);
+    if (this.io) this.io.disconnect();
+    clearTimeout(this.t1); clearTimeout(this.t2);
+  }
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

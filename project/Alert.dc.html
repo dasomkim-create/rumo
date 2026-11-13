@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>지금 알림</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 560ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:60ms}.rise>*:nth-child(3){animation-delay:120ms}.rise>*:nth-child(4){animation-delay:180ms}.rise>*:nth-child(5){animation-delay:240ms}.rise>*:nth-child(6){animation-delay:300ms}.rise>*:nth-child(7){animation-delay:360ms}.rise>*:nth-child(8){animation-delay:420ms}.rise>*:nth-child(9){animation-delay:480ms}
+@media (prefers-reduced-motion: reduce){.rise>*{animation:none!important}}
+@keyframes rumo-spin{to{transform:rotate(360deg)}}
+@keyframes rumo-wiggle{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes rumo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes rumo-gather{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.3) rotate(-120deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-pop{0%{transform:scale(.2) rotate(-140deg);opacity:0}70%{transform:scale(1.08) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes rumo-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes rumo-burst{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.2);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-ring{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.5);opacity:0}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+a{color:#5b3fe0}a:hover{color:#3d24b8}
+@keyframes rumo-glow{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(var(--gx),var(--gy)) scale(1.1)}66%{transform:translate(calc(var(--gx) * -0.6),calc(var(--gy) * 0.8)) scale(.95)}}
+@keyframes rumo-radar{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.25);opacity:0}}
+.glass{background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #ffffff; color: #111111; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div aria-hidden="true" style="position: absolute; inset: 0; filter: blur(60px);">
+    <div style="position: absolute; left: -110px; top: 40px; width: 420px; height: 420px; border-radius: 999px; background: #ff9ee2; opacity: 0.9; --gx: 70px; --gy: 60px; animation: rumo-glow 14s ease-in-out infinite;"></div>
+    <div style="position: absolute; right: -60px; top: 470px; width: 260px; height: 260px; border-radius: 999px; background: #ffd56b; opacity: 0.4; --gx: -50px; --gy: -60px; animation: rumo-glow 18s ease-in-out infinite;"></div>
+  </div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 36%, rgba(255,255,255,.95) 0, rgba(255,255,255,.55) 120px, rgba(255,255,255,0) 230px);"></div>
+
+  <div class="rise" style="position: relative; height: 100%; box-sizing: border-box; padding: 60px 20px 32px; display: flex; flex-direction: column; align-items: center;">
+    <div style="align-self: stretch; display: flex; justify-content: space-between; align-items: center;">
+      <span class="glass" style="display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 999px; font-size: 13px; line-height: 19px; font-weight: 600;">
+        <span style="width: 8px; height: 8px; border-radius: 999px; background: #ff64cf;"></span>지금 · 20:00
+      </span>
+      <a href="Main.dc.html" aria-label="닫기" class="glass" style="width: 36px; height: 36px; border-radius: 999px; color: #111111; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </a>
+    </div>
+
+    <div style="position: relative; width: 300px; height: 300px; margin-top: 28px; display: flex; align-items: center; justify-content: center;">
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; background: rgba(255,255,255,.22);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 40px; border-radius: 999px; background: rgba(255,255,255,.32);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 80px; border-radius: 999px; background: rgba(255,255,255,.72);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; box-shadow: inset 0 0 0 2px #ff64cf; animation: rumo-radar 2.4s ease-out infinite;"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; box-shadow: inset 0 0 0 2px #ff64cf; animation: rumo-radar 2.4s ease-out 1.2s infinite;"></div>
+      <img src="/_blob/090e19df98d02b97d3da074df29f0464" alt="오메가3 표식: 노란 꽃" style="position: relative; width: 112px; height: 103px; animation: rumo-wiggle 2.4s ease-in-out infinite;">
+    </div>
+
+    <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+      <span style="font-size: 15px; line-height: 22px; font-weight: 500; color: #4b5059;">루모가 거실에서 불렀어요</span>
+      <h1 style="margin: 0; font-size: 30px; line-height: 40px; font-weight: 600; letter-spacing: -0.8px;">오메가3 먹을 시간이야</h1>
+      <span style="font-size: 15px; line-height: 22px; color: #4b5059;">1알 · 물과 함께 · 현관 타일에도 떠 있어요</span>
+    </div>
+
+    <sc-if value="{{snoozed}}" hint-placeholder-val="{{false}}">
+      <div role="status" class="glass" style="margin-top: 16px; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 18px;">
+        <img src="/_blob/9872436ab2c57fc639497e1350f4bd24" alt="" style="width: 22px; height: 22px;">
+        <span style="font-size: 15px; line-height: 22px; font-weight: 500;">20:30에 다시 물어볼게. 워치로도 알려줄게.</span>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{micOff}}" hint-placeholder-val="{{false}}">
+      <div role="note" class="glass" style="margin-top: 16px; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 18px; text-align: left;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4b5059" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="flex: none;"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M3 3l18 18"></path></svg>
+        <span style="font-size: 14px; line-height: 20px; color: #30343b;">마이크가 꺼져 있어요. 버튼이나 현관 체크 타일로 알려줘요.</span>
+      </div>
+    </sc-if>
+
+    <div style="margin-top: auto; align-self: stretch; display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; gap: 8px;">
+        <div style="flex-grow: 1;"><dc-import name="Button" label="먹었어" href="Done.dc.html" variant="primary" size="lg" hint-size="100%,56px"></dc-import></div>
+        <sc-if value="{{micOn}}" hint-placeholder-val="{{true}}">
+        <div style="width: 56px;"><dc-import name="Button" label="" a11y="말로 확인하기" icon="mic" href="Voice.dc.html" variant="voice" size="lg" hint-size="56px,56px"></dc-import></div>
+        </sc-if>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="glass" onClick="{{snooze}}" style="flex: 1; height: 48px; border: 0; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 500; color: #111111; cursor: pointer;">{{snoozeLabel}}</button>
+        <a href="Main.dc.html" class="glass" style="flex: 1; height: 48px; border-radius: 999px; font-size: 15px; font-weight: 500; color: #111111; text-decoration: none; display: flex; align-items: center; justify-content: center;">오늘은 건너뛰기</a>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mic":{"editor":"enum","options":["on","off"],"default":"on"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { snoozed: false };
+  }
+  renderVals() {
+    const sn = this.state.snoozed;
+    const mic = (this.props.mic ?? 'on') !== 'off';
+    return { micOn: mic, micOff: !mic, snoozed: sn, snoozeLabel: sn ? '20:30에 다시' : '30분 뒤', snooze: () => this.setState({ snoozed: true }) };
+  }
+}
+</script>
+</body>
+</html>

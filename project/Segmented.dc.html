@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>세그먼트</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+.seg a{transition:background 200ms ease,color 200ms ease}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<nav class="seg" aria-label="{{a11y}}" style="width: 100%; box-sizing: border-box; height: 40px; padding: 3px; border-radius: 12px; background: #f0f2f5; display: grid; grid-template-columns: repeat({{n}}, minmax(0, 1fr)); gap: 3px; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <sc-for list="{{items}}" as="it" hint-placeholder-count="2">
+    <a href="{{it.href}}" aria-current="{{it.current}}" style="border-radius: 9px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; line-height: 22px; font-weight: {{it.fw}}; background: {{it.bg}}; color: {{it.fg}}; box-shadow: {{it.shadow}};">{{it.label}}</a>
+  </sc-for>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"labels":{"editor":"text","default":"영양제|건강"},"hrefs":{"editor":"text","default":"Report.dc.html|Health.dc.html"},"active":{"editor":"number","default":0},"a11y":{"editor":"text","default":"기록 보기 전환"},"$preview":{"width":350,"height":40}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const L = (p.labels ?? '영양제|건강').split('|');
+    const H = (p.hrefs ?? 'Report.dc.html|Health.dc.html').split('|');
+    const a = p.active ?? 0;
+    return {
+      n: L.length,
+      a11y: p.a11y ?? '기록 보기 전환',
+      items: L.map((l, i) => ({
+        label: l, href: H[i] || '#',
+        current: i === a ? 'page' : 'false',
+        bg: i === a ? '#ffffff' : 'transparent',
+        fg: i === a ? '#111111' : '#6b7079',
+        fw: i === a ? '600' : '500',
+        shadow: i === a ? '0 1px 3px rgba(0, 0, 0, 0.1)' : 'none'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
