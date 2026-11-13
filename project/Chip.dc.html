@@ -20,14 +20,15 @@ button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-col
   </sc-if>{{label}}
 </span>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"지금 · 20:00"},"icon":{"editor":"text","default":"/_blob/cd10fb660700a66544d1f0c65db1e189"},"tone":{"editor":"enum","options":["now","soft","plain"],"default":"now"},"$preview":{"width":160,"height":28}}'>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"지금 · 20:00"},"icon":{"editor":"text","default":"/_blob/cd10fb660700a66544d1f0c65db1e189"},"tone":{"editor":"enum","options":["now","snooze","soft","plain"],"default":"now"},"$preview":{"width":160,"height":28}}'>
 class Component extends DCLogic {
   renderVals() {
     const p = this.props;
     const tone = p.tone ?? 'now';
-    const icon = p.icon ?? '/_blob/cd10fb660700a66544d1f0c65db1e189';
+    const icon = p.icon ?? (tone === 'snooze' ? '/_blob/9872436ab2c57fc639497e1350f4bd24' : '/_blob/cd10fb660700a66544d1f0c65db1e189');
     const T = {
       now: { bg: '#ff64cf', pad: '0 12px 0 10px', fw: 600, filter: 'brightness(0)', iz: '14px' },
+      snooze: { bg: '#ffc447', pad: '0 12px 0 10px', fw: 600, filter: 'brightness(0)', iz: '14px' },
       soft: { bg: '#ffffff', pad: '0 12px 0 10px', fw: 500, filter: 'none', iz: '14px' },
       plain: { bg: 'transparent', pad: '0', fw: 500, filter: 'none', iz: '18px' }
     };

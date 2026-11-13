@@ -11,14 +11,18 @@
 <style>
 @font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
 body{margin:0}
+@keyframes ct-pop{0%{transform:scale(.2) rotate(-140deg);opacity:0}70%{transform:scale(1.15) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes ct-wig{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+@media (prefers-reduced-motion: reduce){.ct-a{animation:none!important}}
 button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
 </style>
 </helmet>
 <button type="button" onClick="{{press}}" aria-pressed="{{pressed}}" style="width: 100%; aspect-ratio: 1; box-sizing: border-box; border: 0; border-radius: 18px; padding: 12px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; text-align: left; cursor: pointer; font-family: Pretendard, -apple-system, system-ui, sans-serif; color: #111111; background: {{bg}}; box-shadow: {{ring}};">
-  <img src="{{img}}" alt="" style="width: 34px; height: 34px; filter: {{filter}};">
+  <sc-if value="{{done}}" hint-placeholder-val="{{false}}"><img class="ct-a" src="{{img}}" alt="" style="width: 30px; height: 30px; animation: ct-pop 600ms cubic-bezier(.2,.8,.2,1) both;"></sc-if>
+  <sc-if value="{{notDone}}" hint-placeholder-val="{{true}}"><img class="ct-a" src="{{img}}" alt="" style="width: 30px; height: 30px; animation: {{anim}};"></sc-if>
   <span style="display: flex; flex-direction: column;">
-    <span style="font-size: 15px; line-height: 22px; font-weight: 600; letter-spacing: -0.2px;">{{head}}</span>
-    <span style="font-size: 12px; line-height: 16px; color: #4b5059;">{{foot}}</span>
+    <span style="font-size: 15px; line-height: 21px; font-weight: 500; letter-spacing: -0.2px;">{{head}}</span>
+    <span style="font-size: 12px; line-height: 16px; color: {{footColor}};">{{foot}}</span>
   </span>
 </button>
 </x-dc>
@@ -30,12 +34,13 @@ class Component extends DCLogic {
     const title = p.title ?? '오메가3';
     const done = st === 'done';
     return {
-      head: done ? '먹었어' : title,
-      foot: done ? title + ' · 타일' : (st === 'now' ? '지금 · 톡!' : (p.time ?? '20:00')),
+      head: title,
+      foot: done ? '먹었어' : (st === 'now' ? '지금' : (p.time ?? '20:00')),
+      footColor: done ? '#1f8a5c' : (st === 'now' ? '#c2188f' : '#4b5059'),
       img: done ? '/_blob/bd2be46ec732ec25f3c6ca8f25048663' : (p.icon ?? '/_blob/090e19df98d02b97d3da074df29f0464'),
-      filter: done ? 'brightness(0)' : 'none',
-      bg: done ? '#72e5b5' : (st === 'now' ? '#ffe3f6' : '#f3f4f6'),
-      ring: st === 'now' ? 'inset 0 0 0 3px #ff64cf' : 'none',
+      done, notDone: !done, anim: st === 'now' ? 'ct-wig 2.4s ease-in-out infinite' : 'none',
+      bg: done ? '#e3f8ee' : (st === 'now' ? '#ffe3f6' : '#f3f4f6'),
+      ring: st === 'now' && !done ? 'inset 0 0 0 2px #ff64cf' : 'none',
       pressed: done ? 'true' : 'false',
       press: () => { if (p.onToggle) p.onToggle(); }
     };

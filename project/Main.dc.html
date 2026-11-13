@@ -32,6 +32,10 @@ button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-col
 .fx{transform-box:fill-box;transform-origin:center}
 @keyframes fx-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes fx-z{0%{transform:translate(0,6px);opacity:0}40%{opacity:1}100%{transform:translate(8px,-10px);opacity:0}}
+@keyframes cel-life{0%{opacity:0}10%{opacity:1}78%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes cel-check{0%{stroke-dashoffset:1}100%{stroke-dashoffset:0}}
+.cel{animation:cel-life 2s ease both}
+.cel-chk{stroke-dasharray:1;stroke-dashoffset:1;animation:cel-check 420ms cubic-bezier(.2,.8,.2,1) 520ms both}
 .fx-bob{animation:fx-bob 1.6s ease-in-out infinite}.fx-z{animation:fx-z 2.4s ease-out infinite}
 </style>
 </helmet>
@@ -47,13 +51,6 @@ button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-col
 
     <dc-import name="ScreenHeader" eyebrow="11월 11일 수요일" title="오늘의 루틴" value="{{doneCount}}" total="{{totalLabel}}" hint-size="100%,56px"></dc-import>
 
-    <sc-if value="{{hasMeds}}" hint-placeholder-val="{{true}}">
-    <div style="display: flex; gap: 4px; margin-top: -8px;">
-      <sc-for list="{{bars}}" as="b" hint-placeholder-count="6">
-        <div style="flex-grow: 1; height: 6px; border-radius: 999px; background: {{b.color}};"></div>
-      </sc-for>
-    </div>
-    </sc-if>
 
     <sc-if value="{{isOffline}}" hint-placeholder-val="{{false}}">
     <div role="status" style="border-radius: 28px; background: #f3f4f6; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
@@ -97,20 +94,17 @@ button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-col
         <div style="position: absolute; left: -70px; top: -80px; width: 300px; height: 280px; border-radius: 999px; background: #ff9ee2; opacity: 0.9; --gx: 60px; --gy: 40px; animation: rumo-glow 14s ease-in-out infinite;"></div>
         <div style="position: absolute; right: -40px; bottom: -60px; width: 180px; height: 170px; border-radius: 999px; background: #ffd56b; opacity: 0.45; --gx: -40px; --gy: -30px; animation: rumo-glow 18s ease-in-out infinite;"></div>
       </div>
-      <div aria-hidden="true" style="position: absolute; right: -36px; top: -40px; width: 170px; height: 170px; border-radius: 999px; background: rgba(255,255,255,.28); pointer-events: none;"></div>
-      <div aria-hidden="true" style="position: absolute; right: -36px; top: -40px; width: 170px; height: 170px; border-radius: 999px; box-shadow: inset 0 0 0 2px #ff64cf; pointer-events: none; animation: rumo-radar 2.4s ease-out infinite;"></div>
       <div style="position: relative; display: flex; justify-content: space-between; align-items: flex-start;">
-        <dc-import name="Chip" label="지금 · 20:00" tone="now" hint-size="110px,28px"></dc-import>
-        <img src="/_blob/090e19df98d02b97d3da074df29f0464" alt="오메가3 표식: 노란 꽃" style="display: block; width: 80px; height: 74px; margin: -6px -4px 0 0; animation: rumo-wiggle 2.4s ease-in-out infinite;">
+        <dc-import name="Chip" label="{{nowChip}}" tone="{{nowTone}}" hint-size="110px,28px"></dc-import>
+        <img src="/_blob/090e19df98d02b97d3da074df29f0464" alt="오메가3 표식: 노란 꽃" style="display: block; width: 72px; height: 66px; margin: -4px -2px 0 0; animation: rumo-wiggle 2.4s ease-in-out infinite;">
       </div>
       <h2 style="position: relative; margin: -22px 0 0; font-size: 26px; line-height: 35px; font-weight: 600; letter-spacing: -0.5px;">오메가3<br>먹을 시간</h2>
       <div style="position: relative; display: flex; align-items: center; gap: 6px; font-size: 15px; line-height: 22px; color: #4b5059;">
         <img src="/_blob/2121152ed286f66437955c83965c1158" alt="" style="width: 14px; height: 14px;">{{nowNote}}
       </div>
       <div style="position: relative; display: flex; gap: 8px; margin-top: 4px;">
-        <div style="flex-grow: 1;"><dc-import name="Button" label="먹었어" href="Done.dc.html" variant="primary" size="lg" hint-size="100%,56px"></dc-import></div>
-        <div style="width: 56px;"><dc-import name="Button" label="" a11y="말로 확인하기" icon="mic" href="Voice.dc.html" variant="voice" size="lg" hint-size="56px,56px"></dc-import></div>
-        <div style="width: 96px;"><dc-import name="Button" label="{{snoozeLabel}}" href="" on-press="{{snooze}}" variant="white" size="lg" hint-size="96px,56px"></dc-import></div>
+        <div style="flex-grow: 1;"><dc-import name="Button" label="먹었어" href="" on-press="{{takeNow}}" variant="primary" size="lg" hint-size="100%,56px"></dc-import></div>
+        <div style="width: 104px;"><dc-import name="Button" label="{{snoozeLabel}}" href="" on-press="{{snooze}}" variant="white" size="lg" hint-size="104px,56px"></dc-import></div>
       </div>
     </div>
     </sc-if>
@@ -120,9 +114,9 @@ button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-col
         <div style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0;">
           <span style="font-size: 13px; line-height: 19px; font-weight: 500; color: #6b7079;">다음 · {{next.time}}</span>
           <span style="font-size: 22px; line-height: 31px; font-weight: 600; letter-spacing: -0.4px;">{{next.title}}</span>
-          <span style="font-size: 15px; line-height: 22px; color: #4b5059;">시간이 되면 루모가 부를게요</span>
+          <span style="font-size: 14px; line-height: 20px; color: #6b7079;">루모가 부를게요</span>
         </div>
-        <button type="button" onClick="{{next.take}}" style="height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: #ffffff; color: #111111; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; flex: none;">미리 먹었어</button>
+        <button type="button" onClick="{{next.take}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 999px; background: #ffffff; color: #4b5059; font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; flex: none;">미리 먹었어</button>
       </div>
     </sc-if>
     <sc-if value="{{showAll}}" hint-placeholder-val="{{false}}">
@@ -142,8 +136,8 @@ button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-col
 
     <sc-if value="{{hasMeds}}" hint-placeholder-val="{{true}}">
     <div style="display: flex; flex-direction: column; gap: 10px;">
-      <dc-import name="SectionHeader" label="체크 타일 · 3×2" hint="집 타일을 눌러도 같이 체크돼요" hint-size="100%,23px"></dc-import>
-      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px;">
+      <dc-import name="SectionHeader" label="오늘 먹을 것" hint="현관 타일과 같이 바뀌어요" hint-size="100%,23px"></dc-import>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
         <sc-for list="{{tiles}}" as="t" hint-placeholder-count="6">
           <dc-import name="CheckTile" title="{{t.title}}" time="{{t.time}}" icon="{{t.icon}}" state="{{t.state}}" on-toggle="{{t.toggle}}" hint-size="100%,112px"></dc-import>
         </sc-for>
@@ -153,17 +147,52 @@ button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-col
   </div>
 
   </div>
+  <sc-if value="{{celebrating}}" hint-placeholder-val="{{false}}">
+  <div class="cel" role="status" aria-live="polite" style="position: absolute; inset: 0; z-index: 20; overflow: hidden; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; pointer-events: none;">
+    <div aria-hidden="true" style="position: absolute; inset: 0; filter: blur(60px);">
+      <div style="position: absolute; left: -110px; top: 120px; width: 420px; height: 420px; border-radius: 999px; background: #8ff0c6; opacity: 0.9; --gx: 50px; --gy: 40px; animation: rumo-glow 6s ease-in-out infinite;"></div>
+      <div style="position: absolute; right: -60px; top: 470px; width: 260px; height: 260px; border-radius: 999px; background: #ffd56b; opacity: 0.45; --gx: -40px; --gy: -40px; animation: rumo-glow 7s ease-in-out infinite;"></div>
+    </div>
+    <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 44%, rgba(255,255,255,.95) 0, rgba(255,255,255,.5) 110px, rgba(255,255,255,0) 220px);"></div>
+    <div style="position: relative; width: 220px; height: 220px; display: flex; align-items: center; justify-content: center;">
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; box-shadow: inset 0 0 0 2px #1f9d68; animation: rumo-radar 1.6s ease-out infinite;"></div>
+      <div style="position: relative; width: 112px; height: 112px; border-radius: 999px; background: #111111; display: flex; align-items: center; justify-content: center; animation: rumo-pop 600ms cubic-bezier(.2,.8,.2,1) both;">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#72e5b5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="cel-chk" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+      </div>
+      <img src="{{celIcon}}" alt="" aria-hidden="true" style="position: absolute; left: 2px; top: 14px; width: 52px; height: 52px; --dx: 80px; --dy: 80px; animation: rumo-burst 700ms cubic-bezier(.2,.8,.2,1) 160ms both, rumo-wiggle 2.4s ease-in-out 900ms infinite;">
+      <img src="/_blob/bd2be46ec732ec25f3c6ca8f25048663" alt="" aria-hidden="true" style="position: absolute; right: 8px; bottom: 18px; width: 40px; height: 40px; --dx: -80px; --dy: -70px; animation: rumo-burst 700ms cubic-bezier(.2,.8,.2,1) 240ms both;">
+    </div>
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;">
+      <span style="font-size: 15px; line-height: 22px; font-weight: 500; color: #4b5059;">{{celName}}</span>
+      <span style="font-size: 28px; line-height: 38px; font-weight: 600; letter-spacing: -0.7px;">오늘도 챙겼다!</span>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}">
+  <div role="status" style="position: absolute; left: 20px; right: 20px; bottom: 102px; z-index: 5; height: 52px; box-sizing: border-box; padding: 0 8px 0 18px; border-radius: 18px; background: #111111; color: #ffffff; display: flex; align-items: center; gap: 10px; animation: rumo-in 360ms cubic-bezier(.2,.8,.2,1) {{toastDelay}} both;">
+    <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; background: #72e5b5; display: inline-flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+    <span style="flex-grow: 1; min-width: 0; font-size: 15px; line-height: 22px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{toast}}</span>
+    <button type="button" onClick="{{undo}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 12px; background: transparent; color: #d5ff44; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; flex: none;">되돌리기</button>
+  </div>
+  </sc-if>
   <div style="position: absolute; left: 20px; right: 20px; bottom: 24px;">
     <dc-import name="TabBar" active="today" hint-size="100%,66px"></dc-import>
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["normal","offline","empty"],"default":"normal"},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["normal","offline","empty"],"default":"normal"},"taken":{"editor":"text","default":""},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { retrying: false, done: { probiotic: true, vitd: true, lutein: true, omega: false, calcium: false, magnesium: false }, snoozed: false };
+    const t = (props.taken || '').split(',').filter(Boolean);
+    const done = { probiotic: true, vitd: true, lutein: true, omega: false, calcium: false, magnesium: false };
+    t.forEach((id) => { done[id] = true; });
+    this.state = { retrying: false, done, snoozed: false, last: t.length ? t[t.length - 1] : null };
   }
+  componentDidMount() { if (this.state.last) this.armToast(); }
+  componentWillUnmount() { clearTimeout(this.tt); clearTimeout(this.ct); }
+  armToast(extra) { clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ last: null }), 5000 + (extra || 0)); }
+  take(id) { clearTimeout(this.ct); this.setState({ done: Object.assign({}, this.state.done, { [id]: true }), last: id, snoozed: false, cel: id }); this.ct = setTimeout(() => this.setState({ cel: null }), 2000); this.armToast(2000); }
   renderVals() {
     const mode = this.props.mode ?? 'normal';
     const off = mode === 'offline';
@@ -174,23 +203,22 @@ class Component extends DCLogic {
       { id: 'vitd', title: '비타민D', time: '08:00', icon: '/_blob/4f09d3617e69995832560c4998771e80', now: false },
       { id: 'lutein', title: '루테인', time: '12:30', icon: '/_blob/5e9761d53e7178469e1b8d82893baf92', now: false },
       { id: 'omega', title: '오메가3', time: '20:00', icon: '/_blob/090e19df98d02b97d3da074df29f0464', now: true },
-      { id: 'calcium', title: '칼슘', time: '20:00', icon: '/_blob/add37f25abe7a4e4585156f9d9e852dd', now: false },
+      { id: 'calcium', title: '칼슘', time: '21:00', icon: '/_blob/add37f25abe7a4e4585156f9d9e852dd', now: false },
       { id: 'magnesium', title: '마그네슘', time: '22:30', icon: '/_blob/d513e23a477d5280f5568955d8cc67f2', now: false }
     ];
     const list = empty ? [] : all;
     const tiles = list.map((m) => ({
       title: m.title, time: m.time, icon: m.icon,
       state: d[m.id] ? 'done' : (m.now ? 'now' : 'wait'),
-      toggle: () => this.setState({ done: Object.assign({}, d, { [m.id]: !d[m.id] }) })
+      toggle: () => (d[m.id] ? this.setState({ done: Object.assign({}, d, { [m.id]: false }), last: null }) : this.take(m.id))
     }));
-    const bars = list.map((m) => ({ color: d[m.id] ? '#72e5b5' : (m.now ? '#ff64cf' : '#e8eaed') }));
     const doneCount = String(list.filter((m) => d[m.id]).length);
     const sn = this.state.snoozed;
     const pending = list.filter((m) => !d[m.id]);
     const nowItem = pending.find((m) => m.now);
     const nx = nowItem ? null : pending[0];
     return {
-      tiles, bars, doneCount,
+      tiles, doneCount,
       hasMeds: !empty, isEmpty: empty, isOffline: off,
       chipLabel: off ? '루모 · 연결 끊김' : '루모 · 거실에 있어요', chipTone: off ? 'soft' : 'plain',
       totalLabel: '/' + list.length,
@@ -198,9 +226,18 @@ class Component extends DCLogic {
       retryLabel: this.state.retrying ? '찾는 중…' : '다시 연결',
       retry: () => this.setState({ retrying: !this.state.retrying }),
       showNow: !!nowItem, showNext: !nowItem && !!nx, showAll: !empty && pending.length === 0,
-      next: nx ? { title: nx.title, time: nx.time, icon: nx.icon, take: () => this.setState({ done: Object.assign({}, d, { [nx.id]: true }) }) } : { title: '', time: '', icon: '', take: () => {} },
+      next: nx ? { title: nx.title, time: nx.time, icon: nx.icon, take: () => this.take(nx.id) } : { title: '', time: '', icon: '', take: () => {} },
       nowNote: sn ? '20:30에 다시 알려드릴게요' : (off ? '1알 · 물과 함께 · 루모 대신 폰으로 알렸어요' : '1알 · 물과 함께 · 루모가 방금 말했어요'),
-      snoozeLabel: sn ? '취소' : '30분 뒤',
+      snoozeLabel: sn ? '미룸 취소' : '30분 뒤',
+      nowChip: sn ? '미룸 · 20:30' : '지금 · 20:00', nowTone: sn ? 'snooze' : 'now',
+      takeNow: () => { if (nowItem) this.take(nowItem.id); },
+      hasToast: !!this.state.last,
+      celebrating: !!this.state.cel,
+      celName: ((list.find((m) => m.id === this.state.cel) || { title: '' }).title) + ' · 방금',
+      celIcon: (list.find((m) => m.id === this.state.cel) || { icon: '' }).icon,
+      toastDelay: this.state.cel ? '1700ms' : '0ms',
+      toast: (list.find((m) => m.id === this.state.last) || { title: '' }).title + ' 먹었어요',
+      undo: () => { const id = this.state.last; if (!id) return; clearTimeout(this.tt); clearTimeout(this.ct); this.setState({ done: Object.assign({}, d, { [id]: false }), last: null, cel: null }); },
       snooze: () => this.setState({ snoozed: !sn })
     };
   }

@@ -5,6 +5,13 @@
 
 ![브랜드 장표](docs/preview/brand-slides.png)
 
+## 사이트
+
+- 랜딩페이지: https://dasomkim-create.github.io/rumo-brand/
+- 장표 넘겨 보기: https://dasomkim-create.github.io/rumo-brand/deck.html
+
+`docs/`의 사이트는 캔버스에서 내보낸 정적 버전이에요(이미지로 고정). 캔버스를 고친 뒤에는 다시 내보내야 바뀌어요.
+
 ## 들어 있는 것
 
 | 묶음 | 파일 | 내용 |

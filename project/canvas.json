@@ -416,6 +416,15 @@
       "title": "BI 06 User Journey",
       "x": 2920,
       "y": 2600
+    },
+    "HomeAfter.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 44,
+      "title": "04-3 오늘 · 먹은 뒤 (지금 카드 사라짐 + 되돌리기)",
+      "w": 390,
+      "x": 5570,
+      "y": 1264
     }
   },
   "createdOnFiles": {
@@ -532,6 +541,7 @@
     "AlertNoMic.dc.html",
     "HomeEmpty.dc.html",
     "HomeOffline.dc.html",
+    "HomeAfter.dc.html",
     "TabBar.dc.html",
     "NavBar.dc.html",
     "ScreenHeader.dc.html",
