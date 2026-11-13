@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>말로 확인</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 560ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:60ms}.rise>*:nth-child(3){animation-delay:120ms}.rise>*:nth-child(4){animation-delay:180ms}.rise>*:nth-child(5){animation-delay:240ms}.rise>*:nth-child(6){animation-delay:300ms}.rise>*:nth-child(7){animation-delay:360ms}.rise>*:nth-child(8){animation-delay:420ms}.rise>*:nth-child(9){animation-delay:480ms}
+@media (prefers-reduced-motion: reduce){.rise>*{animation:none!important}}
+@keyframes rumo-spin{to{transform:rotate(360deg)}}
+@keyframes rumo-wiggle{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes rumo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes rumo-gather{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.3) rotate(-120deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-pop{0%{transform:scale(.2) rotate(-140deg);opacity:0}70%{transform:scale(1.08) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes rumo-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes rumo-burst{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.2);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-ring{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.5);opacity:0}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+a{color:#5b3fe0}a:hover{color:#3d24b8}
+@keyframes rumo-glow{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(var(--gx),var(--gy)) scale(1.1)}66%{transform:translate(calc(var(--gx) * -0.6),calc(var(--gy) * 0.8)) scale(.95)}}
+@keyframes rumo-radar{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.25);opacity:0}}
+@keyframes rumo-bar{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes rumo-pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+.glass{background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #ffffff; color: #111111; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div aria-hidden="true" style="position: absolute; inset: 0; filter: blur(60px);">
+    <div style="position: absolute; left: -110px; top: 40px; width: 420px; height: 420px; border-radius: 999px; background: #c3b5ff; opacity: 0.9; --gx: 70px; --gy: 60px; animation: rumo-glow 14s ease-in-out infinite;"></div>
+    <div style="position: absolute; right: -60px; top: 470px; width: 260px; height: 260px; border-radius: 999px; background: #ff9ee2; opacity: 0.4; --gx: -50px; --gy: -60px; animation: rumo-glow 18s ease-in-out infinite;"></div>
+  </div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 33%, rgba(255,255,255,.95) 0, rgba(255,255,255,.5) 120px, rgba(255,255,255,0) 230px);"></div>
+  <div class="rise" style="position: relative; height: 100%; box-sizing: border-box; padding: 60px 20px 32px; display: flex; flex-direction: column; align-items: center;">
+    <div style="align-self: stretch; display: flex; justify-content: space-between; align-items: center;">
+      <span class="glass" style="display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 999px; font-size: 13px; line-height: 19px; font-weight: 600;">
+        <span style="width: 8px; height: 8px; border-radius: 999px; background: #7960ff; animation: rumo-pulse-dot 1.2s ease-in-out infinite;"></span>듣는 중 · 24초
+      </span>
+      <a href="Alert.dc.html" aria-label="닫기" class="glass" style="width: 36px; height: 36px; border-radius: 999px; color: #111111; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </a>
+    </div>
+    <div style="position: relative; width: 260px; height: 260px; margin-top: 24px; display: flex; align-items: center; justify-content: center;">
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; background: rgba(255,255,255,.22);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 36px; border-radius: 999px; background: rgba(255,255,255,.32);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 72px; border-radius: 999px; background: rgba(255,255,255,.72);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; box-shadow: inset 0 0 0 2px #7960ff; animation: rumo-radar 2.4s ease-out infinite;"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; box-shadow: inset 0 0 0 2px #7960ff; animation: rumo-radar 2.4s ease-out 1.2s infinite;"></div>
+      <div aria-hidden="true" style="position: relative; display: flex; align-items: center; gap: 5px; height: 56px;">
+        <sc-for list="{{wave}}" as="w" hint-placeholder-count="9">
+          <span style="width: 6px; height: {{w.h}}; border-radius: 999px; background: #7960ff; transform-origin: center; animation: {{w.anim}};"></span>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+      <span style="font-size: 15px; line-height: 22px; font-weight: 500; color: #4b5059;">루모가 물어봐요</span>
+      <h1 style="margin: 0; font-size: 26px; line-height: 35px; font-weight: 600; letter-spacing: -0.5px;">오메가3랑 마그네슘,<br>둘 다 먹었어?</h1>
+    </div>
+
+    <sc-if value="{{said}}" hint-placeholder-val="{{true}}">
+      <div style="margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <span style="padding: 10px 18px; border-radius: 999px; background: #111111; color: #ffffff; font-size: 17px; line-height: 24px; font-weight: 500;">“{{saidText}}”</span>
+        <span role="status" style="display: inline-flex; align-items: center; gap: 6px; font-size: 15px; line-height: 22px; font-weight: 500; color: #30343b;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: {{checkDisplay}};"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>{{resultText}}
+        </span>
+      </div>
+    </sc-if>
+
+    <div style="margin-top: auto; align-self: stretch; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; justify-content: center; gap: 6px;" role="group" aria-label="말해보기 시연">
+        <sc-for list="{{phrases}}" as="p" hint-placeholder-count="3">
+          <button type="button" class="glass" onClick="{{p.say}}" aria-pressed="{{p.pressed}}" style="height: 40px; padding: 0 14px; border: 0; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 500; color: #111111; cursor: pointer; outline: {{p.ring}};">“{{p.text}}”</button>
+        </sc-for>
+      </div>
+      <dc-import name="Button" label="{{cta}}" href="{{ctaHref}}" variant="primary" size="lg" hint-size="100%,56px"></dc-import>
+      <span style="font-size: 12px; line-height: 17px; color: #6b7079; text-align: center;">알림 뒤 30초만 들어요 · 말한 내용은 저장하지 않아요</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { said: 0 };
+  }
+  renderVals() {
+    const P = [
+      { text: '응, 둘 다', result: '둘 다 기록했어요', check: true, cta: '확인', href: 'Done.dc.html' },
+      { text: '오메가3만', result: '마그네슘은 22:30에 다시 물어볼게요', check: true, cta: '확인', href: 'Done.dc.html' },
+      { text: '이따가', result: '30분 뒤에 다시 물어볼게요', check: false, cta: '닫기', href: 'Main.dc.html' }
+    ];
+    const i = this.state.said;
+    const cur = P[i];
+    const H = [18, 30, 44, 26, 52, 34, 46, 24, 16];
+    return {
+      wave: H.map((h, k) => ({ h: h + 'px', anim: 'rumo-bar ' + (0.7 + (k % 4) * 0.15).toFixed(2) + 's ease-in-out ' + (k * 0.08).toFixed(2) + 's infinite' })),
+      said: true,
+      saidText: cur.text, resultText: cur.result,
+      checkDisplay: cur.check ? 'block' : 'none',
+      cta: cur.cta, ctaHref: cur.href,
+      phrases: P.map((p, k) => ({ text: p.text, pressed: k === i ? 'true' : 'false', ring: k === i ? '2px solid #111111' : 'none', say: () => this.setState({ said: k }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

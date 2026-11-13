@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>내 영양제</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 560ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:60ms}.rise>*:nth-child(3){animation-delay:120ms}.rise>*:nth-child(4){animation-delay:180ms}.rise>*:nth-child(5){animation-delay:240ms}.rise>*:nth-child(6){animation-delay:300ms}.rise>*:nth-child(7){animation-delay:360ms}.rise>*:nth-child(8){animation-delay:420ms}.rise>*:nth-child(9){animation-delay:480ms}
+@media (prefers-reduced-motion: reduce){.rise>*{animation:none!important}}
+a{color:#5b3fe0}a:hover{color:#3d24b8}
+.scroll{scrollbar-width:none}.scroll::-webkit-scrollbar{display:none}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #ffffff; color: #111111; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div class="scroll" style="position: absolute; inset: 0; overflow-y: auto; box-sizing: border-box; padding-bottom: 120px;">
+  <div class="rise" style="padding: 60px 20px 0; display: flex; flex-direction: column; gap: 20px;">
+    <div style="height: 40px; display: flex; justify-content: flex-end; align-items: center;"><a href="AddDose.dc.html" aria-label="영양제 추가" class="press" style="width: 36px; height: 36px; border-radius: 999px; background: #111111; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></a></div>
+    <dc-import name="ScreenHeader" eyebrow="매일 6개 챙기는 중" title="영양제" hint-size="100%,56px"></dc-import>
+
+    <section style="display: flex; flex-direction: column; gap: 4px;">
+      <dc-import name="SectionHeader" label="아침" hint="05–11시" icon="/_blob/d6756bae72d01b24cf2105a04388c8dd" hint-size="100%,23px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/56f7bbd221e0dbea56b60be13f10a06b" title="유산균" sub="1알 · 공복에" trail="text" trail-text="08:00" href="EditDose.dc.html" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/4f09d3617e69995832560c4998771e80" title="비타민D" sub="1알 · 아침 식사 후" trail="text" trail-text="08:00" href="EditDose.dc.html" hint-size="100%,60px"></dc-import>
+    </section>
+    <div aria-hidden="true" style="height: 10px; margin: 0 -20px; background: #f3f4f6;"></div>
+    <section style="display: flex; flex-direction: column; gap: 4px;">
+      <dc-import name="SectionHeader" label="점심" hint="11–15시" icon="/_blob/4f09d3617e69995832560c4998771e80" hint-size="100%,23px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/5e9761d53e7178469e1b8d82893baf92" title="루테인" sub="1알 · 식사와 함께" trail="text" trail-text="12:30" href="EditDose.dc.html" hint-size="100%,60px"></dc-import>
+    </section>
+    <div aria-hidden="true" style="height: 10px; margin: 0 -20px; background: #f3f4f6;"></div>
+    <section style="display: flex; flex-direction: column; gap: 4px;">
+      <dc-import name="SectionHeader" label="저녁" hint="18–22시" icon="/_blob/cd10fb660700a66544d1f0c65db1e189" hint-size="100%,23px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/090e19df98d02b97d3da074df29f0464" title="오메가3" sub="1알 · 물과 함께 · 4일분 남음" sub-color="#c2410c" trail="text" trail-text="20:00" href="EditDose.dc.html" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/add37f25abe7a4e4585156f9d9e852dd" title="칼슘" sub="1알 · 저녁 식사 후" trail="text" trail-text="20:00" href="EditDose.dc.html" hint-size="100%,60px"></dc-import>
+    </section>
+    <div aria-hidden="true" style="height: 10px; margin: 0 -20px; background: #f3f4f6;"></div>
+    <section style="display: flex; flex-direction: column; gap: 4px;">
+      <dc-import name="SectionHeader" label="밤" hint="22시 이후" icon="/_blob/14a15b767b7a995a075d8c9067e26935" hint-size="100%,23px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/d513e23a477d5280f5568955d8cc67f2" title="마그네슘" sub="1알 · 자기 전에" trail="text" trail-text="22:30" href="EditDose.dc.html" hint-size="100%,60px"></dc-import>
+    </section>
+
+    <p style="margin: 0; font-size: 13px; line-height: 19px; color: #6b7079;">시간대는 먹는 시간에 따라 자동으로 나뉘어요. 오후(15–18시)처럼 비어 있는 시간대는 숨겨요.</p>
+  </div>
+
+  </div>
+  <div style="position: absolute; left: 20px; right: 20px; bottom: 24px;">
+    <dc-import name="TabBar" active="meds" hint-size="100%,66px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

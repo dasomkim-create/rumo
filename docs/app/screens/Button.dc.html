@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>버튼</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 100%; font-family: Pretendard, -apple-system, system-ui, sans-serif; color: #111111;">
+  <sc-if value="{{hasHref}}" hint-placeholder-val="{{true}}">
+    <a href="{{href}}" aria-label="{{a11y}}" style="width: 100%; height: {{h}}; box-sizing: border-box; padding: 0 18px; border-radius: {{radius}}; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: {{fs}}; font-weight: {{fw}}; letter-spacing: -0.2px; background: {{bg}}; color: {{fg}};">
+      <sc-if value="{{isMic}}" hint-placeholder-val="{{false}}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="2.5" width="7" height="12.5" rx="3.5" fill="currentColor" stroke="none"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"></path><path d="M12 18v3.5M9 21.5h6"></path></svg>
+      </sc-if>{{label}}
+    </a>
+  </sc-if>
+  <sc-if value="{{noHref}}" hint-placeholder-val="{{false}}">
+    <button type="button" onClick="{{press}}" aria-label="{{a11y}}" style="width: 100%; height: {{h}}; box-sizing: border-box; padding: 0 18px; border: 0; border-radius: {{radius}}; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; font-family: inherit; font-size: {{fs}}; font-weight: {{fw}}; letter-spacing: -0.2px; background: {{bg}}; color: {{fg}};">
+      <sc-if value="{{isMic}}" hint-placeholder-val="{{false}}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="2.5" width="7" height="12.5" rx="3.5" fill="currentColor" stroke="none"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"></path><path d="M12 18v3.5M9 21.5h6"></path></svg>
+      </sc-if>{{label}}
+    </button>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"먹었어"},"href":{"editor":"text","default":"Done.dc.html"},"variant":{"editor":"enum","options":["primary","secondary","white","voice"],"default":"primary"},"size":{"editor":"enum","options":["lg","md","sm"],"default":"lg"},"shape":{"editor":"enum","options":["pill","rounded"],"default":"pill"},"icon":{"editor":"enum","options":["none","mic"],"default":"none"},"a11y":{"editor":"text","default":""},"onPress":{"editor":null},"$preview":{"width":350,"height":56}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const v = p.variant ?? 'primary';
+    const s = p.size ?? 'lg';
+    const href = p.href ?? (p.onPress ? '' : 'Done.dc.html');
+    const C = {
+      primary: ['#111111', '#ffffff'],
+      secondary: ['#f3f4f6', '#111111'],
+      white: ['#ffffff', '#111111'],
+      voice: ['#7960ff', '#111111']
+    };
+    const S = { lg: ['56px', '17px', 600], md: ['48px', '15px', 500], sm: ['36px', '14px', 500] };
+    const c = C[v] || C.primary;
+    const z = S[s] || S.lg;
+    const label = p.label ?? '먹었어';
+    return {
+      radius: (p.shape ?? 'pill') === 'rounded' ? '18px' : '999px',
+      label: label,
+      a11y: p.a11y || label,
+      href: href,
+      hasHref: !!href,
+      noHref: !href,
+      bg: c[0], fg: c[1], h: z[0], fs: z[1], fw: z[2],
+      isMic: p.icon === 'mic',
+      press: () => { if (p.onPress) p.onPress(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

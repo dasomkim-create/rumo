@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>먹었어</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 560ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:60ms}.rise>*:nth-child(3){animation-delay:120ms}.rise>*:nth-child(4){animation-delay:180ms}.rise>*:nth-child(5){animation-delay:240ms}.rise>*:nth-child(6){animation-delay:300ms}.rise>*:nth-child(7){animation-delay:360ms}.rise>*:nth-child(8){animation-delay:420ms}.rise>*:nth-child(9){animation-delay:480ms}
+@media (prefers-reduced-motion: reduce){.rise>*{animation:none!important}}
+@keyframes rumo-spin{to{transform:rotate(360deg)}}
+@keyframes rumo-wiggle{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes rumo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes rumo-gather{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.3) rotate(-120deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-pop{0%{transform:scale(.2) rotate(-140deg);opacity:0}70%{transform:scale(1.08) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes rumo-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes rumo-burst{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.2);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-ring{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.5);opacity:0}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+a{color:#5b3fe0}a:hover{color:#3d24b8}
+@keyframes rumo-glow{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(var(--gx),var(--gy)) scale(1.1)}66%{transform:translate(calc(var(--gx) * -0.6),calc(var(--gy) * 0.8)) scale(.95)}}
+@keyframes rumo-radar{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.25);opacity:0}}
+@keyframes rumo-bar{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes rumo-pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes rumo-pop{0%{transform:scale(.2) rotate(-140deg);opacity:0}70%{transform:scale(1.08) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes rumo-burst{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.2);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.glass{background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #ffffff; color: #111111; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div aria-hidden="true" style="position: absolute; inset: 0; filter: blur(60px);">
+    <div style="position: absolute; left: -110px; top: 40px; width: 420px; height: 420px; border-radius: 999px; background: #8ff0c6; opacity: 0.9; --gx: 70px; --gy: 60px; animation: rumo-glow 14s ease-in-out infinite;"></div>
+    <div style="position: absolute; right: -60px; top: 470px; width: 260px; height: 260px; border-radius: 999px; background: #ffd56b; opacity: 0.4; --gx: -50px; --gy: -60px; animation: rumo-glow 18s ease-in-out infinite;"></div>
+  </div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 33%, rgba(255,255,255,.95) 0, rgba(255,255,255,.5) 120px, rgba(255,255,255,0) 230px);"></div>
+  <div class="rise" style="position: relative; height: 100%; box-sizing: border-box; padding: 60px 20px 32px; display: flex; flex-direction: column; align-items: center;">
+    <div style="align-self: stretch; display: flex; justify-content: flex-end;">
+      <a href="HomeAfter.dc.html" aria-label="닫기" class="glass" style="width: 36px; height: 36px; border-radius: 999px; color: #111111; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </a>
+    </div>
+    <div style="position: relative; width: 260px; height: 260px; margin-top: 24px; display: flex; align-items: center; justify-content: center;">
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; background: rgba(255,255,255,.22);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 36px; border-radius: 999px; background: rgba(255,255,255,.32);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 72px; border-radius: 999px; background: rgba(255,255,255,.72);"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; box-shadow: inset 0 0 0 2px #1f9d68; animation: rumo-radar 2.4s ease-out infinite;"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; box-shadow: inset 0 0 0 2px #1f9d68; animation: rumo-radar 2.4s ease-out 1.2s infinite;"></div>
+      <div aria-hidden="true" style="position: absolute; width: 120px; height: 120px; border-radius: 999px; background: #111111;"></div>
+      <img src="/_blob/bd2be46ec732ec25f3c6ca8f25048663" alt="완료" style="position: relative; width: 92px; height: 92px; animation: rumo-pop 700ms cubic-bezier(.2,.8,.2,1) both, rumo-spin 20s linear 700ms infinite;">
+      <img src="/_blob/090e19df98d02b97d3da074df29f0464" alt="" aria-hidden="true" style="position: absolute; left: 0; top: 18px; width: 48px; height: 48px; --dx: 110px; --dy: 100px; animation: rumo-burst 800ms cubic-bezier(.2,.8,.2,1) 200ms both, rumo-float 5s ease-in-out 1.2s infinite;">
+      <img src="/_blob/cd10fb660700a66544d1f0c65db1e189" alt="" aria-hidden="true" style="position: absolute; right: 4px; top: 6px; width: 42px; height: 42px; --dx: -110px; --dy: 120px; animation: rumo-burst 800ms cubic-bezier(.2,.8,.2,1) 260ms both, rumo-float 5s ease-in-out 1.2s infinite;">
+      <img src="/_blob/56f7bbd221e0dbea56b60be13f10a06b" alt="" aria-hidden="true" style="position: absolute; right: 10px; bottom: 16px; width: 46px; height: 46px; --dx: -100px; --dy: -90px; animation: rumo-burst 800ms cubic-bezier(.2,.8,.2,1) 320ms both, rumo-float 5s ease-in-out 1.2s infinite;">
+      <img src="/_blob/03e1ed6b1bebeafc74c1d5553ff8c8f9" alt="" aria-hidden="true" style="position: absolute; left: 14px; bottom: 26px; width: 36px; height: 36px; --dx: 100px; --dy: -80px; animation: rumo-burst 800ms cubic-bezier(.2,.8,.2,1) 380ms both, rumo-float 5s ease-in-out 1.2s infinite;">
+
+    </div>
+
+    <div style="margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+      <span style="font-size: 15px; line-height: 22px; font-weight: 500; color: #4b5059;">오메가3 · 20:03</span>
+      <h1 style="margin: 0; font-size: 30px; line-height: 40px; font-weight: 600; letter-spacing: -0.8px;">{{title}}</h1>
+      <span style="font-size: 17px; line-height: 25px; color: #4b5059;">{{body}}</span>
+    </div>
+
+    <span class="glass" style="margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; font-size: 14px; line-height: 20px; font-weight: 500;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>{{devices}}
+    </span>
+
+    <div style="margin-top: auto; align-self: stretch; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <dc-import name="Button" label="홈으로" href="HomeAfter.dc.html" variant="primary" size="lg" hint-size="100%,56px"></dc-import>
+      <button type="button" onClick="{{undo}}" style="height: 44px; padding: 0 16px; border: 0; background: transparent; font-family: inherit; font-size: 15px; font-weight: 500; color: #4b5059; cursor: pointer;">{{undoLabel}}</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { undone: false };
+  }
+  renderVals() {
+    const u = this.state.undone;
+    return {
+      title: u ? '기록을 되돌렸어요' : '오늘도 챙겼다!',
+      body: u ? '30분 뒤에 루모가 다시 물어볼게요' : '저녁 루틴 12일째예요',
+      devices: u ? '알림을 다시 켰어요' : '루모 · 워치 · 폰 알림을 닫았어요',
+      undoLabel: u ? '다시 기록하기' : '되돌리기',
+      undo: () => this.setState({ undone: !u })
+    };
+  }
+}
+</script>
+</body>
+</html>

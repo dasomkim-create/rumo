@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>건강 리포트</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 560ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:60ms}.rise>*:nth-child(3){animation-delay:120ms}.rise>*:nth-child(4){animation-delay:180ms}.rise>*:nth-child(5){animation-delay:240ms}.rise>*:nth-child(6){animation-delay:300ms}.rise>*:nth-child(7){animation-delay:360ms}.rise>*:nth-child(8){animation-delay:420ms}
+@keyframes rumo-grow{from{transform:scaleY(0)}to{transform:none}}
+.bar{transform-origin:bottom;animation:rumo-grow 700ms cubic-bezier(.2,.8,.2,1) both}
+@keyframes rumo-wiggle{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+.scroll{scrollbar-width:none;-webkit-overflow-scrolling:touch}.scroll::-webkit-scrollbar{display:none}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #ffffff; color: #111111; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div class="scroll" style="position: absolute; inset: 0; overflow-y: auto; box-sizing: border-box; padding-bottom: 120px;">
+  <div class="rise" style="padding: 60px 20px 0; display: flex; flex-direction: column; gap: 20px;">
+    <dc-import name="Segmented" labels="영양제|건강" hrefs="Report.dc.html|Health.dc.html" active="{{one}}" hint-size="100%,40px"></dc-import>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <dc-import name="ScreenHeader" eyebrow="11월 11일 · 워치에서 가져왔어요" title="오늘의 컨디션" value="78" total="/100" hint-size="100%,56px"></dc-import>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div role="img" aria-label="상태: 좋음" style="position: relative; height: 8px; border-radius: 999px; background: #eceef1;">
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 78%; border-radius: 999px; background: linear-gradient(90deg, #ff9ee2 0%, #ffc96b 100%);"></div>
+          <span aria-hidden="true" style="position: absolute; left: calc(78% - 8px); top: -4px; width: 16px; height: 16px; border-radius: 999px; background: #ffffff; box-shadow: 0 0 0 3px #111111;"></span>
+        </div>
+        <div style="display: grid; grid-template-columns: 4fr 3fr 3fr; font-size: 12px; line-height: 16px; color: #8a9099;">
+          <span>휴식</span><span>보통</span><span style="color: #111111; font-weight: 600;">좋음 · 78</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: flex-start;">
+        <img src="/_blob/56f7bbd221e0dbea56b60be13f10a06b" alt="" style="width: 26px; height: 26px; flex: none; animation: rumo-wiggle 3s ease-in-out infinite;">
+        <p style="margin: 0; font-size: 15px; line-height: 22px; color: #30343b;">잘 잤네. 오늘은 무리하지 않아도 괜찮아. 저녁 오메가3만 잊지 말자.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <dc-import name="SectionHeader" label="최근 7일 컨디션" hint="평균 72" hint-size="100%,23px"></dc-import>
+      <div role="img" aria-label="최근 7일 컨디션: 월 64, 화 58, 수 70, 목 74, 금 69, 토 81, 오늘 78" style="height: 120px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; align-items: end;">
+        <sc-for list="{{week}}" as="d" hint-placeholder-count="7">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end;">
+            <span style="font-size: 12px; line-height: 16px; font-weight: {{d.fw}}; color: {{d.tc}}; font-variant-numeric: tabular-nums;">{{d.v}}</span>
+            <div class="bar" style="width: 100%; height: {{d.h}}; border-radius: 6px; background: {{d.c}}; animation-delay: {{d.delay}};"></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; text-align: center; font-size: 12px; line-height: 16px; color: #6b7079;">
+        <sc-for list="{{week}}" as="d" hint-placeholder-count="7"><span style="color: {{d.tc}}; font-weight: {{d.fw}};">{{d.day}}</span></sc-for>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <dc-import name="SectionHeader" label="수면 패턴" icon="/_blob/14a15b767b7a995a075d8c9067e26935" hint="목표 7시간" hint-size="100%,23px"></dc-import>
+      <div role="img" aria-label="요일별 수면 시간, 가로 점선은 목표 7시간" style="position: relative; height: 96px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; align-items: end;">
+        <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 70px; border-top: 1px dashed #c4c8ce;"></div>
+        <sc-for list="{{sleep}}" as="z" hint-placeholder-count="7">
+          <div class="bar" title="{{z.t}}" style="height: {{z.h}}; border-radius: 6px; background: {{z.c}}; animation-delay: {{z.delay}};"></div>
+        </sc-for>
+      </div>
+      <span style="display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 19px; color: #6b7079;"><i style="width: 8px; height: 8px; border-radius: 2px; background: #ff6a32;"></i>화요일 5시간 40분 · 그날 마그네슘도 놓쳤어요</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+      <dc-import name="SectionHeader" label="오늘 요약" hint-size="100%,23px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/14a15b767b7a995a075d8c9067e26935" title="수면" sub="23:40 – 07:00" trail="text" trail-text="7시간 20분" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/7f47d644fe898216564e5b1bfa1142d0" title="활동" sub="워치 · 목표 8,000걸음" trail="text" trail-text="6,420걸음" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/3df2b8b32f769a5dd2d9bc257eebeb10" title="영양제" sub="이번 주 6번 챙겼어요" trail="text" trail-text="6/7" href="Report.dc.html" hint-size="100%,60px"></dc-import>
+    </div>
+
+    <div style="height: 10px; margin: 0 -20px; background: #f3f4f6;" aria-hidden="true"></div>
+
+    <div style="display: flex; flex-direction: column;">
+      <dc-import name="SectionHeader" label="루모 하우스로 보기" hint-size="100%,23px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/904d936360358c88e99fba1c5aee9f67" title="하우스 벽에 비추기" sub="오늘 점수와 수면을 흰 벽에 띄워요" trail="button" off-text="비추기" on-text="비추는 중" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/a0d9d5901770d1d54c603dd7fbf72305" title="주간 리포트 출력" sub="한 장 요약 · QR로 상세 기록 저장" trail="button" off-text="출력" on-text="출력됨" hint-size="100%,60px"></dc-import>
+      <p style="margin: 8px 0 0; font-size: 12px; line-height: 17px; color: #8a9099;">점수는 애플 건강·삼성 헬스에서 가져온 수면과 활동으로 계산해요. 의료 진단이 아니에요.</p>
+    </div>
+  </div>
+
+  </div>
+  <div style="position: absolute; left: 20px; right: 20px; bottom: 24px;">
+    <dc-import name="TabBar" active="report" hint-size="100%,66px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const D = ['월', '화', '수', '목', '금', '토', '오늘'];
+    const V = [64, 58, 70, 74, 69, 81, 78];
+    const week = V.map((v, i) => {
+      const today = i === 6;
+      return {
+        day: D[i], v: String(v),
+        h: Math.round((v / 100) * 92) + 'px',
+        c: today ? 'linear-gradient(180deg, #ff9ee2 0%, #ffc96b 100%)' : 'linear-gradient(180deg, #eceef1 0%, #f4f5f7 100%)',
+        tc: today ? '#111111' : '#6b7079',
+        fw: today ? '600' : '400',
+        delay: (i * 50) + 'ms'
+      };
+    });
+    const S = [7.0, 5.7, 7.5, 6.8, 7.2, 8.1, 7.3];
+    const sleep = S.map((h, i) => ({
+      h: Math.round((h / 10) * 100) + 'px',
+      c: h < 6.5 ? 'linear-gradient(180deg, #ff6a32 0%, #ffa27d 100%)' : (i === 6 ? 'linear-gradient(180deg, #ff9ee2 0%, #ffc96b 100%)' : 'linear-gradient(180deg, #eceef1 0%, #f4f5f7 100%)'),
+      t: D[i] + ' ' + Math.floor(h) + '시간 ' + Math.round((h % 1) * 60) + '분',
+      delay: (i * 50) + 'ms'
+    }));
+    return { week, sleep, one: 1, no: false };
+  }
+}
+</script>
+</body>
+</html>

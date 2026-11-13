@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>탭 바</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-spin{to{transform:rotate(360deg)}}
+@keyframes rumo-wiggle{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes rumo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes rumo-gather{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.3) rotate(-120deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-pop{0%{transform:scale(.2) rotate(-140deg);opacity:0}70%{transform:scale(1.08) rotate(10deg);opacity:1}100%{transform:none}}
+@keyframes rumo-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes rumo-burst{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.2);opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-ring{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.5);opacity:0}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<nav aria-label="탭" style="width: 100%; height: 66px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; display: flex; justify-content: space-around; align-items: center; background: rgba(255, 255, 255, 0.72); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); font-family: Pretendard, -apple-system, system-ui, sans-serif; color: #111111;">
+  <sc-for list="{{items}}" as="it" hint-placeholder-count="4">
+    <a href="{{it.href}}" aria-current="{{it.current}}" style="display: flex; flex-direction: column; align-items: center; gap: 3px; width: 64px; text-decoration: none; color: {{it.color}}; font-size: 11px; line-height: 14px; font-weight: {{it.weight}};">
+      <img src="{{it.icon}}" alt="" style="width: 26px; height: 26px; filter: {{it.filter}}; opacity: {{it.opacity}}; animation: {{it.anim}};">{{it.label}}
+    </a>
+  </sc-for>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["today","meds","report","robot"],"default":"today"},"$preview":{"width":350,"height":66}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active ?? 'today';
+    const T = [
+      { key: 'today', label: '오늘', href: 'Main.dc.html', icon: '/_blob/4f09d3617e69995832560c4998771e80' },
+      { key: 'meds', label: '영양제', href: 'Meds.dc.html', icon: '/_blob/8c92ad14aea89e11ef58d9c4d48c7daf' },
+      { key: 'report', label: '기록', href: 'Report.dc.html', icon: '/_blob/3df2b8b32f769a5dd2d9bc257eebeb10' },
+      { key: 'robot', label: '루모', href: 'Robot.dc.html', icon: '/_blob/a0d9d5901770d1d54c603dd7fbf72305' }
+    ];
+    const items = T.map((t) => {
+      const on = t.key === active;
+      return Object.assign({}, t, {
+        current: on ? 'page' : 'false',
+        color: on ? '#111111' : '#6b7079',
+        weight: on ? 600 : 500,
+        filter: on ? 'none' : 'grayscale(1)',
+        opacity: on ? 1 : 0.4,
+        anim: on ? 'rumo-pop 600ms cubic-bezier(.2,.8,.2,1) both' : 'none'
+      });
+    });
+    return { items };
+  }
+}
+</script>
+</body>
+</html>

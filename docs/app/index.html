@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUMO 앱 프로토타입</title>
+<meta name="description" content="RUMO 앱을 직접 눌러 보는 프로토타입 — 패키지 디자인 기말 프로젝트 · 김다솜">
+<style>
+@font-face{font-family:"Pretendard";src:url("../fonts/PretendardVariable.woff2") format("woff2");font-weight:45 920;font-display:swap}
+:root{--bg:#0b0b0c;--panel:#141416;--line:#232326;--ink:#ffffff;--sub:#9a9aa2;--accent:#d5ff44}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{display:flex;height:100%;min-height:100vh}
+.side{width:300px;flex:none;padding:28px 24px;border-right:1px solid var(--line);overflow-y:auto;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;flex-direction:column;gap:10px}
+.brand p{margin:0;font-size:14px;line-height:21px;color:var(--sub)}
+.grp{display:flex;flex-direction:column;gap:2px}
+.grp h3{margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.04em;color:#6c6c74}
+.grp a{display:flex;justify-content:space-between;gap:8px;padding:9px 12px;border-radius:12px;color:#d4d4d8;text-decoration:none;font-size:15px;transition:background 160ms ease,color 160ms ease}
+.grp a span{color:#6c6c74;font-size:13px;font-variant-numeric:tabular-nums}
+.grp a:hover{background:#1c1c1f;color:#fff}
+.grp a[aria-current="page"]{background:#ffffff;color:#000}.grp a[aria-current="page"] span{color:#6c6c74}
+.links{margin-top:auto;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.links a{color:var(--sub);text-decoration:none}.links a:hover{color:#fff}
+.main{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.glow{position:absolute;width:60vmin;height:60vmin;border-radius:999px;filter:blur(90px);opacity:.25;background:radial-gradient(#ff64cf,#7960ff 60%,transparent 70%);pointer-events:none}
+.device{position:relative;transform-origin:50% 50%}
+.frame{position:relative;overflow:hidden;background:#fff;color:#111;box-shadow:0 0 0 10px #1c1c1f,0 40px 120px rgba(0,0,0,.6)}
+.screen{position:absolute;inset:0;animation:scr-in 320ms cubic-bezier(.2,.8,.2,1) both}
+@keyframes scr-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cap{position:absolute;left:0;right:0;top:calc(100% + 26px);text-align:center;font-size:14px;color:var(--sub)}
+.hint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);font-size:13px;color:#6c6c74;white-space:nowrap}
+.menu-btn{display:none}
+.load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#888;font-size:14px}
+@media (max-width:820px){
+  .side{position:fixed;inset:auto 0 0 0;width:auto;max-height:72vh;border-right:0;border-top:1px solid var(--line);background:var(--panel);border-radius:22px 22px 0 0;z-index:30;transform:translateY(105%);transition:transform 260ms cubic-bezier(.2,.8,.2,1);padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+  .side.open{transform:none}
+  .brand p,.links{display:none}
+  .menu-btn{display:inline-flex;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:31;height:44px;padding:0 18px;border:0;border-radius:999px;background:#fff;color:#000;font:600 15px Pretendard,system-ui,sans-serif;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .frame{box-shadow:none}
+  .cap,.hint,.glow{display:none}
+}
+@media (prefers-reduced-motion: reduce){.screen{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="side" id="side" aria-label="화면 목록">
+    <div class="brand">
+      <svg role="img" aria-label="rumo" viewBox="0 0 512 100" style="width:96px;height:19px"><path fill="#fff" d="M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100ZM104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50ZM228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100ZM298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z"/><path fill="#ffc447" d="M425.02 56.65L490.70 74.25A16.0 16.0 0 0 0 498.98 43.35L433.30 25.75A16.0 16.0 0 0 0 425.02 56.65ZM437.75 21.30L455.35 86.98A16.0 16.0 0 0 0 486.25 78.70L468.65 13.02A16.0 16.0 0 0 0 437.75 21.30ZM474.73 14.64L426.64 62.73A16.0 16.0 0 0 0 449.27 85.36L497.36 37.27A16.0 16.0 0 0 0 474.73 14.64Z"/></svg>
+      <p>앱 프로토타입이에요. 화면 안의 버튼을 직접 눌러 보세요. 왼쪽에서 화면으로 바로 갈 수도 있어요.</p>
+    </div>
+    <nav id="nav"></nav>
+    <div class="links"><a href="../index.html">← 브랜드 사이트</a><a href="../deck.html">장표 넘겨 보기</a><a href="https://github.com/dasomkim-create/rumo-brand">GitHub 소스</a></div>
+  </aside>
+  <main class="main" id="main">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="device" id="device"><div class="frame" id="frame"><div class="load">불러오는 중…</div></div></div>
+    <div class="hint"><b id="cap" style="color:#d4d4d8;font-weight:600"></b> · 화면 안을 눌러 보세요</div>
+  </main>
+</div>
+<button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="side">화면 목록</button>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="dc-lite.js"></script>
+<script>
+(function () {
+  var G = [
+    ['처음 만나기', [['Onboarding','01 시작'],['Connect','02 루모 연결'],['AddDose','03 영양제 등록']]],
+    ['매일의 루틴', [['Main','04 오늘 (홈)'],['HomeAfter','04-3 먹은 뒤'],['Meds','05 영양제'],['EditDose','05-1 수정 · 삭제'],['Report','06 기록'],['Health','06-2 건강 리포트'],['Robot','07 루모 설정']]],
+    ['루모가 부를 때', [['Alert','A 지금 알림'],['Voice','B 말로 확인'],['Done','C 먹었어'],['Watch','W 워치 알림']]],
+    ['예외 상황', [['HomeOffline','04-1 연결 끊김'],['HomeEmpty','04-2 영양제 0개'],['AlertNoMic','A-1 마이크 꺼짐']]],
+    ['시트', [['SheetSymbol','03-1 표식 고르기'],['SheetProduct','03-2 영양제 찾기']]]
+  ];
+  var TITLE = {}; var nav = document.getElementById('nav');
+  nav.innerHTML = G.map(function (g) { return '<div class="grp"><h3>' + g[0] + '</h3>' + g[1].map(function (s) { TITLE[s[0]] = s[1]; var p = s[1].split(' '); return '<a href="#/' + s[0] + '" data-s="' + s[0] + '">' + p.slice(1).join(' ') + '<span>' + p[0] + '</span></a>'; }).join('') + '</div>'; }).join('<div style="height:14px"></div>');
+  var frame = document.getElementById('frame'), device = document.getElementById('device'), cap = document.getElementById('cap');
+  var side = document.getElementById('side'), menuBtn = document.getElementById('menuBtn');
+  var root = ReactDOM.createRoot(frame); var cur = null; var size = { w: 390, h: 844 };
+  function fit() {
+    var mobile = window.innerWidth <= 820;
+    var W = mobile ? window.innerWidth : (document.getElementById('main').clientWidth - 80);
+    var H = mobile ? window.innerHeight : (window.innerHeight - 140);
+    var s = Math.min(W / size.w, H / size.h, mobile ? 10 : 1.15);
+    device.style.transform = 'scale(' + s + ')';
+    frame.style.width = size.w + 'px'; frame.style.height = size.h + 'px';
+    frame.style.borderRadius = (mobile ? 0 : (size.w < 300 ? 56 : 44)) + 'px';
+  }
+  function go(name, push) {
+    if (!TITLE[name]) name = 'Onboarding';
+    if (push !== false && location.hash !== '#/' + name) { history.pushState(null, '', '#/' + name); }
+    cur = name;
+    document.querySelectorAll('#nav a').forEach(function (a) { if (a.dataset.s === name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    cap.textContent = TITLE[name]; document.title = TITLE[name] + ' · RUMO 앱';
+    side.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false');
+    DCLite.load(name).then(function () {
+      var pv = DCLite.preview(name) || { width: 390, height: 844 };
+      size = { w: pv.width, h: pv.height }; fit();
+      root.render(React.createElement('div', { className: 'screen', key: name + ':' + Date.now() }, React.createElement(DCLite.DC, { __name: name })));
+    }).catch(function (e) { frame.innerHTML = '<div class="load">화면을 불러오지 못했어요</div>'; console.error(e); });
+  }
+  frame.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a'); if (!a) return;
+    var href = a.getAttribute('href') || '';
+    var m = href.match(/([A-Za-z0-9_-]+)\.dc\.html/);
+    if (m) { e.preventDefault(); go(m[1]); return; }
+    if (href === '' || href === '#') { e.preventDefault(); return; }
+    if (href.charAt(0) === '#') { e.preventDefault(); var t = frame.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth' }); }
+  }, true);
+  nav.addEventListener('click', function (e) { var a = e.target.closest('a'); if (!a) return; e.preventDefault(); go(a.dataset.s); });
+  menuBtn.addEventListener('click', function () { var o = side.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+  window.addEventListener('popstate', function () { go((location.hash.match(/^#\/(\w+)/) || [])[1], false); });
+  window.addEventListener('resize', fit);
+  go((location.hash.match(/^#\/(\w+)/) || [])[1] || 'Onboarding', false);
+})();
+</script>
+</body>
+</html>

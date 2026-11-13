@@ -9,6 +9,9 @@
 
 - 랜딩페이지: https://dasomkim-create.github.io/rumo-brand/
 - 장표 넘겨 보기: https://dasomkim-create.github.io/rumo-brand/deck.html
+- 앱 프로토타입(직접 눌러 보기): https://dasomkim-create.github.io/rumo-brand/app/
+
+`docs/app/`은 캔버스의 앱 화면(`.dc.html`)을 그대로 읽어서 실제로 동작시켜요. 런타임 `dc-lite.js`는 이 레포용으로 새로 만든 가벼운 버전이에요.
 
 `docs/`의 사이트는 캔버스에서 내보낸 정적 버전이에요(이미지로 고정). 캔버스를 고친 뒤에는 다시 내보내야 바뀌어요.
 

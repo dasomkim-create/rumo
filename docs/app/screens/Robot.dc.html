@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>루모 설정</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 560ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:60ms}.rise>*:nth-child(3){animation-delay:120ms}.rise>*:nth-child(4){animation-delay:180ms}
+@keyframes rumo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes rumo-flash-a{0%,100%{transform:none;filter:none}35%{transform:scale(1.08);filter:brightness(1.15) drop-shadow(0 0 8px rgba(213,255,68,.9))}}
+@keyframes rumo-flash-b{0%,100%{transform:none;filter:none}35%{transform:scale(1.08);filter:brightness(1.15) drop-shadow(0 0 8px rgba(213,255,68,.9))}}
+@keyframes rumo-buzz-a{0%,100%{transform:none}10%,30%,50%,70%{transform:translateX(-3px) rotate(-3deg)}20%,40%,60%{transform:translateX(3px) rotate(3deg)}}
+@keyframes rumo-buzz-b{0%,100%{transform:none}10%,30%,50%,70%{transform:translateX(-3px) rotate(-3deg)}20%,40%,60%{transform:translateX(3px) rotate(3deg)}}
+@keyframes rumo-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.5}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+a{color:#5b3fe0}a:hover{color:#3d24b8}
+.scroll{scrollbar-width:none;-webkit-overflow-scrolling:touch}.scroll::-webkit-scrollbar{display:none}
+button,.press{transition:transform 180ms cubic-bezier(.2,.8,.2,1),background-color 200ms ease,box-shadow 200ms ease,opacity 200ms ease}button:active,.press:active{transform:scale(.96)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #ffffff; color: #111111; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div class="scroll" style="position: absolute; inset: 0; overflow-y: auto; box-sizing: border-box; padding-bottom: 120px;">
+  <div class="rise" style="padding: 60px 20px 0; display: flex; flex-direction: column; gap: 20px;">
+    <div style="height: 40px; display: flex; justify-content: space-between; align-items: center;"><dc-import name="Chip" label="우리 집 루모 · No. 0427" icon="/_blob/904d936360358c88e99fba1c5aee9f67" tone="plain" hint-size="200px,28px"></dc-import><a href="Connect.dc.html" aria-label="기기 추가" class="press" style="width: 36px; height: 36px; border-radius: 999px; background: #111111; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></a></div>
+    <dc-import name="ScreenHeader" eyebrow="" title="루모" hint-size="100%,40px"></dc-import>
+
+    <div style="border-radius: 24px; background: #ffe4d9; padding: 18px 20px; display: flex; align-items: center; gap: 16px;">
+      <img src="/_blob/a0d9d5901770d1d54c603dd7fbf72305" alt="" style="width: 50px; height: 52px; flex: none; animation: rumo-float 3s ease-in-out infinite;">
+      <div style="display: flex; flex-direction: column; flex-grow: 1;">
+        <span style="font-size: 17px; line-height: 24px; font-weight: 600; letter-spacing: -0.2px;">거실 도크에서 쉬는 중</span>
+        <span style="font-size: 13px; line-height: 19px; color: #4b5059;">충전 82% · 방금 다솜 님을 봤어요</span>
+      </div>
+      <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; line-height: 19px; font-weight: 500;">
+        <span style="width: 8px; height: 8px; border-radius: 999px; background: #1f9d68; animation: rumo-pulse 2s ease-in-out infinite;"></span>연결됨
+      </span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <dc-import name="SectionHeader" label="확인이 없으면 이렇게 이어져요" hint-size="100%,23px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/b5ea88f398c71944618e66f6e1c373c5" title="루모" sub="말을 걸고 체크 타일에 불을 켜요" trail="text" trail-text="정시" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/cd10fb660700a66544d1f0c65db1e189" title="워치" sub="가볍게 진동, 탭 한 번으로 확인" trail="text" trail-text="+15분" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/904d936360358c88e99fba1c5aee9f67" title="폰" sub="집에서 못 찾으면 푸시" trail="text" trail-text="+30분" hint-size="100%,60px"></dc-import>
+      <dc-import name="ListRow" icon="/_blob/4da6be375f50b2899f7022aaaef22523" title="기록" sub="'놓침'으로 남겨요. 혼내지 않아요" trail="text" trail-text="+90분" hint-size="100%,60px"></dc-import>
+    </div>
+  </div>
+
+  <div aria-hidden="true" style="height: 10px; margin: 28px 0 28px; background: #f3f4f6;"></div>
+
+  <div style="padding: 0 20px; display: flex; flex-direction: column;">
+    <dc-import name="SectionHeader" label="연결된 기기" hint-size="100%,23px"></dc-import>
+    <button type="button" onClick="{{toggleTile}}" aria-expanded="{{tileOpen}}" style="min-height: 60px; border: 0; padding: 0; background: transparent; display: flex; align-items: center; gap: 14px; cursor: pointer; font-family: inherit; text-align: left; color: #111111;">
+      <img src="/_blob/3df2b8b32f769a5dd2d9bc257eebeb10" alt="" style="width: 28px; height: 28px; flex: none;">
+      <span style="flex-grow: 1; display: flex; flex-direction: column;"><span style="font-size: 17px; line-height: 24px; font-weight: 500; letter-spacing: -0.2px;">체크 타일</span><span style="font-size: 13px; line-height: 19px; color: #6b7079;">현관 3×2 · 6칸 모두 연결됨</span></span>
+      <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #1f9d68;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #1f9d68; animation: rumo-pulse 2s ease-in-out infinite;"></span>연결</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aeb3ba" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: {{tileRot}}; transition: transform 260ms cubic-bezier(.2,.8,.2,1);"><path d="M6 9l6 6 6-6"></path></svg>
+    </button>
+    <sc-if value="{{tileShow}}" hint-placeholder-val="{{false}}">
+      <div style="margin: 4px 0 12px 42px; display: flex; flex-direction: column; gap: 12px; animation: rumo-in 360ms cubic-bezier(.2,.8,.2,1) both;">
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px;">
+          <sc-for list="{{cells}}" as="c" hint-placeholder-count="6">
+            <div style="height: 44px; border-radius: 12px; background: {{c.bg}}; box-shadow: {{c.ring}}; display: flex; align-items: center; justify-content: center; animation: {{c.anim}};"><img src="{{c.icon}}" alt="{{c.name}}" style="width: 22px; height: 22px;"></div>
+          </sc-for>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <span style="font-size: 13px; line-height: 19px; color: #6b7079;">{{tileNote}}</span>
+          <button type="button" onClick="{{lightUp}}" style="height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: #111111; color: #ffffff; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; flex: none;">불 켜보기</button>
+        </div>
+      </div>
+    </sc-if>
+    <button type="button" onClick="{{toggleWatch}}" aria-expanded="{{watchOpen}}" style="min-height: 60px; border: 0; padding: 0; background: transparent; display: flex; align-items: center; gap: 14px; cursor: pointer; font-family: inherit; text-align: left; color: #111111;">
+      <img src="/_blob/cd10fb660700a66544d1f0c65db1e189" alt="" style="width: 28px; height: 28px; flex: none;">
+      <span style="flex-grow: 1; display: flex; flex-direction: column;"><span style="font-size: 17px; line-height: 24px; font-weight: 500; letter-spacing: -0.2px;">워치</span><span style="font-size: 13px; line-height: 19px; color: #6b7079;">햅틱 알림 · 수면과 활동 가져오기</span></span>
+      <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #1f9d68;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #1f9d68; animation: rumo-pulse 2s ease-in-out infinite;"></span>연결</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aeb3ba" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: {{watchRot}}; transition: transform 260ms cubic-bezier(.2,.8,.2,1);"><path d="M6 9l6 6 6-6"></path></svg>
+    </button>
+    <sc-if value="{{watchShow}}" hint-placeholder-val="{{false}}">
+      <div style="margin: 4px 0 12px 42px; display: flex; align-items: center; gap: 12px; animation: rumo-in 360ms cubic-bezier(.2,.8,.2,1) both;">
+        <div aria-hidden="true" style="width: 44px; height: 54px; border-radius: 14px; background: #111111; display: flex; align-items: center; justify-content: center; flex: none; animation: {{buzzAnim}};"><img src="/_blob/090e19df98d02b97d3da074df29f0464" alt="" style="width: 24px; height: 22px;"></div>
+        <span role="status" style="flex-grow: 1; font-size: 13px; line-height: 19px; color: #6b7079;">{{watchNote}}</span>
+        <button type="button" onClick="{{buzz}}" style="height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: #f3f4f6; color: #111111; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; flex: none;">진동 보내기</button>
+      </div>
+    </sc-if>
+    <div style="height: 28px;"></div>
+    <dc-import name="SectionHeader" label="알림 설정" hint-size="100%,23px"></dc-import>
+    <dc-import name="ListRow" icon="/_blob/03e1ed6b1bebeafc74c1d5553ff8c8f9" title="30초 듣기 창" sub="알림 뒤에만 &quot;먹었어&quot;를 들어요" trail="switch" on="{{yes}}" hint-size="100%,60px"></dc-import>
+    <dc-import name="ListRow" icon="/_blob/14a15b767b7a995a075d8c9067e26935" title="방해금지 23:00–07:00" sub="소리 대신 빛만, 아침에 요약" trail="switch" on="{{yes}}" hint-size="100%,60px"></dc-import>
+    <dc-import name="ListRow" icon="/_blob/56f7bbd221e0dbea56b60be13f10a06b" title="가족에게 놓침 요약" sub="중요한 영양제만 · 위치와 대화는 공유 안 해요" trail="switch" hint-size="100%,60px"></dc-import>
+  </div>
+
+  </div>
+  <div style="position: absolute; left: 20px; right: 20px; bottom: 24px;">
+    <dc-import name="TabBar" active="robot" hint-size="100%,66px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: 'tile', wave: 0, buzz: 0 };
+  }
+  renderVals() {
+    const st = this.state;
+    const T = [
+      ['유산균', '/_blob/56f7bbd221e0dbea56b60be13f10a06b', 'd'], ['비타민D', '/_blob/4f09d3617e69995832560c4998771e80', 'd'], ['루테인', '/_blob/5e9761d53e7178469e1b8d82893baf92', 'd'],
+      ['오메가3', '/_blob/090e19df98d02b97d3da074df29f0464', 'n'], ['칼슘', '/_blob/add37f25abe7a4e4585156f9d9e852dd', 'w'], ['마그네슘', '/_blob/d513e23a477d5280f5568955d8cc67f2', 'w']
+    ];
+    const BG = { d: '#72e5b5', n: '#ffe3f6', w: '#f3f4f6' };
+    const kf = st.wave % 2 ? 'rumo-flash-a' : 'rumo-flash-b';
+    return {
+      yes: true, no: false,
+      tileShow: st.open === 'tile', tileOpen: st.open === 'tile' ? 'true' : 'false', tileRot: st.open === 'tile' ? 'rotate(180deg)' : 'none',
+      watchShow: st.open === 'watch', watchOpen: st.open === 'watch' ? 'true' : 'false', watchRot: st.open === 'watch' ? 'rotate(180deg)' : 'none',
+      toggleTile: () => this.setState({ open: st.open === 'tile' ? null : 'tile' }),
+      toggleWatch: () => this.setState({ open: st.open === 'watch' ? null : 'watch' }),
+      cells: T.map((t, i) => ({ name: t[0], icon: t[1], bg: BG[t[2]], ring: t[2] === 'n' ? 'inset 0 0 0 2px #ff64cf' : 'none', anim: st.wave ? (kf + ' 700ms ease ' + (i * 110) + 'ms both') : 'none' })),
+      tileNote: st.wave ? '현관 타일 6칸에 차례로 불이 들어왔어요' : '집 타일을 누르면 여기도 같이 바뀌어요',
+      lightUp: () => this.setState({ wave: st.wave + 1 }),
+      buzzAnim: st.buzz ? ((st.buzz % 2 ? 'rumo-buzz-a' : 'rumo-buzz-b') + ' 700ms ease both') : 'none',
+      watchNote: st.buzz ? '워치로 진동을 보냈어요' : '알림이 잘 오는지 시험해 보세요',
+      buzz: () => this.setState({ buzz: st.buzz + 1 })
+    };
+  }
+}
+</script>
+</body>
+</html>
