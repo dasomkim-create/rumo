@@ -61,6 +61,8 @@ s = re.sub(r'(<g class="s-fill"><path fill="#ffffff" d="[^"]+"></path>)(<path fi
 if '<g class="s-petals"' not in s:
     s = re.sub(r'((?:<path class="sl" pathLength="1" d="M4[0-9.]+ [0-9.]+L[^"]+" fill="none" stroke="#ffc447" stroke-width="1.2" ></path>){3})',
                r'<g class="s-petals" style="transform-box:fill-box;transform-origin:center;animation:vl-spin 14s linear infinite">\1</g>', s, count=1)
+# 히어로 svg는 will-change:transform 때문에 viewBox 밖이 잘려요 → 커진 o(오른쪽 끝 ~543)까지 들어가게 넓힘 (가운데는 글자+o 기준)
+s = s.replace('class="hero-logo" role="img" aria-label="rumo 로고" viewBox="-20 -20 552 140"', 'class="hero-logo" role="img" aria-label="rumo 로고" viewBox="-36 -30 610 160"')
 # 히어로용 CSS (섹션 CSS와 같은 키프레임 사용) — 섹션 블록이 페이지에 있으므로 따로 안 넣어요
 open(P, 'w', encoding='utf-8').write(s)
 
