@@ -139,7 +139,7 @@ function rect(x1,y1,x2,y2){const s=new THREE.Shape();s.moveTo(x1,y1);s.lineTo(x2
 function slot(cx,cy,w,h){const r=h/2,p=new THREE.Path();p.moveTo(cx-w/2+r,cy-r);p.lineTo(cx+w/2-r,cy-r);p.absarc(cx+w/2-r,cy,r,-Math.PI/2,Math.PI/2,false);p.lineTo(cx-w/2+r,cy+r);p.absarc(cx-w/2+r,cy,r,Math.PI/2,Math.PI*1.5,false);return p}
 function setOp(o,v){o.traverse(m=>{if(m.material)(Array.isArray(m.material)?m.material:[m.material]).forEach(x=>x.opacity=v)});o.visible=v>0.01}
 const TEXS=[];function tex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=4;TEXS.push({c,draw,t});return t}
-const GREEN='#d5ff44',BLUE='#7960ff',GRAY='#c9cdd3';
+const GREEN='#a8d14b',BLUE='#8ea8ea',GRAY='#c9cdd3';
 function checker(cols,rows){return tex(cols*32,rows*32,x=>{for(let i=0;i<cols;i++)for(let j=0;j<rows;j++){let f=(i+j)%2?'#ffffff':GRAY;if((i+j)%2===0){const k=(i*7+j*13)%11;if(k===3)f=GREEN;if(k===8)f=BLUE}x.fillStyle=f;x.fillRect(i*32,j*32,32,32)}})}
 function plane(w,h,t){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({map:t,transparent:true,roughness:.9,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2}));m.receiveShadow=true;return m}
 function clover(x,cx,cy,r){x.fillStyle=GREEN;for(const[a,b]of[[-1,0],[1,0],[0,-1],[0,1]]){x.beginPath();x.arc(cx+a*r*.9,cy+b*r*.9,r,0,7);x.fill()}}
@@ -203,7 +203,7 @@ function robotMesh(){ // 로봇 강아지 105W × 165D × 180H (원점: 발바�
   return g}
 const robot=robotMesh(); box.add(robot);
 const dock=new THREE.Group();{const p=new THREE.Mesh(new THREE.CylinderGeometry(1,1,1,48),mat(0xf1f2f4,{roughness:.5}));p.scale.set(60,16,52);p.position.y=8;p.castShadow=p.receiveShadow=true;dock.add(p);
-  const l=new THREE.Mesh(new THREE.BoxGeometry(30,2,1),new THREE.MeshBasicMaterial({color:0x7960ff,transparent:true}));l.position.set(0,8,52.3);dock.add(l)} box.add(dock);
+  const l=new THREE.Mesh(new THREE.BoxGeometry(30,2,1),new THREE.MeshBasicMaterial({color:0x8fb4ff,transparent:true}));l.position.set(0,8,52.3);dock.add(l)} box.add(dock);
 const glow=new THREE.PointLight(0xffd79a,0,320,2); box.add(glow); dock.clear();
 
 
@@ -273,9 +273,9 @@ const remote=new THREE.Group();{remote.add(B(50,110,22,0xf1f2f4,0,0,0,C.kedge));
 // 굿즈
 function cloverShape(r){const s=new THREE.Shape();s.absarc(0,r*.9,r,-PI*.25,PI*1.25,false);s.absarc(-r*.9,0,r,PI*.25,PI*1.75,false);s.absarc(0,-r*.9,r,PI*.75,PI*2.25,false);s.absarc(r*.9,0,r,PI*1.25,PI*2.75,false);return s}
 function flat(shape,d,c){const m=X(shape,d,c,0x6f7a52);m.rotation.x=-PI/2;return m}
-const coasters=[0,1].map(()=>grp(ext,flat(cloverShape(9.5),4,0xd5ff44)));
+const coasters=[0,1].map(()=>grp(ext,flat(cloverShape(9.5),4,0xa8d14b)));
 const boneS=new THREE.Shape();boneS.moveTo(-20,-5);boneS.lineTo(20,-5);boneS.absarc(24,-5,6,PI*1.1,PI*2.6,false);boneS.absarc(24,5,6,-PI*0.6,PI*0.9,false);boneS.lineTo(-20,5);boneS.absarc(-24,5,6,PI*0.1,PI*1.6,false);boneS.absarc(-24,-5,6,PI*0.4,PI*1.9,false);
-const bone=grp(box,flat(boneS,5,0x7960ff));
+const bone=grp(box,flat(boneS,5,0x8ea8ea));
 
 // 런너 4장 (5T) — 테두리 264 × 217, 폭 10
 const RUN_ST=[[330,120],[330,345],[-330,120],[-330,345]];
@@ -299,11 +299,11 @@ function ribbonMesh(col,amp,top){const g=new THREE.Group();const s=new THREE.Sha
   for(let i=0;i<=40;i++){const y=L_*i/40;pts.push([amp*Math.sin(y/L_*Math.PI*2.2),y])}
   s.moveTo(pts[0][0]-w,0);pts.forEach(([x,y])=>s.lineTo(x-w,y));[...pts].reverse().forEach(([x,y])=>s.lineTo(x+w,y));s.closePath();
   g.add(X(s,2,col,0x6b7079));const tx=pts[40][0];let m;
-  if(top==='clover')m=X(cloverShape(8),2,0xd5ff44,0x6f7a52);
-  else if(top==='dot'){const c=new THREE.Shape();c.absarc(0,0,11,0,2*PI,false);const h=new THREE.Path();h.absarc(0,0,5,0,2*PI,true);c.holes.push(h);m=X(c,2,0x7960ff,0x5b6fa8)}
+  if(top==='clover')m=X(cloverShape(8),2,0xa8d14b,0x6f7a52);
+  else if(top==='dot'){const c=new THREE.Shape();c.absarc(0,0,11,0,2*PI,false);const h=new THREE.Path();h.absarc(0,0,5,0,2*PI,true);c.holes.push(h);m=X(c,2,0x8ea8ea,0x5b6fa8)}
   else{const a=new THREE.Shape();a.moveTo(-10,-6);a.lineTo(10,-6);a.lineTo(10,4);a.absarc(0,4,10,0,PI,false);a.closePath();m=X(a,2,0xdfe2e7,0x7f8690)}
   m.position.set(tx,L_+8,0);g.add(m);return g}
-const ribbons=[[0xeaffa6,9,'clover'],[0xd3cbff,7,'dot'],[0xe6e8ec,8,'arch']].map(([c,a,tp])=>{const r=ribbonMesh(c,a,tp);box.add(r);return r});
+const ribbons=[[0xd9e9b0,9,'clover'],[0xc9d6f5,7,'dot'],[0xe6e8ec,8,'arch']].map(([c,a,tp])=>{const r=ribbonMesh(c,a,tp);box.add(r);return r});
 const chimney=new THREE.Group(); box.add(chimney);
 {const s=new THREE.Shape();s.moveTo(-20,20*TAN);s.lineTo(20,-20*TAN);s.lineTo(20,72);s.lineTo(-20,72);s.closePath();
   const body=X(s,40,C.kit,C.kedge);body.position.z=-20;chimney.add(body);
