@@ -3,7 +3,7 @@ mm 단위 SVG, Illustrator에서 바로 열려요. 공개 폴더에 올리지 �
 그래픽은 v8 3D 모형의 텍스처를 벡터로 옮긴 것이에요."""
 import math, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from dieline import Sh, rect, slot, label, fold, cut, runner_parts, ribbon, tray, GATES, CUT, FOLD, INK, MUTE, W, D, H, R, FIN, S, PI
+from dieline import Sh, rect, slot, label, fold, cut, runner_parts, ribbon, tray, GATES, CUT, FOLD, INK, MUTE, W, D, H, R, FIN, S, PI, box_outline_pts, box_slots, GLUE_FOLDS, SIGN_AREA
 
 GREEN, BLUE, GRAY, DARK, BOARD, KIT = '#A8D14B', '#8EA8EA', '#C9CDD3', '#2B2E33', '#EEF0F3', '#FBFBFC'
 FONT = 'Pretendard, Apple SD Gothic Neo, sans-serif'
@@ -30,8 +30,7 @@ def clover(cx, cy, r, c=GREEN): return ''.join(f'<circle cx="{cx + a * r * .9:.2
 def outline(mirror):
     """박스 외곽 칼선 path (world 좌표) — mirror면 바깥면에서 본 모습."""
     o = Sh(0, 0, False)
-    pts = [(-135, -D), (135, -D), (135, 0), (135 + D, 0), (490, 0), (490, H + R), (135 + D, H), (135 + D, H + S + FIN), (135, H + S + FIN), (135, H),
-           (0, H + R), (-135, H), (-135, H + S + FIN), (-135 - D, H + S + FIN), (-135 - D, H), (-490, H + R), (-490, 0), (-135 - D, 0), (-135, 0)]
+    pts = box_outline_pts()
     m = -1 if mirror else 1
     for k, (x, y) in enumerate(pts): (o.M if k == 0 else o.L)(m * x, y)
     return o.Z().path()
@@ -84,6 +83,12 @@ def box_sheet(OX, OY, mirror):
     for x1, y1, x2, y2 in [(-135, 0, 135, 0), (-135, 0, -135, H), (135, 0, 135, H), (-135 - D, H, -135, H), (135, H, 135 + D, H),
                            (-135 - D, H + S, -135, H + S), (135, H + S, 135 + D, H + S), (-135 - D, 0, -135 - D, H), (135 + D, 0, 135 + D, H)]:
         out.append(fold(X(x1), Y(y1), X(x2), Y(y2)))
+    for a_, b_ in GLUE_FOLDS: out.append(fold(X(a_[0]), Y(a_[1]), X(b_[0]), Y(b_[1])))
+    for x1, y1, x2, y2, _ in box_slots():
+        xa, xb = sorted((X(x1), X(x2))); out.append(f'<rect x="{xa:.2f}" y="{Y(y2):.2f}" width="{xb-xa:.2f}" height="{y2-y1:.2f}" fill="#FFFFFF" stroke="{CUT}" stroke-width="0.4"/>')
+    if mirror:
+        x1, y1, x2, y2 = SIGN_AREA; xa, xb = sorted((X(x1), X(x2)))
+        out.append(f'<rect x="{xa:.2f}" y="{Y(y2):.2f}" width="{xb-xa:.2f}" height="{y2-y1:.2f}" fill="none" stroke="{MUTE}" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>' + label((xa+xb)/2, Y((y1+y2)/2) + 2, '문패 자리', 5.5, MUTE, 600))
     for x, y, t in [(0, H / 2, '뒷벽'), (0, -D / 2 - (24 if not mirror else 0), '바닥'), (-135 - D / 2, H / 2, '측벽 1'), (135 + D / 2, H / 2, '측벽 2'),
                     (-135 - D / 2, H + S + 12, '손잡이 핀 1'), (135 + D / 2, H + S + 12, '손잡이 핀 2'), (-135 - D - 67.5, 40, '왼문'), (135 + D + 67.5, 40, '오른문')]:
         out.append(label(X(x), Y(y), t, 7, MUTE, 600))
@@ -106,7 +111,7 @@ def kit_sheet(X0, Y0):
             if 'D8' in lab: fill = '#DFE2E7'
             out.append(f'<path d="{sh.path()}" fill="{fill}" fill-rule="evenodd" stroke="{CUT}" stroke-width="0.5"/>')
             if lab.startswith('D3'):
-                out.append(txt(ox + 11, oy - 160 + 6.5, 'RUMO', 19.5, 800) + f'<circle cx="{ox + 11 + 35.5:.2f}" cy="{oy - 160 - 11.7:.2f}" r="2.5" fill="{GREEN}"/>')
+                out.append(txt(ox + 22, oy - 160 + 6.5, 'RUMO', 19.5, 800) + f'<circle cx="{ox + 22 + 35.5:.2f}" cy="{oy - 160 - 11.7:.2f}" r="2.5" fill="{GREEN}"/>')
             elif lab[:2] in ('D4', 'D5', 'D6', 'D7'):
                 for rr_ in range(10):
                     if rr_ % 2 == 0: out.append(box(ox + lx - 15, oy - ly + 35 - (rr_ + 1) * 7, 30, 7, DARK))
@@ -154,7 +159,7 @@ def main():
     secs = []
     y = pad
     secs.append(txt(pad, y + 10, 'RUMO 올인원 패키지 v8 — 인쇄 전개도 · 조립 부품', 16, 800, INK, 'start'))
-    secs.append(txt(pad, y + 22, '바깥면(인쇄면) · 안쪽면 · 조립 키트를 한 장에. 판지 3T / 폼보드 5T, 단위 mm. 탭·풀칠면은 v8 모형처럼 생략 — 인쇄 전에 탭 추가 필요.', 6.5, 500, MUTE, 'start'))
+    secs.append(txt(pad, y + 22, '바깥면(인쇄면) · 안쪽면 · 조립 키트를 한 장에. 판지 3T / 폼보드 5T, 단위 mm. 풀칠 탭 15mm · 고정 홈 5mm 폭 (탭과 홈은 같은 이름끼리 끼워요).', 6.5, 500, MUTE, 'start'))
     y += 48
     secs.append(txt(pad, y, '① 하우스 박스 — 바깥면 (인쇄면에서 본 모습)', 10, 700, INK, 'start')); y += 10
     OY = y + H + S + FIN; secs += box_sheet(pad + 490 + 5, OY, True); y = OY + D + 26

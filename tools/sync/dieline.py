@@ -41,6 +41,37 @@ def fold(x1, y1, x2, y2): return f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f
 def label(x, y, t, size=7, c=INK, w=600, anchor='middle'):
     return f'<text x="{x:.2f}" y="{y:.2f}" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="{size}" font-weight="{w}" fill="{c}" text-anchor="{anchor}">{t}</text>'
 
+GLUE = 15
+def tab_pts(p0, p1, out=GLUE, inset=12):
+    """p0→p1 변 바깥쪽(진행 방향 왼쪽이 바깥이 되도록 호출)에 사다리꼴 풀칠 탭."""
+    dx, dy = p1[0] - p0[0], p1[1] - p0[1]; L = math.hypot(dx, dy); ux, uy = dx / L, dy / L; nx, ny = uy, -ux
+    return [(p0[0] + ux * inset + nx * out, p0[1] + uy * inset + ny * out), (p1[0] - ux * inset + nx * out, p1[1] - uy * inset + ny * out), p1]
+def box_outline_pts():
+    pts = [(-135, -D), (135, -D)]
+    pts += tab_pts((135, -D), (135, 0))                     # 바닥 오른쪽 풀칠 탭 → 측벽 2 안쪽
+    pts += [(135 + D, 0), (490, 0), (490, H + R), (135 + D, H), (135 + D, H + S + FIN), (135, H + S + FIN), (135, H)]
+    pts += tab_pts((135, H), (0, H + R))                    # 박공 오른쪽 풀칠 탭 → 지붕 2 안쪽
+    pts += tab_pts((0, H + R), (-135, H))                   # 박공 왼쪽 풀칠 탭 → 지붕 1 안쪽
+    pts += [(-135, H + S + FIN), (-135 - D, H + S + FIN), (-135 - D, H), (-490, H + R), (-490, 0), (-135 - D, 0), (-135, 0)]
+    pts += tab_pts((-135, 0), (-135, -D))[:-1]              # 바닥 왼쪽 풀칠 탭 → 측벽 1 안쪽
+    return pts
+GLUE_FOLDS = [((135, -D), (135, 0)), ((135, H), (0, H + R)), ((0, H + R), (-135, H)), ((-135, 0), (-135, -D))]
+SL_ = 2.5
+def box_slots():
+    """(x1, y1, x2, y2, 이름) — 전개도 좌표. 바닥 y=-z, 측벽2·지붕2 x=135+z, 측벽1 x=-135-z."""
+    out = []
+    for x in (-117, 63): out.append((x - 10, -208, x + 10, -203, 'A1'))                 # 아치 패널 탭
+    for z in (40, 160): out.append((78, -z - 10, 83, -z + 10, 'C1'))                    # 칸막이 탭
+    for z in (50, 150):                                                                 # 선반 바깥 탭 (측벽 2)
+        for h in (70, 137): out.append((135 + z - 7.5, h - SL_, 135 + z + 7.5, h + SL_, 'D'))
+    for z in (22, 134): out.append((135 + z - SL_, 30, 135 + z + SL_, 45, 'E'))          # 리모컨 받침대 고정 고리
+    slope = S / 135; yc = H + (135 - 70) * slope                                        # 굴뚝 (지붕 2)
+    for z in (135, 165): out.append((135 + z - SL_, yc - 10, 135 + z + SL_, yc + 10, '굴뚝'))
+    for bx in (55, 85):
+        y = H + (135 - bx) * slope; out.append((135 + 150 - 10, y - SL_, 135 + 150 + 10, y + SL_, '굴뚝'))
+    return out
+SIGN_AREA = (-135 - 155, 128, -135 - 65, 168)          # 측벽 1 바깥: 문패 붙이는 자리 (양면테이프)
+
 def arch(sh, cx, yb, w, h):
     r = w / 2; sh.M(cx - r, yb).L(cx + r, yb).L(cx + r, yb + h - r); sh.A(cx, yb + h - r, r, 0, PI, False); sh.L(cx - r, yb); return sh
 def slot(sh, cx, cy, w, h):
@@ -57,13 +88,15 @@ def box_svg():
     def sy(y): return oy - y
     # 외곽 칼선 (한 장): 바닥 아래 → 오른쪽 날개 → 꼭대기 → 왼쪽 날개
     o = Sh(ox, oy)
-    o.M(-135, -D).L(135, -D).L(135, 0)
-    o.L(135 + D, 0).L(135 + D + 135, 0).L(135 + D + 135, H + R).L(135 + D, H)       # 오른쪽: 측벽 바닥 → 오른문
-    o.L(135 + D, H + S + FIN).L(135, H + S + FIN).L(135, H)                          # 지붕 + 핀 (오른쪽)
-    o.L(0, H + R).L(-135, H)                                                         # 뒷벽 박공
-    o.L(-135, H + S + FIN).L(-135 - D, H + S + FIN).L(-135 - D, H)                   # 지붕 + 핀 (왼쪽)
-    o.L(-135 - D - 135, H + R).L(-135 - D - 135, 0).L(-135 - D, 0).L(-135, 0).Z()    # 왼문 → 측벽 바닥
-    g_cut.append(cut(o.path(), 0.5))
+    for k, (x, y) in enumerate(box_outline_pts()): (o.M if k == 0 else o.L)(x, y)
+    g_cut.append(cut(o.Z().path(), 0.5))
+    for x1, y1, x2, y2, _ in box_slots():
+        r_ = Sh(ox, oy); rect(r_, x1, y1, x2, y2); g_cut.append(cut(r_.path(), 0.4))
+    for (a_, b_) in GLUE_FOLDS: g_fold.append(fold(sx(a_[0]), sy(a_[1]), sx(b_[0]), sy(b_[1])))
+    x1, y1, x2, y2 = SIGN_AREA
+    g_lab.append(f'<rect x="{sx(x1):.2f}" y="{sy(y2):.2f}" width="{x2-x1:.2f}" height="{y2-y1:.2f}" fill="none" stroke="{MUTE}" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>' + label(sx((x1+x2)/2), sy((y1+y2)/2) + 2, '문패 붙이는 자리', 5.5, MUTE, 600))
+    for x, y, t in [(-150 + 7, -110, '풀칠'), (150 - 7, -110, '풀칠'), (75, H + R / 2 + 22, '풀칠'), (-75, H + R / 2 + 22, '풀칠')]:
+        g_lab.append(label(sx(x), sy(y), t, 5, MUTE, 600))
     # 핀 슬롯 (손잡이 구멍)
     for c in (-135 - D / 2, 135 + D / 2):
         g_cut.append(cut(slot(Sh(ox, oy), c, H + S + 37, 100, 24).path()))
@@ -83,7 +116,7 @@ def box_svg():
     for x, y, t in [(0, -D - 8, '270'), (-135 - D / 2, -8, '220'), (-135 - D - 67.5, -8, '135')]:
         g_lab.append(label(sx(x), sy(y) + 6, t + ' mm', 6, MUTE, 500))
     g_lab.append(label(pad, 22, 'RUMO 올인원 패키지 v8 — 하우스 박스 전개도', 11, INK, 700, 'start'))
-    g_lab.append(label(pad, 34, f'판지 3T · 펼친 크기 {2*left:.0f} × {top + D:.0f} mm · 접으면 270 × 220 × 220 (지붕 끝 298) · 탭·풀칠면은 v8 모형처럼 생략', 6.5, MUTE, 500, 'start'))
+    g_lab.append(label(pad, 34, f'판지 3T · 펼친 크기 {2*left:.0f} × {top + D:.0f} mm · 접으면 270 × 220 × 220 (지붕 끝 298) · 풀칠 탭 15mm · 고정 홈 5mm (A1·C1 바닥, D 선반·E 고리 오른쪽 벽, 굴뚝 지붕)', 6.5, MUTE, 500, 'start'))
     ly = Hd - 22
     g_lab.append(f'<line x1="{pad}" y1="{ly}" x2="{pad+18}" y2="{ly}" stroke="{CUT}" stroke-width="0.6"/>' + label(pad + 22, ly + 2.2, '칼선 (자르기)', 6.5, INK, 500, 'start'))
     g_lab.append(f'<line x1="{pad+90}" y1="{ly}" x2="{pad+108}" y2="{ly}" stroke="{FOLD}" stroke-width="0.6" stroke-dasharray="4 2"/>' + label(pad + 112, ly + 2.2, '접는 선', 6.5, INK, 500, 'start'))
@@ -92,25 +125,37 @@ def box_svg():
 # ───────── 2) 조립 세트 한눈에 (런너 A~D + 동네 트레이)
 KT = 5
 def runner_parts(i):
-    """parts on runner i in runner coords (x -132..132, y 0..217, y-up). returns list of (Sh-callable, label, labelpos)."""
+    """parts on runner i in runner coords (x -132..132, y 0..217, y-up) — 탭·홈 포함."""
     out = []
-    def R_(cx, cy, w, h, lab):
-        out.append((lambda sh, cx=cx, cy=cy, w=w, h=h: rect(sh, cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2), lab, (cx, cy)))
+    def R_(cx, cy, w, h, lab, tabs=(), slots=()):
+        def f(sh, cx=cx, cy=cy, w=w, h=h, tabs=tabs, slots=slots):
+            rect(sh, cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2)
+            for (x1, y1, x2, y2) in tabs: rect(sh, x1, y1, x2, y2)
+            for (x1, y1, x2, y2) in slots: rect(sh, x1, y1, x2, y2)
+            return sh
+        out.append((f, lab, (cx, cy)))
     if i == 0:
         def archp(sh, dx=10, dy=8.5):
-            sh.M(-132 + dx, dy).L(-102 + dx, dy).L(-102 + dx, 115 + dy); sh.A(-27 + dx, 115 + dy, 75, PI, 0, True)
-            sh.L(48 + dx, dy).L(78 + dx, dy).L(78 + dx, 200 + dy).L(-132 + dx, 200 + dy).Z(); return sh
+            sh.M(-132 + dx, dy).L(-127 + dx, dy).L(-127 + dx, dy - 5).L(-107 + dx, dy - 5).L(-107 + dx, dy).L(-102 + dx, dy).L(-102 + dx, 115 + dy); sh.A(-27 + dx, 115 + dy, 75, PI, 0, True)
+            sh.L(48 + dx, dy).L(53 + dx, dy).L(53 + dx, dy - 5).L(73 + dx, dy - 5).L(73 + dx, dy).L(78 + dx, dy).L(78 + dx, 200 + dy).L(-132 + dx, 200 + dy).Z(); return sh
         out.append((archp, 'A1 아치 패널', (-27 + 10, 200)))
     if i == 1:
         out.append((lambda sh: ribbon(sh, -75, 190, True, 9), 'B1 물결 리본 · 네잎', (-20, 176)))
         out.append((lambda sh: ribbon(sh, 35, 150, True, 7), 'B2 물결 리본 · 동그라미', (85, 136)))
+        for k, x in enumerate((-70, 30)):
+            R_(x, 60, 32, 15, f'E{k+1} 고정 고리', tabs=[(x - 21, 56, x - 16, 64), (x + 16, 56, x + 21, 64)])
     if i == 2:
-        R_(-23.5, 108.5, 197, 200, 'C1 칸막이')
+        x0, y0 = -122, 8.5
+        R_(-23.5, 108.5, 197, 200, 'C1 칸막이', tabs=[(x0 + 27, y0 - 5, x0 + 47, y0), (x0 + 147, y0 - 5, x0 + 167, y0)],
+           slots=[(x0 + u - 7.5, y0 + h - 2.5 - 3, x0 + u + 7.5, y0 + h + 2.5 - 3) for u in (47, 147) for h in (70, 137)])
         out.append((lambda sh: ribbon(sh, 100, 40, False, 8), 'C2 리본 · 아치', (100, 20)))
     if i == 3:
-        R_(-102, 108.5, 40, 197, 'D1 선반'); R_(-58, 108.5, 40, 197, 'D2 선반'); R_(11, 160, 90, 40, 'D3 문패 RUMO')
-        for k, x in enumerate([-19, 13, 45, 77]): R_(x, 45, 30, 70, f'D{4+k}')
-        R_(107, 45, 40, 40, 'D8 캡')
+        for x, lab in ((-100, 'D1 선반'), (-50, 'D2 선반')):
+            R_(x, 108.5, 40, 197, lab, tabs=[(x - 25, 10 + d - 7.5, x - 20, 10 + d + 7.5) for d in (47, 147)] + [(x + 20, 10 + d - 7.5, x + 25, 10 + d + 7.5) for d in (47, 147)])
+        R_(22, 160, 90, 40, 'D3 문패 RUMO')
+        for k, x in enumerate([5, 37, 69, 101]):
+            R_(x, 50, 30, 70, f'D{4+k}', tabs=[(x - 8, 10, x + 8, 15)], slots=[(x - 15, 67, x - 10, 85), (x + 10, 15, x + 15, 33)])
+        R_(95, 115, 40, 40, 'D8 캡', slots=[(95 + dx - 4, 115 + dy - 1.5, 95 + dx + 4, 115 + dy + 1.5) for dx, dy in ((-10, 8), (10, 8), (0, -10))])
     return out
 
 def ribbon(sh, x0, y0, horiz, amp):
@@ -125,8 +170,8 @@ def ribbon(sh, x0, y0, horiz, amp):
         x, y = T(px, py); (sh.M if k == 0 else sh.L)(x, y)
     sh.Z(); return sh
 
-GATES = [[(-122, 90), (0, 10), (100, 172)], [(-122, 90), (0, 10), (122, 90)], [(-122, 91), (-23, 10), (75, 207)],
-         [(-102, 10), (-58, 207), (-34, 140), (-34, 110), (-19, 10), (13, 10), (45, 10), (77, 10), (122, 45)]]
+GATES = [[(-122, 90), (0, 10), (100, 172)], [(-122, 90), (0, 10), (122, 90), (-70, 50), (30, 50)], [(-122, 91), (-23, 10), (75, 207)],
+         [(-100, 9), (-50, 207), (-24, 160), (5, 11), (37, 11), (69, 11), (101, 11), (122, 115)]]
 
 def tray(sh_factory):
     """동네 트레이: 가운데 대문 + 왼쪽(계단 박공) + 오른쪽(종 지붕) 한 장 · 바닥판."""
@@ -145,6 +190,7 @@ def tray(sh_factory):
         q = sh_factory(); q.M(x1 + r, y1).L(x2 - r, y1); q.A(x2 - r, y1 + r, r, -PI / 2, 0); q.L(x2, y2 - r); q.A(x2 - r, y2 - r, r, 0, PI / 2); q.L(x1 + r, y2)
         q.A(x1 + r, y2 - r, r, PI / 2, PI); q.L(x1, y1 + r); q.A(x1 + r, y1 + r, r, PI, PI * 1.5); paths.append(q)
     rrect(71, 40, 125, 154, 8); rrect(78, 162, 90, 174, 2); rrect(108, 162, 120, 174, 2)
+    for x in (-56, 56): q = sh_factory(); rect(q, x - 2.5, 30, x + 2.5, 45); paths.append(q)   # E 고리 홈
     b = sh_factory(); rect(b, -66, -80, 66, 0); paths.append(b)
     # 리모컨 거치대: 등받이 날개 54×40 (3면 칼선, 앞쪽이 접는 선) + 앞 턱 54×8
     fl = sh_factory(); fl.M(27, -50).L(27, -10).L(-27, -10).L(-27, -50); paths.append(fl)
@@ -186,7 +232,7 @@ def kit_svg():
     body.append(f'<rect x="{tx - 28}" y="{gy - 6}" width="56" height="12" rx="6" fill="#8EA8EA"/>' + label(tx, gy + 30, '뼈 네임태그', 6, INK, 600))
     body.append(f'<rect x="{tx + 52}" y="{gy - 24}" width="22" height="50" rx="4" fill="#F1F2F4" stroke="{MUTE}" stroke-width="0.4"/>' + label(tx + 63, gy + 38, '리모컨', 6, INK, 600))
     head = [label(pad, pad + 6, 'RUMO 올인원 패키지 v8 — 조립 세트 한눈에', 12, INK, 700, 'start'),
-            label(pad, pad + 20, '런너 4장(A~D)에서 13개 부품을 떼어 루모의 집을 만들어요. 빈 런너 틀 4장은 받침대가 돼요. 회색 점은 게이트(연결점).', 6.5, MUTE, 500, 'start')]
+            label(pad, pad + 20, '런너 4장(A~D)에서 15개 부품을 떼어 루모의 집을 만들어요. 빈 런너 틀 4장은 받침대가 돼요. 회색 점은 게이트(연결점).', 6.5, MUTE, 500, 'start')]
     ly = Hd - pad + 4
     leg = [f'<line x1="{pad}" y1="{ly}" x2="{pad+18}" y2="{ly}" stroke="{CUT}" stroke-width="0.8"/>', label(pad + 22, ly + 2.2, '부품 칼선', 6.5, INK, 500, 'start'),
            f'<line x1="{pad+80}" y1="{ly}" x2="{pad+98}" y2="{ly}" stroke="{FOLD}" stroke-width="0.8" stroke-dasharray="4 2"/>', label(pad + 102, ly + 2.2, '접는 선', 6.5, INK, 500, 'start')]

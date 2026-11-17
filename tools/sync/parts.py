@@ -2,7 +2,8 @@
 각 부품을 따로 그린 2D 도면(인쇄 무늬 포함) + 코드 · 크기 · 쓰는 단계 · 완성 후 역할."""
 import math, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from dieline import Sh, rect, ribbon, tray, PI
+from dieline import Sh, rect, ribbon, tray, PI, runner_parts
+import re
 import kit_icons
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 GREEN, BLUE, GRAY, DARK, KIT = '#A8D14B', '#8EA8EA', '#C9CDD3', '#2B2E33', '#FFFFFF'
@@ -14,6 +15,23 @@ def svg(body, x0, y0, w, h, pad=10, sw=1.2):
             + body.replace('{w}', str(sw)) + '</svg>')
 def P(sh, fill=KIT): return f'<path d="{sh.path()}" fill="{fill}" fill-rule="evenodd" {ST}/>'
 
+def runner_part(i, code, overlay=None, sw=1.6, pad=8):
+    """런너 i 에서 code 로 시작하는 부품을 탭·홈 그대로 따로 그려요."""
+    for fn, lab, _ in runner_parts(i):
+        if lab.startswith(code):
+            sh = fn(Sh(0, 0)); d = sh.path()
+            nums = [(float(a), float(b)) for a, b in re.findall(r'[ML]\s*(-?[\d.]+) (-?[\d.]+)', d)]
+            xs = [a for a, _ in nums]; ys = [b for _, b in nums]
+            x0, y0, x1, y1 = min(xs), min(ys), max(xs), max(ys)
+            body = f'<path d="{d}" fill="{KIT}" fill-rule="evenodd" {ST}/>' + (overlay(x0, y0, x1, y1) if overlay else '')
+            return svg(body, x0, y0, x1 - x0, y1 - y0, pad, sw)
+    raise KeyError(code)
+def sign_ov(x0, y0, x1, y1):
+    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    return f'<text x="{cx:.1f}" y="{cy+7:.1f}" font-family="{FONT}" font-size="20" font-weight="800" fill="{DARK}" text-anchor="middle">RUMO</text><circle cx="{cx+36:.1f}" cy="{cy-12:.1f}" r="2.6" fill="{GREEN}"/>'
+def wall_ov(x0, y0, x1, y1):
+    xl, yb = x0 + (x1 - x0 - 30) / 2 if False else None, None
+    return ''
 def arch_panel():
     s = Sh(0, 0); s.M(-132, 0).L(-102, 0).L(-102, 115); s.A(-27, 115, 75, PI, 0, True); s.L(48, 0).L(78, 0).L(78, 200).L(-132, 200).Z()
     return svg(P(s), -132, -200, 210, 200, 8, 2)
@@ -67,19 +85,20 @@ def window_frame():
     return svg(b, -35, -82, 70, 82, 6, 1)
 
 PARTS = [  # (그룹, 코드, 이름, 수량, 크기, 언제, 완성 후, svg)
-    ('바로 쓰는 것', '—', '하우스 박스', 1, '270 × 220 × 220 · 판지 3T', '받기 · 열기', '루모의 집 (지붕·벽·양문)', kit_icons.house()),
+    ('바로 쓰는 것', '—', '하우스 박스', 1, '270 × 220 × 220 · 판지 3T · 풀칠 탭 4 · 고정 홈 16', '받기 · 열기', '루모의 집 (지붕·벽·양문)', kit_icons.house()),
     ('바로 쓰는 것', '—', '받침 블록', 1, '146 × 152 × 20 · 폼보드 겹', '받기 · 9단계', '아치 안 루모 침대', plinth()),
-    ('바로 쓰는 것', '—', '동네 트레이', 1, '264 × 236 + 바닥판 132 × 80 · 5T', '1 · 3단계', '대문 모양 리모컨 받침대', tray_part()),
+    ('바로 쓰는 것', '—', '동네 트레이', 1, '264 × 236 + 바닥판 132 × 80 · 5T', '1 · 3단계', '리모컨 받침대 · 고리로 오른쪽 벽에 고정', tray_part()),
     ('바로 쓰는 것', '—', '바닥 매트', 1, '262 × 212 · 인쇄 시트', '4단계', '집 바닥 체크 무늬', mat()),
-    ('런너에서 떼는 부품', 'A1', '아치 패널', 1, '210 × 200 · 5T', '7단계', '정면 아치 대문', arch_panel()),
-    ('런너에서 떼는 부품', 'C1', '칸막이', 1, '197 × 200 · 5T', '6단계', '선반칸 세로 벽', plate(197, 200)),
-    ('런너에서 떼는 부품', 'D1 · D2', '선반', 2, '40 × 197 · 5T', '6단계', '선반칸 2단', plate(40, 197)),
-    ('런너에서 떼는 부품', 'D3', '문패', 1, '90 × 40 · 5T', '11단계', '집 옆 RUMO 문패', sign()),
-    ('런너에서 떼는 부품', 'D4–D7', '굴뚝 벽', 4, '30 × 70 · 5T', '10단계', '줄무늬 굴뚝', chimney_wall()),
-    ('런너에서 떼는 부품', 'D8', '굴뚝 캡', 1, '40 × 40 · 5T', '10단계', '굴뚝 뚜껑', plate(40, 40, '#DFE2E7')),
+    ('런너에서 떼는 부품', 'A1', '아치 패널', 1, '210 × 200 · 5T · 바닥 탭 2', '7단계', '정면 아치 대문 · 바닥 홈에 끼움', runner_part(0, 'A1', sw=2)),
+    ('런너에서 떼는 부품', 'C1', '칸막이', 1, '197 × 200 · 5T · 탭 2 · 홈 4', '6단계', '선반칸 세로 벽 · 바닥 홈에 끼움', runner_part(2, 'C1', sw=2)),
+    ('런너에서 떼는 부품', 'D1 · D2', '선반', 2, '40 × 197 · 5T · 양쪽 탭 2', '6단계', '칸막이 홈 ↔ 오른쪽 벽 홈', runner_part(3, 'D1', sw=2)),
+    ('런너에서 떼는 부품', 'D3', '문패', 1, '90 × 40 · 5T', '11단계', '왼쪽 벽 표시 자리에 붙임', sign()),
+    ('런너에서 떼는 부품', 'D4–D7', '굴뚝 벽', 4, '30 × 70 · 5T · 맞물림 홈 2 · 탭 1', '10단계', '서로 맞물려 지붕 홈에 끼움', runner_part(3, 'D4', sw=1.2, pad=6)),
+    ('런너에서 떼는 부품', 'D8', '굴뚝 캡', 1, '40 × 40 · 5T · 리본 홈 3', '10단계', '굴뚝 뚜껑 · 리본 3개 꽂는 자리', runner_part(3, 'D8', sw=1.2, pad=6)),
     ('런너에서 떼는 부품', 'B1', '물결 리본 · 네잎', 1, '약 18 × 115', '10단계', '굴뚝 위 연기', rib('clover', '#D9E9B0', 9)),
     ('런너에서 떼는 부품', 'B2', '물결 리본 · 동그라미', 1, '약 14 × 115', '10단계', '굴뚝 위 연기', rib('dot', '#C9D6F5', 7)),
     ('런너에서 떼는 부품', 'C2', '물결 리본 · 아치', 1, '약 16 × 115', '10단계', '굴뚝 위 연기', rib('arch', '#E6E8EC', 8)),
+    ('런너에서 떼는 부품', 'E1 · E2', '고정 고리', 2, '42 × 15 · 5T · 양끝 탭', '3단계', '받침대 대문 ↔ 집 오른쪽 벽', runner_part(1, 'E1', sw=1.2, pad=6)),
     ('런너에서 떼는 부품', 'A~D', '런너 틀', 4, '264 × 217 · 5T', '4 · 12단계', '겹쳐서 집 받침대', runner_frame()),
     ('문 포켓 · 굿즈', '—', '창틀', 1, '70 × 82 · 5T', '8단계', '왼문 아치 창', window_frame()),
     ('문 포켓 · 굿즈', '—', '네잎 코스터', 2, '약 36 × 36 · 4T', '1단계', '컵 받침 · 동네 둥근 창', kit_icons.coaster()),
@@ -142,7 +161,7 @@ h2 span{{font-size:14px;color:#8a8a90;font-weight:500}}
 <main>
   <h1>조립 세트, 하나하나</h1>
   <p class="lead">상자에 들어 있는 부품을 낱개로 펼쳐 봤어요. 단계 번호는 사용 방법의 조립 순서예요. 크기는 mm, v8 3D 모형 기준이에요.</p>
-  <div class="sum"><span><b>{len(PARTS)}</b>종류</span><span><b>{total}</b>조각</span><span>런너 4장에서 <b>13</b>부품을 떼고, 빈 틀 4장도 다시 써요</span></div>
+  <div class="sum"><span><b>{len(PARTS)}</b>종류</span><span><b>{total}</b>조각</span><span>런너 4장에서 <b>15</b>부품을 떼고, 빈 틀 4장도 다시 써요</span></div>
   {body}
 </main>
 </body>

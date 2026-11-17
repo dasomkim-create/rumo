@@ -88,7 +88,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:99px;ba
       <div class="rr"><span>동네 트레이</span><span>대문 창 · 창마다 굿즈</span><span>리모컨 받침대</span></div>
       <div class="rr"><span>받침 블록</span><span>네 발 홈 · 루모 고정</span><span>아치 안 루모 침대</span></div>
       <div class="rr"><span>뒷벽</span><span>루모 등 받침</span><span>—</span></div>
-      <div class="rr"><span>런너 A~D</span><span>바닥 완충 4겹</span><span>집 부품 13개</span></div>
+      <div class="rr"><span>런너 A~D</span><span>바닥 완충 4겹</span><span>집 부품 15개</span></div>
       <div class="rr"><span>런너 틀 4장</span><span>부품 틀</span><span>집 받침대</span></div>
       <div class="rr"><span>문 포켓</span><span>인증서 · 창틀</span><span>인증서 전시</span></div>
     </div>
@@ -284,6 +284,8 @@ let trayBase=null, cradleBack=null, cradleLip=null, aRmStand=null;
   const lip=X(rect(-27,0,27,8),KT,C.kit,C.kedge);cradleLip=new THREE.Group();cradleLip.position.set(0,72,0);cradleLip.add(lip);m.add(cradleLip);
   aRmStand=new THREE.Object3D();aRmStand.position.set(0,42.2,-55.5);aRmStand.quaternion.setFromEuler(new THREE.Euler(-110*Math.PI/180,0,0));m.add(aRmStand)}
 function anchor(par,p,q){const a=new THREE.Object3D();a.position.set(...p);if(q)a.quaternion.copy(q);par.add(a);return a}
+const brackets=new THREE.Group(); tray.add(brackets);
+for(const x of[-56,56]){const b=B(KT,15,32,C.kit,x,37.5,-KT-16,C.kedge);brackets.add(b)}
 const aC0=anchor(pivL,[-32,150,-KT/2],Qe(PI/2,0,0)), aC1=anchor(pivL,[-32,102,-KT/2],Qe(PI/2,0,0)), aRm=anchor(pivR,[32,97,-KT/2]);
 const _v=new THREE.Vector3(),_q=new THREE.Quaternion();
 const atA=a=>()=>{const p=a.getWorldPosition(new THREE.Vector3());ext.worldToLocal(p);return {p,q:a.getWorldQuaternion(new THREE.Quaternion()),s:new THREE.Vector3(1,1,1)}};
@@ -331,15 +333,17 @@ const chimney=new THREE.Group(); box.add(chimney);
   chimney.add(B(18,12,2,0xdfe2e7,0,-6,0))}
 // 게이트(연결점)
 const gateSets=runners.map(()=>new THREE.Group()); gateSets.forEach(g=>ext.add(g));
-const GATE=[[[-122,90],[0,10],[100,172]],[[-122,90],[0,10],[122,90]],[[-122,91],[-23,10],[75,207]],[[-102,10],[-58,207],[-34,140],[-34,110],[-19,10],[13,10],[45,10],[77,10],[122,45]]];
+const GATE=[[[-122,90],[0,10],[100,172]],[[-122,90],[0,10],[122,90]],[[-122,91],[-23,10],[75,207]],[[-100,10],[-50,207],[-24,160],[5,13],[37,13],[69,13],[101,13],[122,115]]];
 GATE.forEach((gs,i)=>gs.forEach(([x,y])=>gateSets[i].add(B(4,4,KT,0xd5d9df,x,y,KT/2,C.kedge))));
 
 // ───────── 키프레임
 const roofY=x=>H+(135-Math.abs(x))*TAN+T;
 const on=(ri,loc)=>()=>comp(runners[ri].now,loc);
 const qIn=Qe(PI/2,0,0), qSide=Qe(0,PI/2,0), CH=[70,roofY(70),150], CS=0.75;
+// 리모컨 받침대는 고정 고리 2개(E1·E2)로 집 오른쪽 벽에 걸려요: 날개 끝이 벽에 닿고, 대문은 벽에서 37mm
+const STX=135+T+66*Math.sin(0.6)+KT+1, STZ=78;
 const K={
- tray:{o:tray,k:[P([0,Yr,168]),[2,P([350,0,190],Qe(0,-0.5,0)),110]]},
+ tray:{o:tray,k:[P([0,Yr,168]),[2,P([STX,0,STZ],Qe(0,PI/2,0)),110],[11,P([STX,RL,STZ],Qe(0,PI/2,0)),0]]},
  remote:{o:remote,k:[atA(aRm),[0,P([-120,11,600],Qe(PI/2,0.2,0)),120],[10,atA(aRmStand),110]]},
  c0:{o:coasters[0],k:[atA(aC0),[0,P([-230,0,560],Qe(0,0.3,0)),120],[10,atA(aC0),110]]},
  c1:{o:coasters[1],k:[atA(aC1),[0,P([-180,0,600],Qe(0,-0.2,0)),120],[10,atA(aC1),110]]},
@@ -347,17 +351,17 @@ const K={
  dock:{o:dock,k:[P([0,Yr,80]),[1,P([-300,0,460]),150],[8,P([-27,T+0.3,118]),170]]},
  arch:{o:archP,k:[on(0,P([10,8.5,0])),[4,popUp],[6,P([0,T,203]),150]]},
  div:{o:divider,k:[on(2,P([-23.5,108.5,KT/2],qSide)),[4,popUp],[5,P([80.5,T+Hs/2,101.5]),130]]},
- sh0:{o:shelves[0],k:[on(3,P([-102,108.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+67,101.5]),130]]},
- sh1:{o:shelves[1],k:[on(3,P([-58,108.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+134,101.5]),130]]},
- sign:{o:sign,k:[on(3,P([11,140,KT/2])),[4,popUp],[10,P([150,0,262],Qe(0,-0.35,0)),90]]},
- w0:{o:cWalls[0],k:[on(3,P([-19,45,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]+12.5]),160]]},
- w1:{o:cWalls[1],k:[on(3,P([13,45,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]-12.5]),170]]},
- w2:{o:cWalls[2],k:[on(3,P([45,45,KT/2])),[4,popUp],[9,P([CH[0]-12.5,CH[1]+30,CH[2]],qSide),180]]},
- w3:{o:cWalls[3],k:[on(3,P([77,45,KT/2])),[4,popUp],[9,P([CH[0]+12.5,CH[1]+30,CH[2]],qSide),190]]},
+ sh0:{o:shelves[0],k:[on(3,P([-100,108.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+67,101.5]),130]]},
+ sh1:{o:shelves[1],k:[on(3,P([-50,108.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+134,101.5]),130]]},
+ sign:{o:sign,k:[on(3,P([22,140,KT/2])),[4,popUp],[10,P([-135-T-KT/2-0.5,RL+128,110],Qe(0,-PI/2,0)),90]]},
+ w0:{o:cWalls[0],k:[on(3,P([5,50,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]+12.5]),160]]},
+ w1:{o:cWalls[1],k:[on(3,P([37,50,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]-12.5]),170]]},
+ w2:{o:cWalls[2],k:[on(3,P([69,50,KT/2])),[4,popUp],[9,P([CH[0]-12.5,CH[1]+30,CH[2]],qSide),180]]},
+ w3:{o:cWalls[3],k:[on(3,P([101,50,KT/2])),[4,popUp],[9,P([CH[0]+12.5,CH[1]+30,CH[2]],qSide),190]]},
  rb0:{o:ribbons[0],k:[on(1,P([-75,190,KT/2],Qe(0,0,-PI/2))),[4,popUp],[9,P([CH[0]-6,CH[1]+58,CH[2]],Qe(0,0.3,0.25)),210]]},
  rb1:{o:ribbons[1],k:[on(1,P([35,190,KT/2],Qe(0,0,-PI/2))),[4,popUp],[9,P([CH[0]+2,CH[1]+58,CH[2]+3],Qe(0,-0.2,-0.05)),220]]},
  rb2:{o:ribbons[2],k:[on(2,P([100,40,KT/2])),[4,popUp],[9,P([CH[0]+8,CH[1]+58,CH[2]-3],Qe(0,0.9,-0.3)),230]]},
- cap:{o:cCap,k:[on(3,P([107,45,KT/2],qIn)),[4,popUp],[9,P([CH[0],CH[1]+58,CH[2]]),200]]},
+ cap:{o:cCap,k:[on(3,P([95,115,KT/2],qIn)),[4,popUp],[9,P([CH[0],CH[1]+58,CH[2]]),200]]},
 };
 frames.forEach((f,i)=>K['f'+i]={o:f,k:[on(i,P([0,0,0])),[11,P([0,i*KT,220],Qe(-PI/2,0,0)),60+i*25]]});
 
@@ -369,7 +373,7 @@ const N=12;
 const STEPS=['',
  '트레이 홈에서 굿즈를 꺼낸다 — 네잎 코스터 2 · 뼈 네임태그 · 리모컨',
  '받침 블록째로 루모를 들어 꺼낸다 — 네 발은 홈에 끼운 그대로',
- '트레이를 병풍처럼 세우고 대문 뒤 바닥판을 앞으로 펼친다 → 대문 모양 리모컨 받침대',
+ '트레이를 병풍처럼 세우고 바닥판을 앞으로 펼친 뒤, 고정 고리 2개(E1·E2)로 집 오른쪽 벽 홈에 건다 → 리모컨 받침대',
  '바닥 매트를 들고, 아래 깔린 런너 A~D 4장을 꺼내 펼친다',
  '런너에서 부품을 똑똑 떼어낸다 (게이트 14곳)',
  '칸막이(C1)에 선반(D1 · D2)을 끼워 선반칸 조립',
@@ -377,7 +381,7 @@ const STEPS=['',
  '왼문 덧창을 열고(뜯는 조각 없음), 포켓 속 창틀을 붙인다',
  '받침 블록을 아치 안에 놓고 루모를 올린다 — 루모의 침대',
  '줄무늬 굴뚝(벽 4 + 캡)을 맞물리고 물결 리본 3개를 꽂아 지붕 슬릿에 끼운다',
- '받침대 바닥의 등받이와 앞 턱을 세워 리모컨을 비스듬히 기대 놓고 · 코스터는 둥근 창에 · 문패는 집 옆 · 네임태그는 손잡이에',
+ '받침대 바닥의 등받이와 앞 턱을 세워 리모컨을 비스듬히 기대 놓고 · 코스터는 둥근 창에 · 문패는 왼쪽 벽 표시 자리에 · 네임태그는 손잡이에',
  '빈 런너 틀 4장을 겹쳐 받침대로 — 집을 올리면 완성'];
 const st={fold:1,door:0,kit:0};
 function apply(){
@@ -394,6 +398,7 @@ function apply(){
   pivL.rotation.y=-0.6*s(2); pivR.rotation.y=0.6*s(2);
   if(trayBase){const u=s(2),c=s(10);trayBase.rotation.x=PI/2*u;trayBase.position.z=-2*KT*(1-u);trayBase.position.y=KT*u;cradleBack.rotation.x=70*PI/180*c;cradleLip.rotation.x=-PI/2*c}
   for(const key in K){const {o,k:ks}=K[key];const q=run(ks,s);o.position.copy(q.p);o.quaternion.copy(q.q);o.scale.copy(q.s);setOp(o,vis);if(o===tray)tray.updateMatrixWorld(true)}
+  setOp(brackets,vis*s(2));
   gateSets.forEach((g,i)=>{const q=runners[i].now;g.position.copy(q.p);g.quaternion.copy(q.q);setOp(g,vis*(1-s(4)))});
   const fin=clamp((k-9.8)/0.2);
   [...cWalls,cCap].forEach(o=>setOp(o,vis*(1-fin)));
