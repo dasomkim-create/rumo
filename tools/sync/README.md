@@ -10,3 +10,10 @@
 5. 장표 순서/개수가 바뀌면 `slides.txt`와 `docs/deck.html`(N, names)도 같이 고쳐요.
 6. `BrandSymbols.dc.html`이 바뀌었으면 `python3 tools/sync/symbols_section.py`로 랜딩의 심볼 섹션을 다시 만들어요.
 7. `BrandSite.dc.html`(랜딩)이 바뀌었으면 `docs/index.html`에 같은 내용을 옮겨요(정적 버전이라 자동으로는 안 바뀌어요).
+
+## 패키지 v8 (사용설명서 섹션)
+
+패키지 3D 모형은 `RUMO 올인원 패키지 v8` 아티팩트(https://claude.ai/artifact/VYuXUBv8A7ntd73bgiQDoH)만 따라가요.
+1. v8을 Artifact read(path "index.html")로 받아요.
+2. `python3 tools/sync/package.py <받은 index.html>` → `docs/package/index.html` 갱신(전체 화면 3D + `?embed` 모드).
+3. 랜딩의 사용설명서 섹션은 단계 문구·구성품 표를 이 페이지에서 바로 읽어서 따로 손볼 필요 없어요. 섹션 모양을 바꿀 때만 `python3 tools/sync/package_section.py`.
