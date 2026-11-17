@@ -12,6 +12,7 @@ BrandKit	In the box
 BrandLogo	Logo
 BrandUsage	Logo guide
 BrandLogoColor	Logo color
+BrandVariable	Variable logo
 BrandSymbols	Symbols
 BrandColor	Color
 BrandType	Type
