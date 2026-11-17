@@ -51,8 +51,9 @@ def variant(name, k, n, letc=None, mono=None, step=None, delay=0.0):
         m = re.match(r'(\S+) [\d.]+s (.+) [\d.]+s infinite both$', SYM['꽃']['parts'][0]['anim'])
         an = f'{m.group(1)} {step}s {m.group(2)} {shift:.2f}s infinite both'
         win = f'animation:vl-win {n * step}s linear {shift:.2f}s infinite both'
-        return (f'<g class="vl-o" style="{win}"><path fill="{mono or "#ffc447"}" d="{FLOWER}" '
-                f'style="transform-box:fill-box;transform-origin:50% 50%;animation:{an}"/></g>')
+        # 원래 로고처럼 14초에 한 바퀴 천천히 돌아요 (바깥 g = 회전, 안쪽 path = 꽃 인터랙션)
+        return (f'<g class="vl-o" style="{win}"><g style="transform-box:fill-box;transform-origin:center;animation:vl-spin 14s linear infinite">'
+                f'<path fill="{mono or "#ffc447"}" d="{FLOWER}" style="transform-box:fill-box;transform-origin:50% 50%;animation:{an}"/></g></g>')
     s = SYM[name]; opt = dict(PICK)[name]
     x0, y0, x1, y1 = _bbox(name); sc = SLOT * opt / max(x1 - x0, y1 - y0)
     tr = f'translate({SLOT_CX} {SLOT_CY}) scale({sc:.4f}) translate({-(x0 + x1) / 2:.2f} {-(y0 + y1) / 2:.2f}) {s["tr"]}'
@@ -70,6 +71,7 @@ def variant(name, k, n, letc=None, mono=None, step=None, delay=0.0):
     return f'<g class="vl-o" style="{win}"><g transform="{tr}">{"".join(out)}</g></g>'
 
 CSS = KEYFRAMES + '''
+@keyframes vl-spin{to{transform:rotate(360deg)}}
 @keyframes vl-win{0%,6.249%{visibility:visible}6.25%,100%{visibility:hidden}}
 .vl-still{display:none}
 @media (prefers-reduced-motion: reduce){.vl-o{display:none}.vl-still{display:inline}}

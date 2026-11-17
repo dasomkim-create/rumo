@@ -11,8 +11,8 @@ P = os.path.join(REPO, 'docs', 'index.html')
 s = open(P, encoding='utf-8').read()
 
 def slot_groups(mono=None):
-    # 히어로: 처음엔 꽃(기본 로고)이 머물다가, 7초마다 다음 심볼이 각자의 인터랙션으로 들어와요
-    m = V.markup(mono=mono, step=7.0, names=['로고꽃'] + [n for n, _ in V.PICK if n != '꽃'])
+    # 히어로: 처음엔 꽃(기본 로고)이 머물다가, 8초마다 다음 심볼이 각자의 인터랙션으로 들어와요
+    m = V.markup(mono=mono, step=8.0, names=['로고꽃'] + [n for n, _ in V.PICK if n != '꽃'])
     return m[m.index('"/>', m.index(V.LETTERS)) + 3:m.rindex('</svg>')]
 
 # 1) 히어로
