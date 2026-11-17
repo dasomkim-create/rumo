@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>RUMO 목적과 포지셔닝</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.rise>*{animation:rumo-in 600ms cubic-bezier(.2,.8,.2,1) both}
+.rise>*:nth-child(2){animation-delay:90ms}.rise>*:nth-child(3){animation-delay:180ms}.rise>*:nth-child(4){animation-delay:270ms}
+@keyframes rumo-spin{to{transform:rotate(360deg)}}
+.spin{transform-box:fill-box;transform-origin:center;animation:rumo-spin 14s linear infinite}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+.bi-toc a{color:#6b6b6b;text-decoration:none;transition:color 160ms ease}.bi-toc a:hover{color:#ffffff}.bi-arrow{width:44px;height:44px;border-radius:999px;box-shadow:inset 0 0 0 1.5px #4a4a4a;color:#ffffff;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:box-shadow 160ms ease,background 160ms ease}.bi-arrow:hover{box-shadow:inset 0 0 0 1.5px #ffffff;background:#1a1a1a}
+</style>
+</helmet>
+<div style="width: 1920px; height: 1080px; box-sizing: border-box; position: relative; overflow: hidden; background: #050505; color: #ffffff; font-family: Pretendard, -apple-system, system-ui, sans-serif; padding: 120px 120px 0;">
+  <div class="rise" style="display: flex; flex-direction: column; gap: 40px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 80px;">
+      <h1 style="margin: 0; font-size: 56px; line-height: 1; font-weight: 600; letter-spacing: -1.6px;">Purpose &amp; Positioning</h1>
+      <p style="margin: 0; max-width: 900px; font-size: 24px; line-height: 36px; color: #a3a3a3; width: 724px">RUMO는 영양제를 고르는 앱이 아니에요. 이미 산 영양제를 매일 먹게 만드는, 집 안의 작은 동반자예요.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 24px; height: 700px;">
+      <div style="display: grid; grid-template-rows: auto 1fr; gap: 40px; padding-right: 24px;">
+        <div style="border-top: 1px solid #333333; padding-top: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px;">
+          <span style="font-size: 16px; line-height: 24px; font-weight: 600; color: #4d8df6;">브랜드 목적</span>
+          <span style="font-size: 40px; line-height: 52px; font-weight: 600; letter-spacing: -1px;">사 놓고 못 먹는 영양제를,<br>먹었는지 확인하는 하루로.</span>
+          <span style="font-size: 18px; line-height: 28px; color: #a3a3a3;">문제는 무엇을 먹을지가 아니라 매일 먹는 일 자체예요. 앱 알림은 끄면 끝이지만, 집에 있는 루모는 먼저 말을 걸고 "먹었어" 한 마디로 확인해요.</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-content: end;">
+          <sc-for list="{{why}}" as="w" hint-placeholder-count="3">
+            <div style="border-top: 1px solid #333333; padding-top: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px;">
+              <span style="font-size: 16px; line-height: 24px; font-weight: 600; color: #4d8df6;">{{w.k}}</span>
+              <span style="font-size: 24px; line-height: 32px; font-weight: 600;">{{w.t}}</span>
+              <span style="font-size: 17px; line-height: 26px; color: #a3a3a3;">{{w.d}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="border-radius: 28px; background: #141414; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: 16px; line-height: 24px; font-weight: 600; color: #4d8df6;">포지셔닝 맵</span><span style="font-size: 15px; color: #8b8b8b;">점 위에 올려보세요</span></div>
+        <div style="position: relative; flex-grow: 1; border-radius: 20px; background: #0c0c0c;">
+          <div aria-hidden="true" style="position: absolute; left: 50%; top: 24px; bottom: 24px; width: 1px; background: #2a2a2a;"></div>
+          <div aria-hidden="true" style="position: absolute; top: 50%; left: 24px; right: 24px; height: 1px; background: #2a2a2a;"></div>
+          <span style="position: absolute; left: 50%; top: 8px; transform: translateX(-50%); font-size: 15px; color: #8b8b8b;">확인 · 습관</span>
+          <span style="position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); font-size: 15px; color: #8b8b8b;">분석 · 관리</span>
+          <span style="position: absolute; left: 16px; top: 50%; transform: translateY(-140%); font-size: 15px; color: #8b8b8b;">화면 속</span>
+          <span style="position: absolute; right: 16px; top: 50%; transform: translateY(-140%); font-size: 15px; color: #8b8b8b;">집 · 공간 속</span>
+          <sc-for list="{{dots}}" as="d" hint-placeholder-count="6">
+            <div onMouseEnter="{{d.enter}}" onMouseLeave="{{leave}}" style="position: absolute; left: {{d.x}}; top: {{d.y}}; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: default;">
+              <span style="width: {{d.s}}; height: {{d.s}}; border-radius: 999px; background: {{d.c}}; transition: transform 200ms ease; transform: {{d.tf}};"></span>
+              <span style="font-size: {{d.fs}}; line-height: 1.3; font-weight: 600; white-space: nowrap; color: {{d.tc}};">{{d.name}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <span style="font-size: 18px; line-height: 28px; color: #d4d4d4; min-height: 56px;">{{note}}</span>
+      </div>
+    </div>
+  </div>
+  <sc-if value="{{showFoot}}" hint-placeholder-val="{{true}}">
+  <div style="position: absolute; left: 120px; right: 120px; bottom: 40px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; line-height: 22px;">
+    <nav class="bi-toc" aria-label="Contents" style="display: flex; align-items: center; gap: 16px;"><a href="BrandCover.dc.html" title="Cover" aria-label="01 Cover" style="font-variant-numeric: tabular-nums;">01</a><a href="BrandPhilosophy.dc.html" title="Philosophy" aria-label="02 Philosophy" style="font-variant-numeric: tabular-nums;">02</a><a href="BrandStrategy.dc.html" aria-current="page" style="color: #ffffff; font-weight: 600; white-space: nowrap;"><span style="font-variant-numeric: tabular-nums;">03</span> Positioning</a><a href="BrandPersona.dc.html" title="Persona" aria-label="04 Persona" style="font-variant-numeric: tabular-nums;">04</a><a href="BrandPersona2.dc.html" title="Family" aria-label="05 Family" style="font-variant-numeric: tabular-nums;">05</a><a href="BrandJourney.dc.html" title="Journey" aria-label="06 Journey" style="font-variant-numeric: tabular-nums;">06</a><a href="BrandAI.dc.html" title="Meet Rumo" aria-label="07 Meet Rumo" style="font-variant-numeric: tabular-nums;">07</a><a href="BrandFace.dc.html" title="Expressions" aria-label="08 Expressions" style="font-variant-numeric: tabular-nums;">08</a><a href="BrandFeatures.dc.html" title="How it works" aria-label="09 How it works" style="font-variant-numeric: tabular-nums;">09</a><a href="BrandLogo.dc.html" title="Logo" aria-label="10 Logo" style="font-variant-numeric: tabular-nums;">10</a><a href="BrandUsage.dc.html" title="Logo guide" aria-label="11 Logo guide" style="font-variant-numeric: tabular-nums;">11</a><a href="BrandLogoColor.dc.html" title="Logo color" aria-label="12 Logo color" style="font-variant-numeric: tabular-nums;">12</a><a href="BrandSymbols.dc.html" title="Symbols" aria-label="13 Symbols" style="font-variant-numeric: tabular-nums;">13</a><a href="BrandColor.dc.html" title="Color" aria-label="14 Color" style="font-variant-numeric: tabular-nums;">14</a><a href="BrandType.dc.html" title="Type" aria-label="15 Type" style="font-variant-numeric: tabular-nums;">15</a><a href="BrandVoice.dc.html" title="Voice" aria-label="16 Voice" style="font-variant-numeric: tabular-nums;">16</a><a href="BrandMVP.dc.html" title="MVP demo" aria-label="17 MVP demo" style="font-variant-numeric: tabular-nums;">17</a></nav>
+    <div style="display: flex; align-items: center; gap: 16px;"><a class="bi-arrow" href="BrandPhilosophy.dc.html" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 6l-6 6 6 6"></path></svg></a><span style="font-variant-numeric: tabular-nums; color: #a3a3a3; min-width: 64px; text-align: center;"><span style="color: #ffffff; font-weight: 600;">03</span> / 17</span><a class="bi-arrow" href="BrandPersona.dc.html" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6l6 6-6 6"></path></svg></a></div>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { const v = this._rv() || {}; v.showFoot = this.props.embed !== true && this.props.embed !== 'true'; return v; }
+  constructor(props) { super(props); this.state = { h: -1 }; }
+  _rv() {
+    const D = [
+      { name: 'RUMO', x: '78%', y: '24%', c: '#ffc447', n: '집 안에서 먼저 말을 걸고, 먹었는지만 확실하게 확인. 분석은 덜고 습관은 더해요.' },
+      { name: '영양제 관리 앱', x: '24%', y: '70%', c: '#6b6b6b', n: '성분 분석·추천·점수까지. 정보는 많지만 먹는 순간은 사용자 몫이에요.' },
+      { name: '복약 알림 앱', x: '22%', y: '30%', c: '#6b6b6b', n: '시간 맞춰 알림. 끄기 쉽고, 먹었는지는 직접 눌러야 남아요.' },
+      { name: '스마트 약통', x: '64%', y: '40%', c: '#6b6b6b', n: '뚜껑을 열면 기록. 확인은 되지만 말을 걸거나 다정하진 않아요.' },
+      { name: '돌봄 로봇', x: '76%', y: '74%', c: '#6b6b6b', n: '고령자 돌봄·건강 관리 중심. 크고 무거운 관리 도구에 가까워요.' },
+      { name: '헬스 플랫폼', x: '34%', y: '84%', c: '#6b6b6b', n: '수면·활동 데이터 분석. 루모는 여기서 데이터를 가져와 쓰기만 해요.' }
+    ];
+    const h = this.state.h;
+    return {
+      why: [
+        { k: 'WHY', t: '매일이 어렵다', d: '영양제는 사는 것보다 꾸준히 먹는 게 어려워요. 혼자면 더.' },
+        { k: 'HOW', t: '먼저 말을 건다', d: '루모가 시간에 맞춰 부르고, 말·타일·워치 어디서든 한 번에 확인.' },
+        { k: 'WHAT', t: '로봇 + 하우스', d: 'AI 컴패니언 로봇, 체크 타일이 있는 하우스 패키지, 앱과 워치.' }
+      ],
+      dots: D.map((d, i) => ({
+        name: d.name, x: d.x, y: d.y,
+        c: i === 0 ? '#ffc447' : (h === i ? '#ffffff' : '#4a4a4a'),
+        s: i === 0 ? '28px' : '16px', fs: i === 0 ? '22px' : '16px',
+        tc: i === 0 || h === i ? '#ffffff' : '#8b8b8b',
+        tf: h === i ? 'scale(1.3)' : 'none',
+        enter: () => this.setState({ h: i })
+      })),
+      note: D[h < 0 ? 0 : h].n,
+      leave: () => this.setState({ h: -1 })
+    };
+  }
+}
+</script>
+</body>
+</html>

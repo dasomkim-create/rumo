@@ -17,3 +17,7 @@
 1. v8을 Artifact read(path "index.html")로 받아요.
 2. `python3 tools/sync/package.py <받은 index.html>` → `docs/package/index.html` 갱신(전체 화면 3D + `?embed` 모드).
 3. 랜딩의 사용설명서 섹션은 단계 문구·구성품 표를 이 페이지에서 바로 읽어서 따로 손볼 필요 없어요. 섹션 모양을 바꿀 때만 `python3 tools/sync/package_section.py`.
+
+## 장표 뷰어 · 랜딩 손질
+- `docs/deck.html`은 실제 장표(`docs/app/screens/Brand*.dc.html`)를 `dc-lite.js`로 바로 돌려서, 장표 안 인터랙션이 그대로 살아 있어요. 장표 순서가 바뀌면 `slides.txt`를 고치고 `python3 tools/sync/deck.py`.
+- 랜딩 헤더(사용 방법 · 모바일 메뉴), 가이드 표지, 하단 버튼 정리는 `python3 tools/sync/landing_patch.py` (여러 번 돌려도 같아요).

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>RUMO 브랜드 표지</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/e716050c98566c9e615f5e9d7d2cdbd6") format("woff2");font-weight:45 920;font-style:normal;font-display:swap}
+body{margin:0}
+@keyframes rumo-gather{from{transform:translate(var(--dx,0),var(--dy,0)) scale(.4) rotate(var(--r,-90deg));opacity:0}to{transform:none;opacity:1}}
+@keyframes rumo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes rumo-spin{to{transform:rotate(360deg)}}
+@keyframes rumo-wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+@keyframes rumo-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.letter{transition:transform 400ms cubic-bezier(.2,.8,.2,1)}
+.letter:hover{transform:translateY(-8px)}
+.spin{transform-box:fill-box;transform-origin:center;animation:rumo-spin 14s linear 1.6s infinite}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<a href="{{nextHref}}" aria-label="다음 장으로" style="display: block; width: 1920px; height: 1080px; color: inherit; text-decoration: none; cursor: pointer;"><div style="width: 1920px; height: 1080px; box-sizing: border-box; position: relative; overflow: hidden; background: #050505; color: #ffffff; font-family: Pretendard, -apple-system, system-ui, sans-serif;">
+  <div style="position: absolute; left: 120px; top: 120px; display: flex; flex-direction: column; gap: 18px; animation: rumo-in 700ms cubic-bezier(.2,.8,.2,1) both;">
+    <span style="font-size: 20px; line-height: 28px; font-weight: 500; color: #4d8df6;">AI Health Companion · Brand Identity</span>
+    <h1 style="margin: 0; font-size: 72px; line-height: 84px; font-weight: 600; letter-spacing: -1.5px;">매일의 일상에<br>다정한 움직임을 더하다</h1>
+    <p style="margin: 6px 0 0; font-size: 24px; line-height: 36px; color: #a3a3a3;">영양제 먹을 시간이 되면 먼저 불러 주는, 집 안에 사는 작은 AI 로봇 루모</p>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; left: 1400px; top: 90px; width: 420px; height: 320px;">
+    <img src="/_blob/bd2be46ec732ec25f3c6ca8f25048663" alt="" style="position: absolute; left: 230px; top: 0; width: 150px; height: 150px; animation: rumo-spin 16s linear infinite;">
+    <img src="/_blob/56f7bbd221e0dbea56b60be13f10a06b" alt="" style="position: absolute; left: 40px; top: 70px; width: 140px; height: 140px; animation: rumo-float 5s ease-in-out infinite;">
+    <img src="/_blob/b5ea88f398c71944618e66f6e1c373c5" alt="" style="position: absolute; left: 250px; top: 190px; width: 110px; height: 107px; animation: rumo-wiggle 4s ease-in-out infinite;">
+    <img src="/_blob/03e1ed6b1bebeafc74c1d5553ff8c8f9" alt="" style="position: absolute; left: 0; top: 240px; width: 70px; height: 70px; animation: rumo-float 3.5s ease-in-out 600ms infinite;">
+  </div>
+
+  <svg role="img" aria-label="rumo 로고" viewBox="0 0 512 100" style="position: absolute; left: 120px; top: 560px; width: 1229px; height: 240px; overflow: visible;">
+    <g class="letter" style="--dx: -70px; --dy: 90px; --r: 0deg; transform-box: fill-box; transform-origin: center; animation: rumo-gather 1000ms cubic-bezier(.2,.8,.2,1) 200ms both;"><path fill="#ffffff" d="M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100Z"></path></g>
+    <g class="letter" style="--dx: 20px; --dy: -110px; --r: 0deg; transform-box: fill-box; transform-origin: center; animation: rumo-gather 1000ms cubic-bezier(.2,.8,.2,1) 320ms both;"><path fill="#ffffff" d="M104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50Z"></path></g>
+    <g class="letter" style="--dx: -30px; --dy: 120px; --r: 0deg; transform-box: fill-box; transform-origin: center; animation: rumo-gather 1000ms cubic-bezier(.2,.8,.2,1) 440ms both;"><path fill="#ffffff" d="M228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100ZM298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z"></path></g>
+    <g class="letter" style="--dx: 90px; --dy: -50px; --r: -240deg; transform-box: fill-box; transform-origin: center; animation: rumo-gather 1000ms cubic-bezier(.2,.8,.2,1) 560ms both;"><path class="spin" fill="#ffc447" d="M425.02 56.65L490.70 74.25A16.0 16.0 0 0 0 498.98 43.35L433.30 25.75A16.0 16.0 0 0 0 425.02 56.65ZM437.75 21.30L455.35 86.98A16.0 16.0 0 0 0 486.25 78.70L468.65 13.02A16.0 16.0 0 0 0 437.75 21.30ZM474.73 14.64L426.64 62.73A16.0 16.0 0 0 0 449.27 85.36L497.36 37.27A16.0 16.0 0 0 0 474.73 14.64Z"></path></g>
+  </svg>
+
+  <div style="position: absolute; left: 120px; right: 120px; top: 980px; display: flex; justify-content: space-between; align-items: center; font-size: 18px; line-height: 26px; color: #ffffff;">
+    <span>패키지 디자인 / 202312992 김다솜</span>
+    <span style="display: inline-flex; align-items: center; gap: 14px; color: #a3a3a3;">A Little Care, Every Day.<span style="width: 44px; height: 44px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px #4a4a4a; color: #ffffff; display: inline-flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6l6 6-6 6"></path></svg></span></span>
+  </div>
+</div></a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { const e = this.props.embed === true || this.props.embed === 'true'; return { nextHref: e ? '#philosophy' : 'BrandPhilosophy.dc.html' }; }
+}
+</script>
+</body>
+</html>

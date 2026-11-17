@@ -10,7 +10,7 @@ for f in src:
     new = open(f, 'rb').read()
     if not os.path.exists(dst) or open(dst, 'rb').read() != new:
         changed.append(name); open(dst, 'wb').write(new)
-    if name.endswith('.dc.html') and not name.startswith('Brand'):
+    if name.endswith('.dc.html'):
         shutil.copy(f, os.path.join(REPO, 'docs', 'app', 'screens', name))
 R = os.path.join(REPO, 'tools', 'sync', '.render'); os.makedirs(R, exist_ok=True)
 for f in glob.glob(os.path.join(REPO, 'project', '*.dc.html')): shutil.copy(f, R)

@@ -18,7 +18,10 @@ assert i > 0
 s = s[:i] + EMBED + s[i:]
 CAM = 'new THREE.PerspectiveCamera(32,'
 if CAM in s:  # embed: wider lens so a narrow frame still shows the whole set
-    s = s.replace(CAM, "new THREE.PerspectiveCamera(/[?&]embed\\b/.test(location.search)?42:32,", 1)
+    s = s.replace(CAM, "new THREE.PerspectiveCamera(/[?&]embed\\b/.test(location.search)?(innerWidth/innerHeight<1.1?42:22):32,", 1)
+Z = 'ctrl.enableDamping=true;'
+if Z in s:  # embed: wheel scrolls the landing instead of zooming the model
+    s = s.replace(Z, Z + "if(/[?&]embed\\b/.test(location.search))ctrl.enableZoom=false;", 1)
 out = os.path.join(REPO, 'docs', 'package', 'index.html')
 open(out, 'w', encoding='utf-8').write(s)
 print('wrote', out, len(s))

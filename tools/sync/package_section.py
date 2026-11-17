@@ -93,7 +93,7 @@ HTML = '''<!-- package:start -->
         bar.style.width = (100 * k / (steps.length - 1)) + '%';
         if (!now) tween(s.v);
       }
-      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) show(+e.target.dataset.k); }); }, { rootMargin: '-45% 0px -45% 0px' });
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) show(+e.target.dataset.k); }); }, { rootMargin: matchMedia('(max-width: 860px)').matches ? '-64% 0px -22% 0px' : '-45% 0px -45% 0px' });
       [].forEach.call(list.querySelectorAll('.pk-step'), function (li) { io.observe(li); });
     }
     if (fr.contentDocument && fr.contentDocument.readyState === 'complete') go(); else fr.addEventListener('load', go);

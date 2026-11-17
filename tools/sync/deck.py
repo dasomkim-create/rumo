@@ -1,0 +1,84 @@
+"""Builds docs/deck.html — the full-screen deck viewer that runs the real (interactive) slides
+with docs/app/dc-lite.js. Slide order comes from tools/sync/slides.txt."""
+import os, json
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+rows = [l.rstrip('\n').split('\t') for l in open(os.path.join(os.path.dirname(__file__), 'slides.txt'), encoding='utf-8') if l.strip()]
+S = json.dumps([[f, t] for f, t in rows], ensure_ascii=False)
+HTML = '''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUMO 브랜드 장표</title>
+<style>
+@font-face{font-family:"Pretendard";src:url("fonts/PretendardVariable.woff2") format("woff2");font-weight:45 920;font-display:swap}
+html,body{margin:0;height:100%;background:#000;color:#fff;font-family:Pretendard,-apple-system,system-ui,sans-serif;overflow:hidden}
+.stage{position:fixed;inset:0 0 72px 0;display:flex;align-items:center;justify-content:center}
+.slide{position:relative;width:1920px;height:1080px;flex:none;transform-origin:50% 50%;background:#000}
+.slide>.pg{position:absolute;inset:0;animation:pg-in 280ms ease both}
+.slide img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+@keyframes pg-in{from{opacity:0}to{opacity:1}}
+.bar{position:fixed;left:0;right:0;bottom:0;height:72px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 max(16px,env(safe-area-inset-left,0px)) env(safe-area-inset-bottom,0px)}
+.btn{width:44px;height:44px;border-radius:999px;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-family:inherit}
+.btn:hover{background:rgba(255,255,255,.22)}
+.btn:focus-visible{outline:2px solid #7960ff;outline-offset:2px}
+.num{display:flex;align-items:center;gap:10px;font-variant-numeric:tabular-nums;font-size:15px;color:#a3a3a3;min-width:0}
+.num b{color:#fff}.num span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dots{position:fixed;left:50%;bottom:66px;transform:translateX(-50%);display:flex;gap:6px}
+.dots i{width:6px;height:6px;border-radius:9px;background:#3a3a3a;transition:width 240ms ease,background 240ms ease}
+.dots i.on{width:18px;background:#fff}
+.hint{position:fixed;top:16px;left:50%;transform:translateX(-50%);height:32px;display:flex;align-items:center;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.1);font-size:13px;color:#d4d4d4;pointer-events:none;transition:opacity 600ms ease}
+@media (max-width:600px){.dots{display:none}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage"><div class="slide" id="slide"></div></div>
+<div class="hint" id="hint">장표 안을 눌러 보세요 · 넘기기는 ← → 또는 스와이프</div>
+<div class="dots" id="dots" aria-hidden="true"></div>
+<nav class="bar" aria-label="장표 넘기기">
+  <a class="btn" href="index.html#book" aria-label="사이트로 돌아가기">✕</a>
+  <span class="num" aria-live="polite"><b id="cur">01</b><span>/ <i id="tot" style="font-style:normal"></i> · <span id="nm"></span></span></span>
+  <span style="display:flex;gap:8px"><button class="btn" id="prev" aria-label="이전 장">‹</button><button class="btn" id="next" aria-label="다음 장">›</button></span>
+</nav>
+<script>window.DC_SCREEN_BASE='app/screens/';window.DC_BLOB_BASE='blobs/';</script>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="app/dc-lite.js"></script>
+<script>
+(function(){
+  var S=__SLIDES__, N=S.length, i=1, slide=document.getElementById('slide'), stage=document.getElementById('stage');
+  document.getElementById('tot').textContent=N;
+  var dots=document.getElementById('dots'); dots.innerHTML=S.map(function(){return '<i></i>'}).join('');
+  var live=!!(window.React&&window.ReactDOM&&window.DCLite), root=null, seq=0;
+  function fit(){ var r=stage.getBoundingClientRect(); slide.style.transform='scale('+Math.min(r.width/1920,r.height/1080)+')'; }
+  window.addEventListener('resize',fit); fit();
+  function img(n){ return 'img/slide-'+String(n).padStart(2,'0')+'.jpg'; }
+  function show(n){
+    i=Math.max(1,Math.min(N,n)); var me=++seq, name=S[i-1][0];
+    document.getElementById('cur').textContent=String(i).padStart(2,'0'); document.getElementById('nm').textContent=S[i-1][1];
+    [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i-1)});
+    if(location.hash!=='#'+i) history.replaceState(null,'','#'+i);
+    if(!live){ slide.innerHTML='<div class="pg"><img class="ph" src="'+img(i)+'" alt="'+S[i-1][1]+' 장표"></div>'; return; }
+    DCLite.load(name).then(function(){
+      if(me!==seq) return;
+      if(!root) root=ReactDOM.createRoot(slide);
+      root.render(React.createElement('div',{className:'pg',key:name+':'+me},React.createElement(DCLite.DC,{__name:name,embed:true})));
+      if(i<N) DCLite.load(S[i][0]).catch(function(){});
+    }).catch(function(e){ console.error(e); if(me===seq){ if(root){root.unmount();root=null;} slide.innerHTML='<div class="pg"><img class="ph" src="'+img(i)+'" alt=""></div>'; } });
+  }
+  document.getElementById('prev').onclick=function(){show(i-1)};
+  document.getElementById('next').onclick=function(){show(i+1)};
+  document.addEventListener('keydown',function(e){ var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+    if(e.key==='ArrowRight'||e.key==='PageDown')show(i+1); if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1); if(e.key==='Escape')location.href='index.html#book'; });
+  var x0=null,y0=null; stage.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  stage.addEventListener('touchend',function(e){ if(x0===null)return; var dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0; if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5)show(i+(dx<0?1:-1)); x0=null; });
+  setTimeout(function(){document.getElementById('hint').style.opacity=0},3500);
+  window.addEventListener('hashchange',function(){var h=parseInt(location.hash.slice(1),10); if(!isNaN(h)&&h!==i)show(h)});
+  var h=parseInt(location.hash.slice(1),10); show(isNaN(h)?1:h);
+})();
+</script>
+</body>
+</html>
+'''
+open(os.path.join(REPO, 'docs', 'deck.html'), 'w', encoding='utf-8').write(HTML.replace('__SLIDES__', S))
+print('deck slides:', len(rows))
