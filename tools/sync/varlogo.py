@@ -52,7 +52,7 @@ def variant(name, k, n, letc=None, mono=None, step=None, delay=0.0):
         an = f'{m.group(1)} {step}s {m.group(2)} {shift:.2f}s infinite both'
         win = f'animation:vl-win {n * step}s linear {shift:.2f}s infinite both'
         # 원래 로고처럼 14초에 한 바퀴 천천히 돌아요 (바깥 g = 회전, 안쪽 path = 꽃 인터랙션)
-        return (f'<g class="vl-o" style="{win}"><g style="transform-box:fill-box;transform-origin:center;animation:vl-spin 14s linear infinite">'
+        return (f'<g class="vl-o" data-n="{name}" style="{win}"><g style="transform-box:fill-box;transform-origin:center;animation:vl-spin 14s linear infinite">'
                 f'<path fill="{mono or "#ffc447"}" d="{FLOWER}" style="transform-box:fill-box;transform-origin:50% 50%;animation:{an}"/></g></g>')
     s = SYM[name]; opt = dict(PICK)[name]
     x0, y0, x1, y1 = _bbox(name); sc = SLOT * opt / max(x1 - x0, y1 - y0)
@@ -68,13 +68,16 @@ def variant(name, k, n, letc=None, mono=None, step=None, delay=0.0):
         out.append(f'<path d="{p["sd"]}" fill="none" stroke="{scol}" stroke-width="{p["sw"]}" stroke-linecap="{p["cap"]}" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" style="animation:{_anim(p["sanim"], shift, st("sanim"), step)}"/>')
         out.append(f'<path d="{p["d"]}" fill="{col}" fill-rule="{p["fr"]}" style="transform-box:fill-box;transform-origin:{p["origin"]};animation:{_anim(p["anim"], shift, st("anim"), step)}"/>')
     win = f'animation:vl-win {n * step}s linear {shift:.2f}s infinite both'
-    return f'<g class="vl-o" style="{win}"><g transform="{tr}">{"".join(out)}</g></g>'
+    return f'<g class="vl-o" data-n="{name}" style="{win}"><g transform="{tr}">{"".join(out)}</g></g>'
 
 CSS = KEYFRAMES + '''
 @keyframes vl-spin{to{transform:rotate(360deg)}}
 @keyframes vl-win{0%,6.249%{visibility:visible}6.25%,100%{visibility:hidden}}
 .vl-still{display:none}
 @media (prefers-reduced-motion: reduce){.vl-o{display:none}.vl-still{display:inline}}
+.vl.pick .vl-o{animation:none!important;visibility:hidden}.vl.pick .vl-o.on{visibility:visible}.vl.pick .vl-still{display:none}
+[data-vl-pick]{cursor:pointer;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+[data-vl-pick]:hover,[data-vl-pick].on{transform:translateY(-3px);box-shadow:inset 0 0 0 1.5px #d5ff44}
 '''
 def css(n=len(PICK)):
     return CSS.replace('6.249%', f'{100 / n - .001:.3f}%').replace('6.25%', f'{100 / n:.3f}%')
@@ -89,8 +92,28 @@ def markup(letc='#ffffff', mono=None, names=None, viewbox='-6 -16 560 132', step
 
 def static(name, letc='#ffffff', mono=None, viewbox='-6 -16 560 132'):
     """멈춘 로고 한 장 (심볼 하나, 애니메이션 없음)."""
-    v = re.sub(r' style="[^"]*animation:[^"]*"', '', variant(name, 0, 1, mono=mono)).replace(' class="vl-o"', '')
+    v = re.sub(r' style="[^"]*animation:[^"]*"', '', variant(name, 0, 1, mono=mono)).replace(' class="vl-o"', '').replace(f' data-n="{name}"', '')
     return f'<svg viewBox="{viewbox}" role="img" aria-label="rum + {name}" style="overflow:visible"><path fill="{letc}" d="{LETTERS}"/>{v}</svg>'
+
+# 심볼 카드에 올리면(폰은 탭) 큰 로고의 o가 그 심볼로 — 그 심볼의 등장 인터랙션이 처음부터 재생되고 머물러요.
+# 카드: data-vl-pick="이름", 같은 섹션 안의 svg.vl 이 대상. 손을 떼면 원래 순서로 돌아가요.
+HOVER_JS = r"""<script>(function(){
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function host(el){var s=el.closest('section');return (s&&s.querySelector('svg.vl'))||document.querySelector('svg.vl')}
+function clear(svg){if(!svg)return;svg.classList.remove('pick');svg.querySelectorAll('.vl-o.on').forEach(function(g){g.classList.remove('on');g.querySelectorAll('path').forEach(function(p){if(p.dataset.a!=null){p.style.animation=p.dataset.a;delete p.dataset.a}})})}
+function pick(el){var svg=host(el);if(!svg)return;clear(svg);var g=svg.querySelector('.vl-o[data-n="'+el.dataset.vlPick+'"]');if(!g)return;
+ svg.classList.add('pick');g.classList.add('on');
+ g.querySelectorAll('path').forEach(function(p){var a=p.style.animation;if(!a||a==='none'||a.indexOf('vl-spin')>=0)return;p.dataset.a=a;
+  var m=a.match(/^(\S+) ([\d.]+)s (.+) (-?[\d.]+)s infinite both$/);if(!m)return;var d=parseFloat(m[2]);
+  p.style.animation='none';void p.getBoundingClientRect();
+  if(reduce){p.style.animation='none';return}
+  p.style.animation=m[1]+' '+d+'s '+m[3]+' 0s 1 both';
+  setTimeout(function(){if(p.dataset.a!=null)p.style.animationPlayState='paused'},d*1000*.5)})}
+document.querySelectorAll('[data-vl-pick]').forEach(function(el){
+ el.addEventListener('mouseenter',function(){pick(el)});
+ el.addEventListener('mouseleave',function(){clear(host(el));el.classList.remove('on')});
+ el.addEventListener('click',function(){var on=el.classList.contains('on');document.querySelectorAll('[data-vl-pick].on').forEach(function(o){o.classList.remove('on')});if(on){clear(host(el))}else{el.classList.add('on');pick(el)}});});
+})();</script>"""
 
 def meaning(name):
     s = SYM[name]; return s['mean'] if s['g'] != 'mark' else '영양제 표식'

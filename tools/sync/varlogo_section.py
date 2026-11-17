@@ -25,7 +25,7 @@ else:
     assert n == 1, 'hero logo not found'
 
 # 2) 섹션
-uses = ''.join(f'<div class="vl-use"><div class="vl-mini">{V.static(n)}</div><b>{t}</b><span>{d}</span></div>' for n, t, d in V.USES)
+uses = ''.join(f'<div class="vl-use" data-vl-pick="{n}"><div class="vl-mini">{V.static(n)}</div><b>{t}</b><span>{d}</span></div>' for n, t, d in V.USES)
 CSS = V.css() + '''
 #variable-logo .vl-stage{border-radius:28px;background:#0b0b0b;box-shadow:0 0 0 1px #1c1c1e;display:grid;place-items:center;padding:clamp(56px,10vw,140px) 8%}
 #variable-logo .vl-stage svg{width:min(100%,880px);height:auto;display:block}
@@ -43,7 +43,7 @@ SEC = f'''<!-- varlogo:start -->
     <div class="vl-head reveal"><div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;"><span class="eyebrow">Variable Logo</span><h2 class="h-l">o 자리는<br>루모의 지금이에요.</h2><p class="lead">r·u·m은 그대로, o 자리에 동그란 심볼이 각자의 방식으로 나타나요.</p></div>
     <a class="pill" href="logo/" style="height: 44px; padding: 0 20px; font-size: 15px;">설명 자세히 보기 →</a></div>
     <div class="vl-stage reveal">{V.markup()}</div>
-    <div class="vl-uses reveal">{uses}</div>
+    <div class="vl-uses reveal">{uses}</div>{V.HOVER_JS}
   </div></section>
 <!-- varlogo:end -->'''
 if '<!-- varlogo:start -->' in s:
@@ -66,7 +66,7 @@ open(P, 'w', encoding='utf-8').write(s)
 
 # 3) 상세 페이지
 font = '../fonts/PretendardVariable.woff2'
-cards = ''.join(f'<div class="card"><div class="lg">{V.static(n)}</div><b>{k:02d} {n}</b><span>{V.meaning(n)}</span></div>' for k, (n, _) in enumerate(V.PICK, 1))
+cards = ''.join(f'<div class="card" data-vl-pick="{n}"><div class="lg">{V.static(n)}</div><b>{k:02d} {n}</b><span>{V.meaning(n)}</span></div>' for k, (n, _) in enumerate(V.PICK, 1))
 rule_svg = (f'<svg viewBox="-6 -24 560 148" aria-hidden="true"><path fill="#f4f4f2" d="{V.LETTERS}"/>'
             f'<rect x="{V.SLOT_CX - V.SLOT / 2}" y="{V.SLOT_CY - V.SLOT / 2}" width="{V.SLOT}" height="{V.SLOT}" fill="none" stroke="#d5ff44" stroke-width="2" stroke-dasharray="7 5"/>'
             f'<line x1="-6" x2="400" y1="100" y2="100" stroke="#4d8df6" stroke-width="1.5"/><line x1="-6" x2="400" y1="0" y2="0" stroke="#4d8df6" stroke-width="1.5"/>'
@@ -87,7 +87,7 @@ nav a{{color:var(--sub);text-decoration:none;font-size:15px}} nav a:hover{{color
 h1{{margin:12px 0 0;font-size:clamp(36px,6vw,72px);line-height:1.08;font-weight:600;letter-spacing:-.04em}}
 h2{{margin:0 0 20px;font-size:24px;font-weight:600;letter-spacing:-.02em}}
 .lead{{margin:16px 0 0;font-size:clamp(17px,1.5vw,21px);line-height:1.6;color:var(--sub);max-width:46ch}}
-.stage{{border-radius:28px;background:#0b0b0b;box-shadow:0 0 0 1px var(--line);display:grid;place-items:center;padding:clamp(56px,10vw,140px) 8%}}
+.stage{{position:sticky;top:12px;z-index:5;border-radius:28px;background:#0b0b0b;box-shadow:0 0 0 1px var(--line);display:grid;place-items:center;padding:clamp(56px,10vw,140px) 8%}}
 .stage svg{{width:min(100%,880px);height:auto;display:block}}
 .rules{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
 .rule{{background:var(--panel);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0}}
@@ -106,15 +106,15 @@ h2{{margin:0 0 20px;font-size:24px;font-weight:600;letter-spacing:-.02em}}
 <nav><a href="../#variable-logo">← 랜딩으로</a><a href="../deck.html">브랜드 가이드</a></nav>
 <header><span class="eyebrow">Variable Logo</span><h1>o 자리는<br>루모의 지금이에요.</h1>
 <p class="lead">r·u·m은 그대로 두고, 마지막 o 자리에 동그란 심볼이 하나씩 들어와요. 심볼마다 그려지는 방식이 달라서, 로고가 바뀌는 순간에도 루모의 성격이 보여요.</p></header>
-<div class="stage">{V.markup()}</div>
+<div class="stage vl-scope" id="vlStage">{V.markup()}</div>
 <section><h2>규칙 3가지</h2><div class="rules">
 <div class="rule">{rule_svg}<span class="n">01</span><b>o는 글자보다 크게</b><p>o 자리 상자는 {V.SLOT} × {V.SLOT}. 글자 높이 100보다 크게 잡아야 눈으로 같은 무게로 보여요. 꽉 찬 원은 조금 작게, 성긴 모양은 조금 크게 넣어요.</p></div>
 <div class="rule"><span class="n">02</span><b>r·u·m은 그대로</b><p>글자 모양과 간격은 바꾸지 않아요. 심볼 중심은 상자 가운데에 맞춰요.</p></div>
 <div class="rule"><span class="n">03</span><b>한 화면에 o 하나</b><p>상황에 맞는 심볼 하나만 써요. 정할 게 없으면 기본인 꽃으로 돌아와요. 색은 심볼 원래 색, 또는 한 색.</p></div>
 </div></section>
-<section><h2>앱에서 이렇게 바뀌어요</h2><div class="uses">{''.join(f'<div class="card"><div class="lg">{V.static(n)}</div><b>{t}</b><span>{d}</span></div>' for n, t, d in V.USES)}</div></section>
+<section><h2>앱에서 이렇게 바뀌어요</h2><div class="uses">{''.join(f'<div class="card" data-vl-pick="{n}"><div class="lg">{V.static(n)}</div><b>{t}</b><span>{d}</span></div>' for n, t, d in V.USES)}</div></section>
 <section><h2>o 자리에 들어가는 심볼 {len(V.PICK)}</h2><div class="grid">{cards}</div></section>
-</div></body></html>
+</div>{V.HOVER_JS}</body></html>
 '''
 os.makedirs(os.path.join(REPO, 'docs', 'logo'), exist_ok=True)
 open(os.path.join(REPO, 'docs', 'logo', 'index.html'), 'w', encoding='utf-8').write(PAGE)
