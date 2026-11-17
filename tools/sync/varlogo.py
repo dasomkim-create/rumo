@@ -9,6 +9,8 @@ KEYFRAMES = '\n'.join(re.findall(r'@keyframes rs-[a-z-]+\{.*?\}\}', _src.split('
 _lg = _src[_src.find('class Component'):]
 _j = _lg.find('const S = ') + len('const S = '); _k = _lg.find('];\n', _j) + 1
 SYM = {s['name']: s for s in json.loads(_lg[_j:_k])}
+# 원래 로고의 꽃 (BrandLogo 장표와 같은 모양 · 같은 자리) — 히어로에서 스케치로 그려진 뒤 첫 o가 돼요
+FLOWER = re.search(r'class="spin" fill="#ffc447" d="(M425[^"]+)"', open(os.path.join(REPO, 'project', 'BrandLogo.dc.html')).read()).group(1)
 LETTERS = ('M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100ZM104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50Z'
            'M228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100ZM298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z')
 
@@ -35,28 +37,36 @@ def _bbox(name):
         b = Image.open(d + '/a.png').getbbox()
     _bbox_cache[name] = tuple(v / 4 for v in b); return _bbox_cache[name]
 
-def _anim(a, shift, stagger):
+def _anim(a, shift, stagger, step=None):
     """'rs-pop 6s ease 0.29s infinite both' → STEP초 주기 · 위치 맞춘 delay"""
     if a == 'none': return 'none'
     m = re.match(r'(\S+) ([\d.]+)s (.+) ([\d.]+)s infinite both$', a)
     name, _, ease, _d = m.groups()
-    return f'{name} {STEP}s {ease} {shift + stagger:.2f}s infinite both'
+    return f'{name} {step or STEP}s {ease} {shift + stagger:.2f}s infinite both'
 
-def variant(name, k, n, letc=None, mono=None):
+def variant(name, k, n, letc=None, mono=None, step=None, delay=0.0):
     """심볼 하나(o 자리) — k번째, 전체 n개. 비어 있을 땐 숨김."""
+    if name == '로고꽃':                 # 원래 로고 꽃: 처음 그려진 그대로 머물다 꽃 인터랙션(rs-bloom)으로 퇴장·재등장
+        step = step or STEP; shift = k * step - n * step + delay
+        m = re.match(r'(\S+) [\d.]+s (.+) [\d.]+s infinite both$', SYM['꽃']['parts'][0]['anim'])
+        an = f'{m.group(1)} {step}s {m.group(2)} {shift:.2f}s infinite both'
+        win = f'animation:vl-win {n * step}s linear {shift:.2f}s infinite both'
+        return (f'<g class="vl-o" style="{win}"><path fill="{mono or "#ffc447"}" d="{FLOWER}" '
+                f'style="transform-box:fill-box;transform-origin:50% 50%;animation:{an}"/></g>')
     s = SYM[name]; opt = dict(PICK)[name]
     x0, y0, x1, y1 = _bbox(name); sc = SLOT * opt / max(x1 - x0, y1 - y0)
     tr = f'translate({SLOT_CX} {SLOT_CY}) scale({sc:.4f}) translate({-(x0 + x1) / 2:.2f} {-(y0 + y1) / 2:.2f}) {s["tr"]}'
-    shift = k * STEP - n * STEP          # 음수 delay → 처음부터 제 차례에 맞춰 돌아요
+    step = step or STEP
+    shift = k * step - n * step + delay  # 음수 delay → 처음부터 제 차례에 맞춰 돌아요 (delay: 첫 심볼이 시작하는 시각)
     ds = [float(re.search(r' ([\d.]+)s infinite', p[a]).group(1)) for p in s['parts'] for a in ('anim', 'sanim') if p[a] != 'none']
     d0 = min(ds) if ds else 0
     out = []
     for p in s['parts']:
         st = lambda a: (float(re.search(r' ([\d.]+)s infinite', p[a]).group(1)) - d0) * .5 if p[a] != 'none' else 0
         col = mono or p['fill']; scol = mono or p['sc'] if p['sc'] != 'none' else 'none'
-        out.append(f'<path d="{p["sd"]}" fill="none" stroke="{scol}" stroke-width="{p["sw"]}" stroke-linecap="{p["cap"]}" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" style="animation:{_anim(p["sanim"], shift, st("sanim"))}"/>')
-        out.append(f'<path d="{p["d"]}" fill="{col}" fill-rule="{p["fr"]}" style="transform-box:fill-box;transform-origin:{p["origin"]};animation:{_anim(p["anim"], shift, st("anim"))}"/>')
-    win = f'animation:vl-win {n * STEP}s linear {shift:.2f}s infinite both'
+        out.append(f'<path d="{p["sd"]}" fill="none" stroke="{scol}" stroke-width="{p["sw"]}" stroke-linecap="{p["cap"]}" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" style="animation:{_anim(p["sanim"], shift, st("sanim"), step)}"/>')
+        out.append(f'<path d="{p["d"]}" fill="{col}" fill-rule="{p["fr"]}" style="transform-box:fill-box;transform-origin:{p["origin"]};animation:{_anim(p["anim"], shift, st("anim"), step)}"/>')
+    win = f'animation:vl-win {n * step}s linear {shift:.2f}s infinite both'
     return f'<g class="vl-o" style="{win}"><g transform="{tr}">{"".join(out)}</g></g>'
 
 CSS = KEYFRAMES + '''
@@ -67,10 +77,10 @@ CSS = KEYFRAMES + '''
 def css(n=len(PICK)):
     return CSS.replace('6.249%', f'{100 / n - .001:.3f}%').replace('6.25%', f'{100 / n:.3f}%')
 
-def markup(letc='#ffffff', mono=None, names=None, viewbox='-6 -16 560 132'):
+def markup(letc='#ffffff', mono=None, names=None, viewbox='-6 -16 560 132', step=None, delay=0.0):
     """<svg> 한 개: 글자 + 돌아가는 o. 같은 페이지에 여러 개 넣어도 돼요 (css()는 한 번만)."""
     names = names or [n for n, _ in PICK]
-    vs = ''.join(variant(nm, k, len(names), mono=mono) for k, nm in enumerate(names))
+    vs = ''.join(variant(nm, k, len(names), mono=mono, step=step, delay=delay) for k, nm in enumerate(names))
     still = re.sub(r' style="[^"]*animation:[^"]*"', '', variant('꽃', 0, 1, mono=mono)).replace('class="vl-o"', 'class="vl-still"')
     return (f'<svg class="vl" viewBox="{viewbox}" role="img" aria-label="rumo 가변 로고 — o 자리에 심볼이 바뀌어 들어와요" style="overflow:visible">'
             f'<path fill="{letc}" d="{LETTERS}"/>{vs}{still}</svg>')

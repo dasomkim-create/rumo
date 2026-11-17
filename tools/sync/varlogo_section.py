@@ -11,7 +11,8 @@ P = os.path.join(REPO, 'docs', 'index.html')
 s = open(P, encoding='utf-8').read()
 
 def slot_groups(mono=None):
-    m = V.markup(mono=mono)
+    # 히어로: 처음엔 꽃(기본 로고)이 머물다가, 7초마다 다음 심볼이 각자의 인터랙션으로 들어와요
+    m = V.markup(mono=mono, step=7.0, names=['로고꽃'] + [n for n, _ in V.PICK if n != '꽃'])
     return m[m.index('"/>', m.index(V.LETTERS)) + 3:m.rindex('</svg>')]
 
 # 1) 히어로
@@ -52,9 +53,6 @@ else:
     j2 = s.find('</script>', j)                 # 심볼 섹션 스크립트 뒤
     j = j2 + len('</script>') if 0 < j2 - j < 400 else j
     s = s[:j] + '\n' + SEC + s[j:]
-# 히어로 스케치 가이드 원도 o 자리 크기에 맞춤
-r = V.SLOT / 2
-s = s.replace('d="M462 0A50 50 0 1 1 461.9 0"', f'd="M{V.SLOT_CX} {V.SLOT_CY - r:g}A{r:g} {r:g} 0 1 1 {V.SLOT_CX - .1:g} {V.SLOT_CY - r:g}"', 1)
 # 히어로용 CSS (섹션 CSS와 같은 키프레임 사용) — 섹션 블록이 페이지에 있으므로 따로 안 넣어요
 open(P, 'w', encoding='utf-8').write(s)
 
