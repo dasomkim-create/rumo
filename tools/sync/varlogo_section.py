@@ -53,6 +53,14 @@ else:
     j2 = s.find('</script>', j)                 # 심볼 섹션 스크립트 뒤
     j = j2 + len('</script>') if 0 < j2 - j < 400 else j
     s = s[:j] + '\n' + SEC + s[j:]
+# Identity 섹션: 가이드 원을 꽃(중심 462, 50 · 지름 100)에 맞추고, 꽃은 원래 로고처럼 천천히 돌아요
+s = s.replace('d="M478 -11A61 61 0 1 1 477.9 -11"', 'd="M462 0A50 50 0 1 1 461.9 0"')
+s = re.sub(r'(<g class="s-fill"><path fill="#ffffff" d="[^"]+"></path>)(<path fill="#ffc447" d="[^"]+"></path>)(</g>)',
+           r'\1<g style="transform-box:fill-box;transform-origin:center;animation:vl-spin 14s linear infinite">\2</g>\3', s, count=1)
+# 꽃잎 스케치 선도 꽃과 함께 돌아요 (선과 채움이 어긋나지 않게)
+if '<g class="s-petals"' not in s:
+    s = re.sub(r'((?:<path class="sl" pathLength="1" d="M4[0-9.]+ [0-9.]+L[^"]+" fill="none" stroke="#ffc447" stroke-width="1.2" ></path>){3})',
+               r'<g class="s-petals" style="transform-box:fill-box;transform-origin:center;animation:vl-spin 14s linear infinite">\1</g>', s, count=1)
 # 히어로용 CSS (섹션 CSS와 같은 키프레임 사용) — 섹션 블록이 페이지에 있으므로 따로 안 넣어요
 open(P, 'w', encoding='utf-8').write(s)
 
