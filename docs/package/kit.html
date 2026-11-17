@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUMO 조립 세트</title>
+<meta name="description" content="RUMO 올인원 패키지 v8 — 런너 A~D와 동네 트레이, 굿즈를 한 장에서 보기">
+<style>
+@font-face{font-family:"Pretendard";src:url("../fonts/PretendardVariable.woff2") format("woff2");font-weight:45 920;font-display:swap}
+:root{--bg:#000;--fg:#fff;--sub:#a3a3a3;--line:#1c1c1e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));background:rgba(0,0,0,.8);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+header a{color:var(--fg);text-decoration:none;font-size:14px;font-weight:600}
+.pill{display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:999px;background:#fff;color:#111!important}
+main{max-width:1280px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-right,0px)) 64px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:24px}
+h1{margin:0;font-size:clamp(28px,4vw,44px);line-height:1.2;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+p{margin:0;color:var(--sub);font-size:16px;line-height:1.6;max-width:640px}
+.sheet{background:#fff;border-radius:24px;padding:clamp(8px,2vw,24px);overflow-x:auto}
+.sheet img{display:block;width:100%;min-width:720px;height:auto}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--sub)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:18px;height:0;border-top:2px solid #EC008C}
+.legend i.f{border-top:2px dashed #00A0E9}
+</style>
+</head>
+<body>
+<header><a href="../index.html#package">← 사용 방법으로</a><a class="pill" href="./">3D로 보기</a></header>
+<main>
+  <h1>조립 세트 한눈에</h1>
+  <p>런너 4장(A~D)에서 부품 13개를 떼어 루모의 집을 만들어요. 빈 런너 틀 4장은 겹쳐서 받침대가 되고, 동네 트레이는 병풍처럼 세워요. 휴대폰에서는 옆으로 밀어서 보세요.</p>
+  <div class="legend"><span><i></i>부품 칼선</span><span><i class="f"></i>접는 선</span><span>회색 점 · 게이트(연결점)</span></div>
+  <div class="sheet"><img src="rumo-v8-kit-overview.svg" alt="런너 A: 아치 패널 A1. 런너 B: 물결 리본 B1·B2. 런너 C: 칸막이 C1, 리본 C2. 런너 D: 선반 D1·D2, 문패 D3, 굴뚝 벽 D4~D7, 캡 D8. 동네 트레이 3폭과 바닥판, 네잎 코스터 2개, 뼈 네임태그, 리모컨."></div>
+</main>
+</body>
+</html>

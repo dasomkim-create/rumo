@@ -12,7 +12,7 @@ if 'class="nav-act"' not in s:
     assert OLD in s; s = s.replace(OLD, NEW, 1)
 SHEET = '''<div class="nav-sheet" id="navSheet" hidden><nav aria-label="전체 메뉴">
     <a href="#meet-rumo">Meet Rumo</a><a href="#how">How it works</a><a href="#confirm">Confirm</a><a href="#identity">Identity</a><a href="#symbols">Symbols</a><a href="#package">Package · 사용 방법</a><a href="deck.html">Brand Identity Guide</a>
-    <span class="ns-row"><a class="pill" href="app/">앱 눌러 보기</a><a class="pill pill-ghost" href="package/">패키지 3D</a></span></nav></div>
+    <span class="ns-row"><a class="pill" href="app/">앱 눌러 보기</a><a class="pill pill-ghost" href="package/kit.html">조립 세트</a></span></nav></div>
 '''
 if 'id="navSheet"' not in s:
     i = s.find('</header>') + len('</header>'); s = s[:i] + '\n  ' + SHEET + s[i:]
