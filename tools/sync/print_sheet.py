@@ -134,7 +134,7 @@ def kit_sheet(X0, Y0):
         out.append(box(tx - 66 + k * 10.17, ty - 8, 10.3, 8, '#FFFFFF' if k % 2 else (GREEN if k == 4 else (BLUE if k == 8 else GRAY))))
     for x1, y1, x2, y2 in folds: out.append(fold(tx + x1, ty - y1, tx + x2, ty - y2))
     for x, y, t in labs: out.append(label(tx + x, ty - y + 2, t, 5.5, MUTE, 600))
-    out.append(txt(tx - 132, Y0 + 11, '동네 트레이', 8, 700, INK, 'start') + txt(tx + 132, Y0 + 11, '폼보드 5T · 병풍 3폭 + 바닥판', 5.5, 500, MUTE, 'end'))
+    out.append(txt(tx - 132, Y0 + 11, '동네 트레이', 8, 700, INK, 'start') + txt(tx + 132, Y0 + 11, '폼보드 5T · 3폭 + 바닥판 → 리모컨 받침대', 5.5, 500, MUTE, 'end'))
     # 받침 블록 (위에서 본 모습) + 굿즈
     by = ty + 110
     px, py = tx - 132 + 73, by + 76

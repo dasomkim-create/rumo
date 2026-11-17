@@ -146,9 +146,9 @@ def tray(sh_factory):
         q.A(x1 + r, y2 - r, r, PI / 2, PI); q.L(x1, y1 + r); q.A(x1 + r, y1 + r, r, PI, PI * 1.5); paths.append(q)
     rrect(71, 40, 125, 154, 8); rrect(78, 162, 90, 174, 2); rrect(108, 162, 120, 174, 2)
     b = sh_factory(); rect(b, -66, -70, 66, 0); paths.append(b)
-    for x in (-32, 32): rrect(x - 17, -52, x + 17, -8, 6)
+    rrect(-27, -34, 27, -10, 8)                     # 리모컨 홈 52 × 24
     folds += [(-66, 0, -66, 182), (66, 0, 66, 178), (-66, 0, 66, 0)]
-    labs += [(0, 60, '대문 · 루모 창'), (-99, 125, '코스터'), (-99, 82, '네임태그'), (99, 100, '리모컨'), (0, -35, '바닥판 · 앞발 홈')]
+    labs += [(0, 60, '대문 · 루모 창'), (-99, 125, '코스터'), (-99, 82, '네임태그'), (99, 100, '리모컨'), (0, -52, '바닥판 · 리모컨 홈')]
     return paths, labs, folds
 
 def kit_svg():
@@ -175,7 +175,7 @@ def kit_svg():
     for x1, y1, x2, y2 in folds: body.append(fold(tx + x1, ty - y1, tx + x2, ty - y2))
     for x, y, t in labs: body.append(label(tx + x, ty - y + 2, t, 6, INK, 600))
     body.append(label(tx - 132, pad + 40 - 6 + 0, '동네 트레이', 9, INK, 700, 'start'))
-    body.append(label(tx + 132, pad + 40 - 6, '병풍처럼 3폭 · 접으면 받침', 6, MUTE, 500, 'end'))
+    body.append(label(tx + 132, pad + 40 - 6, '3폭 + 바닥판 · 펴면 리모컨 받침대', 6, MUTE, 500, 'end'))
     # 굿즈 (트레이 아래)
     gy = ty + 70 + 40
     def clover(cx, cy, r):

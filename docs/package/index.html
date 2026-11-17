@@ -85,7 +85,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:99px;ba
     <button id="play">▶ 처음부터 재생</button>
     <div class="roles">
       <div class="rh"><span>구성</span><span>배송 · 개봉 때</span><span>완성 후</span></div>
-      <div class="rr"><span>동네 트레이</span><span>대문 창 · 창마다 굿즈</span><span>병풍형 루모 동네</span></div>
+      <div class="rr"><span>동네 트레이</span><span>대문 창 · 창마다 굿즈</span><span>리모컨 받침대</span></div>
       <div class="rr"><span>받침 블록</span><span>네 발 홈 · 루모 고정</span><span>아치 안 루모 침대</span></div>
       <div class="rr"><span>뒷벽</span><span>루모 등 받침</span><span>—</span></div>
       <div class="rr"><span>런너 A~D</span><span>바닥 완충 4겹</span><span>집 부품 13개</span></div>
@@ -272,13 +272,13 @@ gateTex.repeat.set(1/132,1/236); gateTex.offset.set(0.5,0);
 {const s=new THREE.Shape();s.moveTo(0,0);s.lineTo(66,0);s.lineTo(66,178);s.quadraticCurveTo(66,196,50,198);s.quadraticCurveTo(33,216,16,198);s.quadraticCurveTo(0,196,0,178);s.closePath();
   s.holes.push(rrect(5,40,59,154,8)); s.holes.push(rrect(12,162,24,174,2)); s.holes.push(rrect(42,162,54,174,2));
   panel(pivR,s)}
-// 바닥판 — 배송 땐 대문 뒤에 접혀 있다가, 병풍으로 세울 때 펼쳐 받침이 돼요
+// 바닥판 — 배송 땐 대문 뒤에 접혀 있다가, 앞으로 펼치면 리모컨을 세우는 홈 (52 × 24)
 let trayBase=null;
 {const s=new THREE.Shape();s.moveTo(-66,0);s.lineTo(66,0);s.lineTo(66,70);s.lineTo(-66,70);s.closePath();
-  for(const x of[-32,32])s.holes.push(rrect(x-17,8,x+17,52,6));
+  s.holes.push(rrect(-27,10,27,34,8));
   const m=X(s,KT,C.kit,C.kedge);m.rotation.x=-PI/2;tray.add(m);trayBase=m}
 function anchor(par,p,q){const a=new THREE.Object3D();a.position.set(...p);if(q)a.quaternion.copy(q);par.add(a);return a}
-const aC0=anchor(pivL,[-32,150,-KT/2],Qe(PI/2,0,0)), aC1=anchor(pivL,[-32,102,-KT/2],Qe(PI/2,0,0)), aRm=anchor(pivR,[32,97,-KT/2]);
+const aC0=anchor(pivL,[-32,150,-KT/2],Qe(PI/2,0,0)), aC1=anchor(pivL,[-32,102,-KT/2],Qe(PI/2,0,0)), aRm=anchor(pivR,[32,97,-KT/2]), aRmStand=anchor(tray,[0,55,22]);
 const _v=new THREE.Vector3(),_q=new THREE.Quaternion();
 const atA=a=>()=>{const p=a.getWorldPosition(new THREE.Vector3());ext.worldToLocal(p);return {p,q:a.getWorldQuaternion(new THREE.Quaternion()),s:new THREE.Vector3(1,1,1)}};
 const remote=new THREE.Group();{remote.add(B(50,110,22,0xf1f2f4,0,0,0,C.kedge));for(const[x,y]of[[0,30],[-12,-5],[12,-5],[0,-20]]){const b=new THREE.Mesh(new THREE.CylinderGeometry(6,6,3,20),mat(0x8ec8ec));b.rotation.x=PI/2;b.position.set(x,y,11.5);remote.add(b)}} ext.add(remote);
@@ -334,7 +334,7 @@ const on=(ri,loc)=>()=>comp(runners[ri].now,loc);
 const qIn=Qe(PI/2,0,0), qSide=Qe(0,PI/2,0), CH=[70,roofY(70),150], CS=0.75;
 const K={
  tray:{o:tray,k:[P([0,Yr,168]),[2,P([350,0,190],Qe(0,-0.5,0)),110]]},
- remote:{o:remote,k:[atA(aRm),[0,P([-120,11,600],Qe(PI/2,0.2,0)),120],[10,atA(aRm),110]]},
+ remote:{o:remote,k:[atA(aRm),[0,P([-120,11,600],Qe(PI/2,0.2,0)),120],[10,atA(aRmStand),110]]},
  c0:{o:coasters[0],k:[atA(aC0),[0,P([-230,0,560],Qe(0,0.3,0)),120],[10,atA(aC0),110]]},
  c1:{o:coasters[1],k:[atA(aC1),[0,P([-180,0,600],Qe(0,-0.2,0)),120],[10,atA(aC1),110]]},
  bone:{o:bone,k:[P([-98,Yr+45,163],Qs(['x',PI/2],['z',PI/2])),[0,P([-60,0,640],Qe(0,-0.4,0)),120],[10,P([6,H+R+20,110],Qs(['z',PI/2])),150]]},
@@ -363,7 +363,7 @@ const N=12;
 const STEPS=['',
  '트레이 홈에서 굿즈를 꺼낸다 — 네잎 코스터 2 · 뼈 네임태그 · 리모컨',
  '받침 블록째로 루모를 들어 꺼낸다 — 네 발은 홈에 끼운 그대로',
- '트레이를 꺼내 병풍처럼 접어 세우고, 접혀 있던 바닥판을 펼친다 → 팝업 카드 같은 루모 동네',
+ '트레이 양 날개를 뒤로 접어 세우고 바닥판을 앞으로 펼친다 → 대문 모양 리모컨 받침대',
  '바닥 매트를 들고, 아래 깔린 런너 A~D 4장을 꺼내 펼친다',
  '런너에서 부품을 똑똑 떼어낸다 (게이트 14곳)',
  '칸막이(C1)에 선반(D1 · D2)을 끼워 선반칸 조립',
@@ -371,7 +371,7 @@ const STEPS=['',
  '왼문 덧창을 열고(뜯는 조각 없음), 포켓 속 창틀을 붙인다',
  '받침 블록을 아치 안에 놓고 루모를 올린다 — 루모의 침대',
  '줄무늬 굴뚝(벽 4 + 캡)을 맞물리고 물결 리본 3개를 꽂아 지붕 슬릿에 끼운다',
- '코스터는 동네의 둥근 창에, 리모컨은 긴 창에 다시 꽂고 · 문패는 집 옆 · 네임태그는 손잡이에',
+ '리모컨은 받침대 홈에 세워 대문 앞에 · 코스터는 둥근 창에 · 문패는 집 옆 · 네임태그는 손잡이에',
  '빈 런너 틀 4장을 겹쳐 받침대로 — 집을 올리면 완성'];
 const st={fold:1,door:0,kit:0};
 function apply(){
@@ -385,7 +385,7 @@ function apply(){
   const k=st.kit*N, s=i=>built?ease(clamp(k-i)):0;
   box.position.y=RL*s(11);
   runners.forEach(r=>r.now=run(r.keys,s));
-  pivL.rotation.y=-0.6*s(2); pivR.rotation.y=0.6*s(2);
+  pivL.rotation.y=-PI/2*s(2); pivR.rotation.y=PI/2*s(2);
   for(const key in K){const {o,k:ks}=K[key];const q=run(ks,s);o.position.copy(q.p);o.quaternion.copy(q.q);o.scale.copy(q.s);setOp(o,vis);if(o===tray)tray.updateMatrixWorld(true)}
   gateSets.forEach((g,i)=>{const q=runners[i].now;g.position.copy(q.p);g.quaternion.copy(q.q);setOp(g,vis*(1-s(4)))});
   const fin=clamp((k-9.8)/0.2);
@@ -393,7 +393,7 @@ function apply(){
   chimney.position.set(...CH); chimney.scale.setScalar(CS); setOp(chimney,vis*fin);
   floorMat.position.set(0,lerp(T+RL+0.3,T+0.3,s(3))+50*hop(s(3)),110); setOp(floorMat,vis);
   const dp=dock.position; robot.position.set(dp.x,dp.y+PL+40*hop(s(1))+40*hop(s(8)),dp.z); setOp(robot,vis); setOp(dock,vis);
-  if(trayBase){const u=s(2);trayBase.rotation.x=-PI/2*u;trayBase.position.z=-2*KT*(1-u)}
+  if(trayBase){const u=s(2);trayBase.rotation.x=PI/2*u;trayBase.position.z=-2*KT*(1-u);trayBase.position.y=KT*u}
   panePiv.rotation.y=-1.9*s(7); wframe.position.z=-30*(1-s(7)); setOp(wframe,s(7));
   glow.position.set(-27,130,170); glow.intensity=0.9*s(8);
   document.getElementById('v-fold').textContent=Math.round(f*100)+'%';
