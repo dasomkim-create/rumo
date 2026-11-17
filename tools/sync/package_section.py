@@ -1,7 +1,9 @@
 """Inserts/refreshes the landing's Package · 사용 방법 section (docs/index.html).
 A one-screen manual: 3D model + step card with prev/next, phase tabs, step strip and autoplay.
 Step texts and the parts table are read live from docs/package/index.html (= v8), so v8 updates flow in."""
-import os, re
+import os, re, sys
+sys.path.insert(0, os.path.dirname(__file__))
+import kit_icons
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 CSS = '''
 #package .pk-head{display:flex;flex-direction:column;gap:16px;max-width:760px}
@@ -39,6 +41,16 @@ CSS = '''
 #package .pk-parts span{padding:14px 12px 14px 0;border-bottom:1px solid #232326;color:#a3a3a3;min-width:0}
 #package .pk-parts>div:first-child span{color:#6c6c74;font-size:13px;font-weight:600}
 #package .pk-parts>div span:first-child{color:#fff;font-weight:600}
+#package .pk-kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+#package .pk-k{border-radius:20px;background:#111113;padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+#package .pk-ki{height:112px;border-radius:14px;background:#1c1c1e}
+#package .pk-kn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+#package .pk-kn b{font-size:17px;font-weight:600}
+#package .pk-kn span{font-size:13px;color:#8a8a90}
+#package .pk-k p{margin:0;display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:19px}
+#package .pk-k p span:first-child{color:#8a8a90}
+#package .pk-k p span:last-child{color:#d5ff44}
+@media (max-width:600px){#package .pk-kit{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#package .pk-ki{height:88px}}
 #package .pk-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 @media (max-width:900px){
  #package .pk-card{grid-template-columns:minmax(0,1fr);border-radius:24px}
@@ -52,6 +64,7 @@ CSS = '''
  #package .pk-parts{font-size:13px;line-height:19px}
 }
 '''
+KIT = ''.join(f'<div class="pk-k"><div class="pk-ki">{svg}</div><div class="pk-kn"><b>{n}</b><span>× {c}</span></div><p><span>배송 · {a}</span><span>완성 · {b}</span></p></div>' for _, n, c, a, b, svg in kit_icons.ICONS)
 HTML = '''<!-- package:start -->
   <style>''' + CSS + '''</style>
   <section id="package" class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
@@ -65,7 +78,7 @@ HTML = '''<!-- package:start -->
       </div>
       <div class="pk-strip" id="pkStrip"></div>
     </div>
-    <div class="reveal" style="display: flex; flex-direction: column; gap: 20px;"><h3 style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600;">구성품이 하는 일</h3><div class="pk-parts" id="pkParts"></div></div>
+    <div class="reveal" style="display: flex; flex-direction: column; gap: 20px;"><h3 style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600;">상자 속 구성품</h3><div class="pk-kit">''' + KIT + '''</div></div>
     <div class="pk-foot"><span style="color: #8a8a90; font-size: 14px;" id="pkNote"></span><span style="display: flex; gap: 8px; flex-wrap: wrap;"><a class="pill pill-ghost" href="package/kit.html" style="height: 48px; padding: 0 24px; font-size: 16px;">조립 세트 한눈에</a><a class="pill" href="package/" style="height: 48px; padding: 0 24px; font-size: 16px;">3D로 크게 보기 →</a></span></div>
   </div></section>
   <script>
@@ -106,7 +119,7 @@ HTML = '''<!-- package:start -->
       E('pkStrip').innerHTML = steps.map(function (s, k) { return '<button class="pk-dot" type="button" data-k="' + k + '" aria-label="' + esc((/\\d/.test(s.no) ? s.no + '단계 ' : '') + s.t) + '">' + esc(/\\d/.test(s.no) ? String(+s.no) : s.ph) + '</button>'; }).join('');
       var rows = d.querySelectorAll('aside .roles > div'), ph = '';
       [].forEach.call(rows, function (r) { ph += '<div>' + [].map.call(r.children, function (c) { return '<span>' + esc(c.textContent) + '</span>'; }).join('') + '</div>'; });
-      E('pkParts').innerHTML = ph;
+      var pp = E('pkParts'); if (pp) pp.innerHTML = ph;
       var load = document.querySelector('#package .pk-load'); if (load) load.remove();
       function tween(to) {
         cancelAnimationFrame(raf); var from = val(), t0 = performance.now();

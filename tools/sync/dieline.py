@@ -195,8 +195,9 @@ def write(name, Wd, Hd, groups, out=None):
            + ''.join(f'<g id="{gid}">{"".join(items)}</g>\n' for gid, items in groups) + '</svg>\n')
     path = os.path.join(out or OUT, name); open(path, 'w', encoding='utf-8').write(svg); print(path, f'{Wd:.0f}x{Hd:.0f}mm')
 
-Wd, Hd, c, f, l = box_svg()
-# 전개도는 공개 사이트에 올리지 않아요 — 실행한 폴더(또는 DIELINE_OUT)에 저장
-write('rumo-v8-dieline-box.svg', Wd, Hd, [('cut', c), ('fold', f), ('labels', l)], os.environ.get('DIELINE_OUT', os.getcwd()))
-Wd, Hd, items = kit_svg()
-write('rumo-v8-kit-overview.svg', Wd, Hd, [('kit', items)])
+if __name__ == '__main__':
+    Wd, Hd, c, f, l = box_svg()
+    # 전개도는 공개 사이트에 올리지 않아요 — 실행한 폴더(또는 DIELINE_OUT)에 저장
+    write('rumo-v8-dieline-box.svg', Wd, Hd, [('cut', c), ('fold', f), ('labels', l)], os.environ.get('DIELINE_OUT', os.getcwd()))
+    Wd, Hd, items = kit_svg()
+    write('rumo-v8-kit-overview.svg', Wd, Hd, [('kit', items)])

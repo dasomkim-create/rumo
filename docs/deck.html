@@ -40,7 +40,7 @@ html,body{margin:0;height:100%;background:#000;color:#fff;font-family:Pretendard
 <script src="app/dc-lite.js"></script>
 <script>
 (function(){
-  var S=[["BrandCover", "Cover"], ["BrandPhilosophy", "Philosophy"], ["BrandStrategy", "Positioning"], ["BrandPersona", "Persona"], ["BrandPersona2", "Family"], ["BrandJourney", "Journey"], ["BrandAI", "Meet Rumo"], ["BrandFace", "Expressions"], ["BrandFeatures", "How it works"], ["BrandLogo", "Logo"], ["BrandUsage", "Logo guide"], ["BrandLogoColor", "Logo color"], ["BrandSymbols", "Symbols"], ["BrandColor", "Color"], ["BrandType", "Type"], ["BrandVoice", "Voice"], ["BrandMVP", "MVP demo"]], N=S.length, i=1, slide=document.getElementById('slide'), stage=document.getElementById('stage');
+  var S=[["BrandCover", "Cover"], ["BrandPhilosophy", "Philosophy"], ["BrandStrategy", "Positioning"], ["BrandResearch", "Why now"], ["BrandPersona", "Persona"], ["BrandPersona2", "Family"], ["BrandJourney", "Journey"], ["BrandAI", "Meet Rumo"], ["BrandFace", "Expressions"], ["BrandFeatures", "How it works"], ["BrandKit", "In the box"], ["BrandLogo", "Logo"], ["BrandUsage", "Logo guide"], ["BrandLogoColor", "Logo color"], ["BrandSymbols", "Symbols"], ["BrandColor", "Color"], ["BrandType", "Type"], ["BrandVoice", "Voice"], ["BrandMVP", "MVP demo"]], N=S.length, i=1, slide=document.getElementById('slide'), stage=document.getElementById('stage');
   document.getElementById('tot').textContent=N;
   var dots=document.getElementById('dots'); dots.innerHTML=S.map(function(){return '<i></i>'}).join('');
   var live=!!(window.React&&window.ReactDOM&&window.DCLite), root=null, seq=0;

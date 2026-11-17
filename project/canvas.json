@@ -33,34 +33,34 @@
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 10 Logo",
+      "title": "BI 12 Logo",
       "w": 1920,
       "x": 2920,
-      "y": 5200
+      "y": 6500
     },
     "BrandLogoColor.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 12 Logo Color & Misuse",
+      "title": "BI 14 Logo color",
       "w": 1920,
       "x": 2920,
-      "y": 6500
+      "y": 7800
     },
     "BrandPersona.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 04 Persona",
+      "title": "BI 05 Persona",
       "w": 1920,
-      "x": 2920,
-      "y": 1300
+      "x": 920,
+      "y": 2600
     },
     "BrandPhilosophy.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 02 Brand Philosophy",
+      "title": "BI 02 Philosophy",
       "w": 1920,
       "x": 2920,
       "y": 0
@@ -69,7 +69,7 @@
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 03 Purpose & Positioning",
+      "title": "BI 03 Positioning",
       "w": 1920,
       "x": 920,
       "y": 1300
@@ -78,19 +78,19 @@
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 13 Symbols & Motion",
+      "title": "BI 15 Symbols",
       "w": 1920,
       "x": 920,
-      "y": 7800
+      "y": 9100
     },
     "BrandUsage.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 11 Logo Guide",
+      "title": "BI 13 Logo guide",
       "w": 1920,
       "x": 920,
-      "y": 6500
+      "y": 7800
     },
     "Button.dc.html": {
       "h": 56,
@@ -294,55 +294,55 @@
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 09 How It Works",
+      "title": "BI 10 How it works",
       "w": 1920,
-      "x": 920,
+      "x": 2920,
       "y": 5200
     },
     "BrandFace.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 08 Expressions",
+      "title": "BI 09 Expressions",
       "w": 1920,
-      "x": 2920,
-      "y": 3900
+      "x": 920,
+      "y": 5200
     },
     "BrandColor.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 14 Color",
+      "title": "BI 16 Color",
       "w": 1920,
       "x": 2920,
-      "y": 7800
+      "y": 9100
     },
     "BrandType.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 15 Typography",
+      "title": "BI 17 Type",
       "w": 1920,
       "x": 920,
-      "y": 9100
+      "y": 10400
     },
     "BrandVoice.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 16 Voice & Tone",
+      "title": "BI 18 Voice",
       "w": 1920,
       "x": 2920,
-      "y": 9100
+      "y": 10400
     },
     "BrandMVP.dc.html": {
       "h": 1080,
       "is_interactive": true,
       "page": "page-statq4",
-      "title": "BI 17 MVP Demo",
+      "title": "BI 19 MVP demo",
       "w": 1920,
       "x": 920,
-      "y": 10400
+      "y": 11700
     },
     "EditDose.dc.html": {
       "h": 844,
@@ -385,8 +385,8 @@
       "is_interactive": true,
       "page": "page-statq4",
       "w": 1920,
-      "title": "BI 07 Meet Rumo",
-      "x": 920,
+      "title": "BI 08 Meet Rumo",
+      "x": 2920,
       "y": 3900
     },
     "BrandSite.dc.html": {
@@ -404,8 +404,8 @@
       "is_interactive": true,
       "page": "page-statq4",
       "w": 1920,
-      "title": "BI 05 Family Persona",
-      "x": 920,
+      "title": "BI 06 Family",
+      "x": 2920,
       "y": 2600
     },
     "BrandJourney.dc.html": {
@@ -413,9 +413,9 @@
       "is_interactive": true,
       "page": "page-statq4",
       "w": 1920,
-      "title": "BI 06 User Journey",
-      "x": 2920,
-      "y": 2600
+      "title": "BI 07 Journey",
+      "x": 920,
+      "y": 3900
     },
     "HomeAfter.dc.html": {
       "h": 844,
@@ -425,6 +425,24 @@
       "w": 390,
       "x": 5570,
       "y": 1264
+    },
+    "BrandResearch.dc.html": {
+      "x": 2920,
+      "y": 1300,
+      "title": "BI 04 Why now",
+      "page": "page-statq4",
+      "w": 1920,
+      "h": 1080,
+      "is_interactive": true
+    },
+    "BrandKit.dc.html": {
+      "x": 920,
+      "y": 6500,
+      "title": "BI 11 In the box",
+      "page": "page-statq4",
+      "w": 1920,
+      "h": 1080,
+      "is_interactive": true
     }
   },
   "createdOnFiles": {
@@ -555,12 +573,14 @@
     "BrandCover.dc.html",
     "BrandPhilosophy.dc.html",
     "BrandStrategy.dc.html",
+    "BrandResearch.dc.html",
     "BrandPersona.dc.html",
     "BrandPersona2.dc.html",
     "BrandJourney.dc.html",
     "BrandAI.dc.html",
     "BrandFace.dc.html",
     "BrandFeatures.dc.html",
+    "BrandKit.dc.html",
     "BrandLogo.dc.html",
     "BrandUsage.dc.html",
     "BrandLogoColor.dc.html",
