@@ -88,7 +88,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:99px;ba
       <div class="rr"><span>동네 트레이</span><span>대문 창 · 창마다 굿즈</span><span>리모컨 받침대</span></div>
       <div class="rr"><span>받침 블록</span><span>네 발 홈 · 루모 고정</span><span>아치 안 루모 침대</span></div>
       <div class="rr"><span>뒷벽</span><span>루모 등 받침</span><span>—</span></div>
-      <div class="rr"><span>런너 A~D</span><span>바닥 완충 4겹</span><span>집 부품 15개</span></div>
+      <div class="rr"><span>런너 A~D</span><span>바닥 완충 4겹</span><span>집 부품 17개</span></div>
       <div class="rr"><span>런너 틀 4장</span><span>부품 틀</span><span>집 받침대</span></div>
       <div class="rr"><span>문 포켓</span><span>인증서 · 창틀</span><span>인증서 전시</span></div>
     </div>
@@ -207,7 +207,7 @@ const dock=new THREE.Group();{const p=new THREE.Mesh(new THREE.CylinderGeometry(
   const l=new THREE.Mesh(new THREE.BoxGeometry(30,2,1),new THREE.MeshBasicMaterial({color:0x8fb4ff,transparent:true}));l.position.set(0,8,52.3);dock.add(l)} box.add(dock);
 const glow=new THREE.PointLight(0xffd79a,0,320,2); box.add(glow); dock.clear();
 // 받침 블록 — 폼보드를 겹친 하얀 블록, 네 발이 홈에 쏙 들어가 흔들리지 않아요 (완성 후엔 아치 안 루모 침대)
-const PL=8, PLW=146, PLD=152;
+const PL=4, PLW=146, PLD=152;
 {const g=new THREE.Group();
   const base=B(PLW,PL,PLD,0xffffff,0,PL/2,0,C.kedge); g.add(base);
   const sh=rect(-PLW/2,-PLD/2,PLW/2,PLD/2);
@@ -274,18 +274,17 @@ gateTex.repeat.set(1/132,1/236); gateTex.offset.set(0.5,0);
   panel(pivR,s)}
 // 바닥판 132 × 80 — 배송 땐 대문 뒤에 접혀 있다가, 앞으로 펼치면 리모컨 거치대
 //   등받이 날개(54 × 40)를 70° 세우고 · 앞 턱(54 × 8)을 세우면 리모컨이 20° 기대어 고정
-let trayBase=null, cradleBack=null, cradleLip=null, aRmStand=null;
-{const s=new THREE.Shape();s.moveTo(-66,0);s.lineTo(66,0);s.lineTo(66,80);s.lineTo(-66,80);s.closePath();
-  const h1=new THREE.Path();h1.moveTo(-27,10);h1.lineTo(-27,50);h1.lineTo(27,50);h1.lineTo(27,10);h1.closePath();s.holes.push(h1);
-  const h2=new THREE.Path();h2.moveTo(-27,72);h2.lineTo(-27,80);h2.lineTo(27,80);h2.lineTo(27,72);h2.closePath();s.holes.push(h2);
+let trayBase=null, aRmStand=null, aRib=[];
+{const s=new THREE.Shape();s.moveTo(-66,0);s.lineTo(66,0);s.lineTo(66,90);s.lineTo(-66,90);s.closePath();
+  for(const x of[-20,20])for(const [y1,y2] of[[30,40],[66,76]]){const h=new THREE.Path();h.moveTo(x-2.5,y1);h.lineTo(x-2.5,y2);h.lineTo(x+2.5,y2);h.lineTo(x+2.5,y1);h.closePath();s.holes.push(h)}
   const m=X(s,KT,C.kit,C.kedge);m.rotation.x=-PI/2;tray.add(m);trayBase=m;
-  cradleBack=new THREE.Group();cradleBack.position.set(0,50,0);m.add(cradleBack);
-  const fb=X(rect(-27,-40,27,0),KT,C.kit,C.kedge);cradleBack.add(fb);
-  const lip=X(rect(-27,0,27,8),KT,C.kit,C.kedge);cradleLip=new THREE.Group();cradleLip.position.set(0,72,0);cradleLip.add(lip);m.add(cradleLip);
-  aRmStand=new THREE.Object3D();aRmStand.position.set(0,42.2,-55.5);aRmStand.quaternion.setFromEuler(new THREE.Euler(-110*Math.PI/180,0,0));m.add(aRmStand)}
+  // 리모컨: 리브 F1·F2의 비스듬한 등(20°)에 기대고, 아래 턱에 걸려요
+  aRmStand=new THREE.Object3D();aRmStand.position.set(0,50.5,-61.5);aRmStand.quaternion.setFromEuler(new THREE.Euler(-110*Math.PI/180,0,0));m.add(aRmStand);
+  const basis=new THREE.Matrix4().makeBasis(new THREE.Vector3(0,1,0),new THREE.Vector3(0,0,-1),new THREE.Vector3(-1,0,0));
+  for(const x of[-20,20]){const a=new THREE.Object3D();a.position.set(x+KT/2,0,0);a.quaternion.setFromRotationMatrix(basis);m.add(a);aRib.push(a)}}
 function anchor(par,p,q){const a=new THREE.Object3D();a.position.set(...p);if(q)a.quaternion.copy(q);par.add(a);return a}
 const brackets=new THREE.Group(); tray.add(brackets);
-for(const x of[-56,56]){const b=B(KT,15,32,C.kit,x,37.5,-KT-16,C.kedge);brackets.add(b)}
+for(const x of[-56,56]){const b=B(KT,15,38,C.kit,x,37.5,-KT-19,C.kedge);brackets.add(b)}
 const aC0=anchor(pivL,[-32,150,-KT/2],Qe(PI/2,0,0)), aC1=anchor(pivL,[-32,102,-KT/2],Qe(PI/2,0,0)), aRm=anchor(pivR,[32,97,-KT/2]);
 const _v=new THREE.Vector3(),_q=new THREE.Quaternion();
 const atA=a=>()=>{const p=a.getWorldPosition(new THREE.Vector3());ext.worldToLocal(p);return {p,q:a.getWorldQuaternion(new THREE.Quaternion()),s:new THREE.Vector3(1,1,1)}};
@@ -305,15 +304,18 @@ const frames=runners.map((r,i)=>{const s=new THREE.Shape();s.moveTo(-132,0);s.li
   const g=grp(ext,X(s,KT,0xf3f4f6,C.kedge));const lb=new THREE.Mesh(new THREE.PlaneGeometry(14,7),new THREE.MeshStandardMaterial({map:labelTex('ABCD'[i]),transparent:true}));lb.position.set(-118,5,KT+0.3);g.add(lb);return g});
 // 부품
 const archP=new THREE.Group(); box.add(archP);
-{const s=new THREE.Shape();s.moveTo(-132,0);s.lineTo(-102,0);s.lineTo(-102,115);s.absarc(-27,115,75,PI,0,true);s.lineTo(48,0);s.lineTo(78,0);s.lineTo(78,Hs);s.lineTo(-132,Hs);s.closePath();archP.add(X(s,KT,C.kit,C.kedge))}
-const divider=grp(box,B(KT,Hs,197,C.kit,0,0,0,C.kedge));
+{const s=new THREE.Shape();s.moveTo(-132,0);s.lineTo(-102,0);s.lineTo(-102,115);s.absarc(-27,115,75,PI,0,true);s.lineTo(48,0);s.lineTo(78,0);s.lineTo(78,195);s.lineTo(-132,195);s.closePath();archP.add(X(s,KT,C.kit,C.kedge))}
+const divider=grp(box,B(KT,190,197,C.kit,0,0,0,C.kedge));
 const shelves=[0,1].map(()=>grp(box,B(40,KT,197,C.kit,0,0,0,C.kedge)));
 const signTex=tex(360,160,(x,w,h)=>{x.fillStyle='#fbfbfc';x.fillRect(0,0,w,h);x.fillStyle='#2b2e33';x.font='800 78px "Pretendard",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText('RUMO',w/2,h/2+4);x.fillStyle=GREEN;x.beginPath();x.arc(w-34,30,10,0,7);x.fill()});
 const sign=new THREE.Group(); ext.add(sign);
 {const m=mat(C.kit),fm=new THREE.MeshStandardMaterial({map:signTex,roughness:.85,transparent:true});sign.add(B(90,40,KT,[m,m,m,m,fm,fm],0,20,0,C.kedge))}
 const brick=tex(120,280,(x,w,h)=>{for(let r=0;r<10;r++){x.fillStyle=r%2?'#fbfbfc':'#2b2e33';x.fillRect(0,h-(r+1)*28,w,28)}});
 const bm=mat(C.kit), bf=new THREE.MeshStandardMaterial({map:brick,roughness:.85,transparent:true});
-const cWalls=[0,1,2,3].map(()=>grp(box,B(30,70,KT,[bm,bm,bm,bm,bf,bf],0,0,0,C.kedge)));
+const cWalls=[[30,45.3],[30,62.7],[20,60],[20,60]].map(([w,h])=>grp(box,B(w,h,KT,[bm,bm,bm,bm,bf,bf],0,0,0,C.kedge)));
+// 리모컨 리브 F1·F2 (폼보드 5T)
+const ribShape=(()=>{const p=[[22,0],[30,0],[30,-5],[40,-5],[40,0],[66,0],[66,-5],[76,-5],[76,0],[86,0],[86,20],[81,20],[80,13.5],[59,6],[41.9,53],[35,53]];const s=new THREE.Shape();p.forEach(([x,y],i)=>i?s.lineTo(x,y):s.moveTo(x,y));s.closePath();return s})();
+const ribs=[0,1].map(()=>grp(ext,X(ribShape,KT,C.kit,C.kedge)));
 const cCap=grp(box,B(40,KT,40,0xdfe2e7,0,0,0,C.kedge));
 function ribbonMesh(col,amp,top){const g=new THREE.Group();const s=new THREE.Shape(),L_=95,w=4;const pts=[];
   for(let i=0;i<=40;i++){const y=L_*i/40;pts.push([amp*Math.sin(y/L_*Math.PI*2.2),y])}
@@ -333,7 +335,7 @@ const chimney=new THREE.Group(); box.add(chimney);
   chimney.add(B(18,12,2,0xdfe2e7,0,-6,0))}
 // 게이트(연결점)
 const gateSets=runners.map(()=>new THREE.Group()); gateSets.forEach(g=>ext.add(g));
-const GATE=[[[-122,90],[0,10],[100,172]],[[-122,90],[0,10],[122,90]],[[-122,91],[-23,10],[75,207]],[[-100,10],[-50,207],[-24,160],[5,13],[37,13],[69,13],[101,13],[122,115]]];
+const GATE=[[[0.0,210.0]],[[-50.9,207.0],[117.5,147.9],[-123.0,41.0],[-16.0,9.0],[54.0,13.0],[102.0,52.5]],[[-124.0,107.5],[120.4,86.5]],[[-89.5,7.0],[-24.5,7.0],[29.0,9.0],[65.0,9.0],[96.0,11.1],[24.0,180.5],[105.0,110.0],[59.0,205.5]]];
 GATE.forEach((gs,i)=>gs.forEach(([x,y])=>gateSets[i].add(B(4,4,KT,0xd5d9df,x,y,KT/2,C.kedge))));
 
 // ───────── 키프레임
@@ -349,19 +351,21 @@ const K={
  c1:{o:coasters[1],k:[atA(aC1),[0,P([-180,0,600],Qe(0,-0.2,0)),120],[10,atA(aC1),110]]},
  bone:{o:bone,k:[P([-98,Yr+45,163],Qs(['x',PI/2],['z',PI/2])),[0,P([-60,0,640],Qe(0,-0.4,0)),120],[10,P([6,H+R+20,110],Qs(['z',PI/2])),150]]},
  dock:{o:dock,k:[P([0,Yr,80]),[1,P([-300,0,460]),150],[8,P([-27,T+0.3,118]),170]]},
- arch:{o:archP,k:[on(0,P([10,8.5,0])),[4,popUp],[6,P([0,T,203]),150]]},
- div:{o:divider,k:[on(2,P([-23.5,108.5,KT/2],qSide)),[4,popUp],[5,P([80.5,T+Hs/2,101.5]),130]]},
- sh0:{o:shelves[0],k:[on(3,P([-100,108.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+67,101.5]),130]]},
- sh1:{o:shelves[1],k:[on(3,P([-50,108.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+134,101.5]),130]]},
- sign:{o:sign,k:[on(3,P([22,140,KT/2])),[4,popUp],[10,P([-135-T-KT/2-0.5,RL+128,110],Qe(0,-PI/2,0)),90]]},
- w0:{o:cWalls[0],k:[on(3,P([5,50,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]+12.5]),160]]},
- w1:{o:cWalls[1],k:[on(3,P([37,50,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]-12.5]),170]]},
- w2:{o:cWalls[2],k:[on(3,P([69,50,KT/2])),[4,popUp],[9,P([CH[0]-12.5,CH[1]+30,CH[2]],qSide),180]]},
- w3:{o:cWalls[3],k:[on(3,P([101,50,KT/2])),[4,popUp],[9,P([CH[0]+12.5,CH[1]+30,CH[2]],qSide),190]]},
- rb0:{o:ribbons[0],k:[on(1,P([-75,190,KT/2],Qe(0,0,-PI/2))),[4,popUp],[9,P([CH[0]-6,CH[1]+58,CH[2]],Qe(0,0.3,0.25)),210]]},
- rb1:{o:ribbons[1],k:[on(1,P([35,190,KT/2],Qe(0,0,-PI/2))),[4,popUp],[9,P([CH[0]+2,CH[1]+58,CH[2]+3],Qe(0,-0.2,-0.05)),220]]},
- rb2:{o:ribbons[2],k:[on(2,P([100,40,KT/2])),[4,popUp],[9,P([CH[0]+8,CH[1]+58,CH[2]-3],Qe(0,0.9,-0.3)),230]]},
- cap:{o:cCap,k:[on(3,P([95,115,KT/2],qIn)),[4,popUp],[9,P([CH[0],CH[1]+58,CH[2]]),200]]},
+ arch:{o:archP,k:[on(0,P([27,14,0])),[4,popUp],[6,P([0,T,203]),150]]},
+ div:{o:divider,k:[on(2,P([-23.5,110,KT/2],qSide)),[4,popUp],[5,P([80.5,T+95,101.5]),130]]},
+ rf0:{o:ribs[0],k:[on(1,P([-142,17,0])),[4,popUp],[10,atA(aRib[0]),120]]},
+ rf1:{o:ribs[1],k:[on(1,P([-70,17,0])),[4,popUp],[10,atA(aRib[1]),130]]},
+ sh0:{o:shelves[0],k:[on(3,P([-90,106.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+67,101.5]),130]]},
+ sh1:{o:shelves[1],k:[on(3,P([-25,106.5,KT/2],qIn)),[4,popUp],[5,P([107.5,T+134,101.5]),130]]},
+ sign:{o:sign,k:[on(3,P([59,160,KT/2])),[4,popUp],[10,P([-135-T-KT/2-0.5,RL+128,110],Qe(0,-PI/2,0)),90]]},
+ w0:{o:cWalls[0],k:[on(3,P([29,39.7,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]+12.5]),160]]},
+ w1:{o:cWalls[1],k:[on(3,P([65,48.4,KT/2])),[4,popUp],[9,P([CH[0],CH[1]+30,CH[2]-12.5]),170]]},
+ w2:{o:cWalls[2],k:[on(3,P([96,47,KT/2])),[4,popUp],[9,P([CH[0]-12.5,CH[1]+30,CH[2]],qSide),180]]},
+ w3:{o:cWalls[3],k:[on(3,P([24,120,KT/2])),[4,popUp],[9,P([CH[0]+12.5,CH[1]+30,CH[2]],qSide),190]]},
+ rb0:{o:ribbons[0],k:[on(1,P([-110,190,KT/2],Qe(0,0,-PI/2))),[4,popUp],[9,P([CH[0]-6,CH[1]+58,CH[2]],Qe(0,0.3,0.25)),210]]},
+ rb1:{o:ribbons[1],k:[on(1,P([-5,150,KT/2],Qe(0,0,-PI/2))),[4,popUp],[9,P([CH[0]+2,CH[1]+58,CH[2]+3],Qe(0,-0.2,-0.05)),220]]},
+ rb2:{o:ribbons[2],k:[on(2,P([100,30,KT/2])),[4,popUp],[9,P([CH[0]+8,CH[1]+58,CH[2]-3],Qe(0,0.9,-0.3)),230]]},
+ cap:{o:cCap,k:[on(3,P([64,110,KT/2],qIn)),[4,popUp],[9,P([CH[0],CH[1]+58,CH[2]]),200]]},
 };
 frames.forEach((f,i)=>K['f'+i]={o:f,k:[on(i,P([0,0,0])),[11,P([0,i*KT,220],Qe(-PI/2,0,0)),60+i*25]]});
 
@@ -381,7 +385,7 @@ const STEPS=['',
  '왼문 덧창을 열고(뜯는 조각 없음), 포켓 속 창틀을 붙인다',
  '받침 블록을 아치 안에 놓고 루모를 올린다 — 루모의 침대',
  '줄무늬 굴뚝(벽 4 + 캡)을 맞물리고 물결 리본 3개를 꽂아 지붕 슬릿에 끼운다',
- '받침대 바닥의 등받이와 앞 턱을 세워 리모컨을 비스듬히 기대 놓고 · 코스터는 둥근 창에 · 문패는 왼쪽 벽 표시 자리에 · 네임태그는 손잡이에',
+ '리브 F1·F2를 받침대 바닥 홈에 꽂고 리모컨을 비스듬히 기대 세운다 · 코스터는 둥근 창에 · 문패는 왼쪽 벽 표시 자리에 · 네임태그는 손잡이에',
  '빈 런너 틀 4장을 겹쳐 받침대로 — 집을 올리면 완성'];
 const st={fold:1,door:0,kit:0};
 function apply(){
@@ -396,7 +400,7 @@ function apply(){
   box.position.y=RL*s(11);
   runners.forEach(r=>r.now=run(r.keys,s));
   pivL.rotation.y=-0.6*s(2); pivR.rotation.y=0.6*s(2);
-  if(trayBase){const u=s(2),c=s(10);trayBase.rotation.x=PI/2*u;trayBase.position.z=-2*KT*(1-u);trayBase.position.y=KT*u;cradleBack.rotation.x=70*PI/180*c;cradleLip.rotation.x=-PI/2*c}
+  if(trayBase){const u=s(2);trayBase.rotation.x=PI/2*u;trayBase.position.z=-2*KT*(1-u);trayBase.position.y=KT*u;trayBase.updateMatrixWorld(true)}
   for(const key in K){const {o,k:ks}=K[key];const q=run(ks,s);o.position.copy(q.p);o.quaternion.copy(q.q);o.scale.copy(q.s);setOp(o,vis);if(o===tray)tray.updateMatrixWorld(true)}
   setOp(brackets,vis*s(2));
   gateSets.forEach((g,i)=>{const q=runners[i].now;g.position.copy(q.p);g.quaternion.copy(q.q);setOp(g,vis*(1-s(4)))});

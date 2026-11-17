@@ -66,9 +66,9 @@ def box_slots():
         for h in (70, 137): out.append((135 + z - 7.5, h - SL_, 135 + z + 7.5, h + SL_, 'D'))
     for z in (22, 134): out.append((135 + z - SL_, 30, 135 + z + SL_, 45, 'E'))          # 리모컨 받침대 고정 고리
     slope = S / 135; yc = H + (135 - 70) * slope                                        # 굴뚝 (지붕 2)
-    for z in (135, 165): out.append((135 + z - SL_, yc - 10, 135 + z + SL_, yc + 10, '굴뚝'))
-    for bx in (55, 85):
-        y = H + (135 - bx) * slope; out.append((135 + 150 - 10, y - SL_, 135 + 150 + 10, y + SL_, '굴뚝'))
+    for z in (137.5, 162.5): out.append((135 + z - SL_, yc - 8 * slope, 135 + z + SL_, yc + 8 * slope, '굴뚝'))   # 옆벽 D6·D7
+    for bx in (57.5, 82.5):                                                                                   # 위·아래 벽 D4·D5
+        y = H + (135 - bx) * slope; out.append((135 + 150 - 8, y - SL_ * slope, 135 + 150 + 8, y + SL_ * slope, '굴뚝'))
     return out
 SIGN_AREA = (-135 - 155, 128, -135 - 65, 168)          # 측벽 1 바깥: 문패 붙이는 자리 (양면테이프)
 
@@ -124,38 +124,20 @@ def box_svg():
 
 # ───────── 2) 조립 세트 한눈에 (런너 A~D + 동네 트레이)
 KT = 5
+import kitgeo
+def _polyfn(o, h):
+    def f(sh, o=o, h=h):
+        for ring in [o] + list(h):
+            for k, (x, y) in enumerate(ring): (sh.M if k == 0 else sh.L)(x, y)
+            sh.Z()
+        return sh
+    return f
 def runner_parts(i):
-    """parts on runner i in runner coords (x -132..132, y 0..217, y-up) — 탭·홈 포함."""
+    """kitgeo 배치 그대로 (탭·홈 포함). 반환: (그리기 함수, 이름, 라벨 위치)"""
     out = []
-    def R_(cx, cy, w, h, lab, tabs=(), slots=()):
-        def f(sh, cx=cx, cy=cy, w=w, h=h, tabs=tabs, slots=slots):
-            rect(sh, cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2)
-            for (x1, y1, x2, y2) in tabs: rect(sh, x1, y1, x2, y2)
-            for (x1, y1, x2, y2) in slots: rect(sh, x1, y1, x2, y2)
-            return sh
-        out.append((f, lab, (cx, cy)))
-    if i == 0:
-        def archp(sh, dx=10, dy=8.5):
-            sh.M(-132 + dx, dy).L(-127 + dx, dy).L(-127 + dx, dy - 5).L(-107 + dx, dy - 5).L(-107 + dx, dy).L(-102 + dx, dy).L(-102 + dx, 115 + dy); sh.A(-27 + dx, 115 + dy, 75, PI, 0, True)
-            sh.L(48 + dx, dy).L(53 + dx, dy).L(53 + dx, dy - 5).L(73 + dx, dy - 5).L(73 + dx, dy).L(78 + dx, dy).L(78 + dx, 200 + dy).L(-132 + dx, 200 + dy).Z(); return sh
-        out.append((archp, 'A1 아치 패널', (-27 + 10, 200)))
-    if i == 1:
-        out.append((lambda sh: ribbon(sh, -75, 190, True, 9), 'B1 물결 리본 · 네잎', (-20, 176)))
-        out.append((lambda sh: ribbon(sh, 35, 150, True, 7), 'B2 물결 리본 · 동그라미', (85, 136)))
-        for k, x in enumerate((-70, 30)):
-            R_(x, 60, 32, 15, f'E{k+1} 고정 고리', tabs=[(x - 21, 56, x - 16, 64), (x + 16, 56, x + 21, 64)])
-    if i == 2:
-        x0, y0 = -122, 8.5
-        R_(-23.5, 108.5, 197, 200, 'C1 칸막이', tabs=[(x0 + 27, y0 - 5, x0 + 47, y0), (x0 + 147, y0 - 5, x0 + 167, y0)],
-           slots=[(x0 + u - 7.5, y0 + h - 2.5 - 3, x0 + u + 7.5, y0 + h + 2.5 - 3) for u in (47, 147) for h in (70, 137)])
-        out.append((lambda sh: ribbon(sh, 100, 40, False, 8), 'C2 리본 · 아치', (100, 20)))
-    if i == 3:
-        for x, lab in ((-100, 'D1 선반'), (-50, 'D2 선반')):
-            R_(x, 108.5, 40, 197, lab, tabs=[(x - 25, 10 + d - 7.5, x - 20, 10 + d + 7.5) for d in (47, 147)] + [(x + 20, 10 + d - 7.5, x + 25, 10 + d + 7.5) for d in (47, 147)])
-        R_(22, 160, 90, 40, 'D3 문패 RUMO')
-        for k, x in enumerate([5, 37, 69, 101]):
-            R_(x, 50, 30, 70, f'D{4+k}', tabs=[(x - 8, 10, x + 8, 15)], slots=[(x - 15, 67, x - 10, 85), (x + 10, 15, x + 15, 33)])
-        R_(95, 115, 40, 40, 'D8 캡', slots=[(95 + dx - 4, 115 + dy - 1.5, 95 + dx + 4, 115 + dy + 1.5) for dx, dy in ((-10, 8), (10, 8), (0, -10))])
+    for code, name, o, h in kitgeo.placed('ABCD'[i]):
+        xs = [x for x, _ in o]; ys = [y for _, y in o]
+        out.append((_polyfn(o, h), f'{code} {name}', ((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2)))
     return out
 
 def ribbon(sh, x0, y0, horiz, amp):
@@ -170,8 +152,7 @@ def ribbon(sh, x0, y0, horiz, amp):
         x, y = T(px, py); (sh.M if k == 0 else sh.L)(x, y)
     sh.Z(); return sh
 
-GATES = [[(-122, 90), (0, 10), (100, 172)], [(-122, 90), (0, 10), (122, 90), (-70, 50), (30, 50)], [(-122, 91), (-23, 10), (75, 207)],
-         [(-100, 9), (-50, 207), (-24, 160), (5, 11), (37, 11), (69, 11), (101, 11), (122, 115)]]
+GATES = [[((g[0] + g[2]) / 2, (g[1] + g[3]) / 2, g) for _, g in kitgeo.gates(r)] for r in 'ABCD']
 
 def tray(sh_factory):
     """동네 트레이: 가운데 대문 + 왼쪽(계단 박공) + 오른쪽(종 지붕) 한 장 · 바닥판."""
@@ -191,12 +172,11 @@ def tray(sh_factory):
         q.A(x1 + r, y2 - r, r, PI / 2, PI); q.L(x1, y1 + r); q.A(x1 + r, y1 + r, r, PI, PI * 1.5); paths.append(q)
     rrect(71, 40, 125, 154, 8); rrect(78, 162, 90, 174, 2); rrect(108, 162, 120, 174, 2)
     for x in (-56, 56): q = sh_factory(); rect(q, x - 2.5, 30, x + 2.5, 45); paths.append(q)   # E 고리 홈
-    b = sh_factory(); rect(b, -66, -80, 66, 0); paths.append(b)
-    # 리모컨 거치대: 등받이 날개 54×40 (3면 칼선, 앞쪽이 접는 선) + 앞 턱 54×8
-    fl = sh_factory(); fl.M(27, -50).L(27, -10).L(-27, -10).L(-27, -50); paths.append(fl)
-    lp = sh_factory(); lp.M(27, -72).L(27, -80); paths.append(lp); lp2 = sh_factory(); lp2.M(-27, -72).L(-27, -80); paths.append(lp2)
-    folds += [(-66, 0, -66, 182), (66, 0, 66, 178), (-66, 0, 66, 0), (-27, -50, 27, -50), (-27, -72, 27, -72)]
-    labs += [(0, 60, '대문 · 루모 창'), (-99, 125, '코스터'), (-99, 82, '네임태그'), (99, 100, '리모컨'), (0, -30, '등받이'), (0, -62, '바닥판 · 리모컨 거치대')]
+    b = sh_factory(); rect(b, -66, -90, 66, 0); paths.append(b)
+    for x in (-20, 20):                                   # 리모컨 리브 F1·F2 홈
+        for y1, y2 in ((30, 40), (66, 76)): q = sh_factory(); rect(q, x - 2.5, -y2, x + 2.5, -y1); paths.append(q)
+    folds += [(-66, 0, -66, 182), (66, 0, 66, 178), (-66, 0, 66, 0)]
+    labs += [(0, 60, '대문 · 루모 창'), (-99, 125, '코스터'), (-99, 82, '네임태그'), (99, 100, '리모컨'), (0, -83, '바닥판 · F 리브 홈 4')]
     return paths, labs, folds
 
 def kit_svg():
@@ -208,8 +188,8 @@ def kit_svg():
     for i, (c, r) in enumerate(cols):
         ox = pad + c * (cw + gap) + 132; oy = pad + 40 + r * (ch + gap) + ch   # runner origin (bottom-center)
         f = Sh(ox, oy); rect(f, -132, 0, 132, 217); body.append(f'<path d="{f.path()}" fill="#F3F4F6" stroke="{INK}" stroke-width="0.5"/>')
-        h = Sh(ox, oy); rect(h, -124, 8, 124, 209); body.append(f'<path d="{h.path()}" fill="#FFFFFF" stroke="{MUTE}" stroke-width="0.35"/>')
-        for x, y in GATES[i]: body.append(f'<rect x="{ox + x - 2:.2f}" y="{oy - y - 2:.2f}" width="4" height="4" fill="#D5D9DF"/>')
+        h = Sh(ox, oy); rect(h, *kitgeo.IN); body.append(f'<path d="{h.path()}" fill="#FFFFFF" stroke="{MUTE}" stroke-width="0.35"/>')
+        for _, _, (gx1, gy1, gx2, gy2) in GATES[i]: body.append(f'<rect x="{ox + gx1:.2f}" y="{oy - gy2:.2f}" width="{gx2-gx1:.2f}" height="{gy2-gy1:.2f}" fill="#D5D9DF"/>')
         for fn, lab, (lx, ly) in runner_parts(i):
             sh = fn(Sh(ox, oy)); body.append(f'<path d="{sh.path()}" fill="#FFFFFF" fill-rule="evenodd" stroke="{CUT}" stroke-width="0.6"/>')
             body.append(label(ox + lx, oy - ly + 2, lab, 6.5, INK, 600))
@@ -232,7 +212,7 @@ def kit_svg():
     body.append(f'<rect x="{tx - 28}" y="{gy - 6}" width="56" height="12" rx="6" fill="#8EA8EA"/>' + label(tx, gy + 30, '뼈 네임태그', 6, INK, 600))
     body.append(f'<rect x="{tx + 52}" y="{gy - 24}" width="22" height="50" rx="4" fill="#F1F2F4" stroke="{MUTE}" stroke-width="0.4"/>' + label(tx + 63, gy + 38, '리모컨', 6, INK, 600))
     head = [label(pad, pad + 6, 'RUMO 올인원 패키지 v8 — 조립 세트 한눈에', 12, INK, 700, 'start'),
-            label(pad, pad + 20, '런너 4장(A~D)에서 15개 부품을 떼어 루모의 집을 만들어요. 빈 런너 틀 4장은 받침대가 돼요. 회색 점은 게이트(연결점).', 6.5, MUTE, 500, 'start')]
+            label(pad, pad + 20, '런너 4장(A~D)에서 17개 부품을 떼어 루모의 집을 만들어요. 빈 런너 틀 4장은 받침대가 돼요. 회색 점은 게이트(연결점).', 6.5, MUTE, 500, 'start')]
     ly = Hd - pad + 4
     leg = [f'<line x1="{pad}" y1="{ly}" x2="{pad+18}" y2="{ly}" stroke="{CUT}" stroke-width="0.8"/>', label(pad + 22, ly + 2.2, '부품 칼선', 6.5, INK, 500, 'start'),
            f'<line x1="{pad+80}" y1="{ly}" x2="{pad+98}" y2="{ly}" stroke="{FOLD}" stroke-width="0.8" stroke-dasharray="4 2"/>', label(pad + 102, ly + 2.2, '접는 선', 6.5, INK, 500, 'start')]

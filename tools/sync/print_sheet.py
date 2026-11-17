@@ -3,6 +3,7 @@ mm 단위 SVG, Illustrator에서 바로 열려요. 공개 폴더에 올리지 �
 그래픽은 v8 3D 모형의 텍스처를 벡터로 옮긴 것이에요."""
 import math, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
+import kitgeo
 from dieline import Sh, rect, slot, label, fold, cut, runner_parts, ribbon, tray, GATES, CUT, FOLD, INK, MUTE, W, D, H, R, FIN, S, PI, box_outline_pts, box_slots, GLUE_FOLDS, SIGN_AREA
 
 GREEN, BLUE, GRAY, DARK, BOARD, KIT = '#A8D14B', '#8EA8EA', '#C9CDD3', '#2B2E33', '#EEF0F3', '#FBFBFC'
@@ -99,31 +100,23 @@ def kit_sheet(X0, Y0):
     names = ['런너 A', '런너 B', '런너 C', '런너 D']
     for i, (c, r) in enumerate([(0, 0), (1, 0), (0, 1), (1, 1)]):
         ox = X0 + c * (cw + gap) + 132; oy = Y0 + 16 + r * (ch + gap + 16) + ch
-        f = Sh(ox, oy); rect(f, -132, 0, 132, 217); hh = Sh(ox, oy); rect(hh, -124, 8, 124, 209)
+        f = Sh(ox, oy); rect(f, -132, 0, 132, 217); hh = Sh(ox, oy); rect(hh, *kitgeo.IN)
         out.append(f'<path d="{f.path()} {hh.path()}" fill="#F3F4F6" fill-rule="evenodd" stroke="{CUT}" stroke-width="0.5"/>')
         out.append(box(ox - 132 + 3, oy - 7 + 0.5, 14, 7, '#E9ECF0') + txt(ox - 125, oy - 1.6, 'ABCD'[i], 5, 800, '#4A4F57'))
-        for x, y in GATES[i]: out.append(box(ox + x - 2, oy - y - 2, 4, 4, '#D5D9DF'))
-        for fn, lab, (lx, ly) in runner_parts(i):
-            sh = fn(Sh(ox, oy)); fill = KIT
-            if 'B1' in lab: fill = '#D9E9B0'
-            if 'B2' in lab: fill = '#C9D6F5'
-            if 'C2' in lab: fill = '#E6E8EC'
-            if 'D8' in lab: fill = '#DFE2E7'
-            out.append(f'<path d="{sh.path()}" fill="{fill}" fill-rule="evenodd" stroke="{CUT}" stroke-width="0.5"/>')
-            if lab.startswith('D3'):
-                out.append(txt(ox + 22, oy - 160 + 6.5, 'RUMO', 19.5, 800) + f'<circle cx="{ox + 22 + 35.5:.2f}" cy="{oy - 160 - 11.7:.2f}" r="2.5" fill="{GREEN}"/>')
-            elif lab[:2] in ('D4', 'D5', 'D6', 'D7'):
-                for rr_ in range(10):
-                    if rr_ % 2 == 0: out.append(box(ox + lx - 15, oy - ly + 35 - (rr_ + 1) * 7, 30, 7, DARK))
-                out.append(f'<rect x="{ox+lx-15:.2f}" y="{oy-ly-35:.2f}" width="30" height="70" fill="none" stroke="{CUT}" stroke-width="0.5"/>')
-            if lab.startswith('D3'): out.append(label(ox + lx, oy - ly + 30, lab, 5.5, INK, 600)); continue
-            out.append(label(ox + lx, oy - ly + (14 if lab[:2] in ('D4', 'D5', 'D6', 'D7') else 2) + (0 if lab[:2] not in ('D4','D5','D6','D7') else 31), lab.split(' ')[0] if lab[:2] in ('D4','D5','D6','D7') else lab, 5.5, INK, 600))
-        # 리본 꼭지 장식
-        if i == 1:
-            out.append(clover(ox - 75 + 113, oy - 190, 6))
-            out.append(f'<circle cx="{ox+35+113:.2f}" cy="{oy-150:.2f}" r="9" fill="none" stroke="{BLUE}" stroke-width="5"/>'.replace(f'cx="{ox+35+113:.2f}"', f'cx="{min(ox+35+111, ox+120):.2f}"'))
-        if i == 2:
-            out.append(f'<path d="M{ox+92:.2f} {oy-40-113:.2f} h16 v-8 a8 8 0 0 0 -16 0 z" fill="#DFE2E7" stroke="{CUT}" stroke-width="0.4"/>')
+        for _, _, (gx1, gy1, gx2, gy2) in GATES[i]: out.append(box(ox + gx1, oy - gy2, gx2 - gx1, gy2 - gy1, '#D5D9DF'))
+        FILL = {'B1': '#D9E9B0', 'B2': '#C9D6F5', 'C2': '#E6E8EC', 'D8': '#DFE2E7'}
+        for k, (fn, lab, (lx, ly)) in enumerate(runner_parts(i)):
+            sh = fn(Sh(ox, oy)); code = lab.split(' ')[0]; cid = f'cp{i}{k}'
+            out.append(f'<path d="{sh.path()}" fill="{FILL.get(code, KIT)}" fill-rule="evenodd" stroke="{CUT}" stroke-width="0.5"/>')
+            if code == 'D3':
+                out.append(txt(ox + lx, oy - ly + 7, 'RUMO', 19.5, 800) + f'<circle cx="{ox + lx + 35.5:.2f}" cy="{oy - ly - 12:.2f}" r="2.5" fill="{GREEN}"/>')
+            if code in ('D4', 'D5', 'D6', 'D7'):        # 줄무늬 굴뚝 인쇄 (부품 모양으로 잘라 보임)
+                out.append(f'<clipPath id="{cid}"><path d="{sh.path()}" clip-rule="evenodd"/></clipPath><g clip-path="url(#{cid})">'
+                           + ''.join(box(ox + lx - 20, oy - ly + 40 - (r_ + 1) * 7, 40, 7, DARK) for r_ in range(0, 12, 2)) + '</g>')
+                out.append(f'<path d="{sh.path()}" fill="none" stroke="{CUT}" stroke-width="0.5"/>')
+            lab_y = oy - ly + 2 if code not in ('D3',) else oy - ly + 26
+            if code in ('D4', 'D5', 'D6', 'D7'): out.append(label(ox + lx, oy - ly + 2, f'<tspan fill="#FFFFFF">{code}</tspan>', 6, INK, 700))
+            else: out.append(label(ox + lx, lab_y, lab, 5.5, INK, 600))
         out.append(txt(ox - 132, oy - ch - 5, names[i], 8, 700, INK, 'start') + txt(ox + 132, oy - ch - 5, '폼보드 5T · 264 × 217', 5.5, 500, MUTE, 'end'))
     # 트레이 (가운데 대문 인쇄)
     tx = X0 + 2 * (cw + gap) + 132 + 10; ty = Y0 + 16 + 260
@@ -166,7 +159,7 @@ def main():
     secs.append(txt(pad, y, '② 하우스 박스 — 안쪽면 (문 안쪽 인쇄 · 바닥 매트)', 10, 700, INK, 'start')); y += 10
     OY = y + H + S + FIN; secs += box_sheet(pad + 490 + 5, OY, False); y = OY + D + 26
     secs.append(txt(pad, y, '③ 조립 키트 — 런너 A~D · 동네 트레이 · 받침 블록 · 굿즈', 10, 700, INK, 'start')); y += 8
-    secs += kit_sheet(pad, y); y += 16 * 2 + 217 * 2 + 26 + 24 + 130
+    secs += kit_sheet(pad, y); y += 16 * 2 + 217 * 2 + 26 + 24 + 36
     ly = y + 6
     secs.append(f'<line x1="{pad}" y1="{ly}" x2="{pad+18}" y2="{ly}" stroke="{CUT}" stroke-width="0.8"/>' + label(pad + 22, ly + 2.2, '칼선', 6.5, INK, 500, 'start'))
     secs.append(f'<line x1="{pad+60}" y1="{ly}" x2="{pad+78}" y2="{ly}" stroke="{FOLD}" stroke-width="0.8" stroke-dasharray="4 2"/>' + label(pad + 82, ly + 2.2, '접는 선', 6.5, INK, 500, 'start'))
