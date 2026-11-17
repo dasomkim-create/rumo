@@ -79,7 +79,7 @@ HTML = '''<!-- package:start -->
       <div class="pk-strip" id="pkStrip"></div>
     </div>
     <div class="reveal" style="display: flex; flex-direction: column; gap: 20px;"><h3 style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600;">상자 속 구성품</h3><div class="pk-kit">''' + KIT + '''</div></div>
-    <div class="pk-foot"><span style="color: #8a8a90; font-size: 14px;" id="pkNote"></span><span style="display: flex; gap: 8px; flex-wrap: wrap;"><a class="pill pill-ghost" href="package/kit.html" style="height: 48px; padding: 0 24px; font-size: 16px;">조립 세트 한눈에</a><a class="pill" href="package/" style="height: 48px; padding: 0 24px; font-size: 16px;">3D로 크게 보기 →</a></span></div>
+    <div class="pk-foot"><span style="color: #8a8a90; font-size: 14px;" id="pkNote"></span><span style="display: flex; gap: 8px; flex-wrap: wrap;"><a class="pill pill-ghost" href="package/kit.html" style="height: 48px; padding: 0 24px; font-size: 16px;">부품 하나하나</a><a class="pill" href="package/" style="height: 48px; padding: 0 24px; font-size: 16px;">3D로 크게 보기 →</a></span></div>
   </div></section>
   <script>
   (function () {
