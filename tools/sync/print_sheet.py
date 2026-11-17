@@ -160,7 +160,9 @@ def main():
     OY = y + H + S + FIN; secs += box_sheet(pad + 490 + 5, OY, False); y = OY + D + 26
     secs.append(txt(pad, y, '③ 조립 키트 — 런너 A~D · 동네 트레이 · 받침 블록 · 굿즈', 10, 700, INK, 'start')); y += 8
     secs += kit_sheet(pad, y); y += 16 * 2 + 217 * 2 + 26 + 24 + 36
-    ly = y + 6
+    import goods_detail
+    g_, y = goods_detail.build(pad, y + 10, WD); secs += g_
+    ly = y + 2
     secs.append(f'<line x1="{pad}" y1="{ly}" x2="{pad+18}" y2="{ly}" stroke="{CUT}" stroke-width="0.8"/>' + label(pad + 22, ly + 2.2, '칼선', 6.5, INK, 500, 'start'))
     secs.append(f'<line x1="{pad+60}" y1="{ly}" x2="{pad+78}" y2="{ly}" stroke="{FOLD}" stroke-width="0.8" stroke-dasharray="4 2"/>' + label(pad + 82, ly + 2.2, '접는 선', 6.5, INK, 500, 'start'))
     HD = ly + 20

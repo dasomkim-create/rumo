@@ -163,20 +163,17 @@ def tray(sh_factory):
     l = sh_factory(); l.M(-132, 0).L(-66, 0).L(-66, 182)
     for x, y in [(-74, 182), (-74, 192), (-84, 192), (-84, 203), (-94, 203), (-94, 213), (-104, 213), (-104, 203), (-114, 203), (-114, 192), (-124, 192), (-124, 182), (-132, 182)]: l.L(x, y)
     l.Z(); paths.append(l)
-    for y in (150, 102): h = sh_factory(); h.A(-98, y, 20, 0, 2 * PI, True); paths.append(h)
-    v = sh_factory(); cx, cy, w_, h_ = -98, 45, 22, 56; r = w_ / 2
-    v.M(cx + r, cy - h_ / 2 + r).L(cx + r, cy + h_ / 2 - r); v.A(cx, cy + h_ / 2 - r, r, 0, PI, False); v.L(cx - r, cy - h_ / 2 + r); v.A(cx, cy - h_ / 2 + r, r, PI, 2 * PI, False); paths.append(v)
+    for hp in kitgeo.tray_holes():                         # 굿즈 포켓(+손가락 홈) · 밴드 슬릿 · 장식 창 — kitgeo 원본
+        q = sh_factory()
+        for k, (x, y) in enumerate(list(hp.exterior.coords)[:-1]): (q.M if k == 0 else q.L)(x, y)
+        q.Z(); paths.append(q)
     rr_ = sh_factory(); rr_.M(66, 0).L(132, 0).L(132, 178).Q(132, 196, 116, 198).Q(99, 216, 82, 198).Q(66, 196, 66, 178).Z(); paths.append(rr_)
-    def rrect(x1, y1, x2, y2, r):
-        q = sh_factory(); q.M(x1 + r, y1).L(x2 - r, y1); q.A(x2 - r, y1 + r, r, -PI / 2, 0); q.L(x2, y2 - r); q.A(x2 - r, y2 - r, r, 0, PI / 2); q.L(x1 + r, y2)
-        q.A(x1 + r, y2 - r, r, PI / 2, PI); q.L(x1, y1 + r); q.A(x1 + r, y1 + r, r, PI, PI * 1.5); paths.append(q)
-    rrect(71, 40, 125, 154, 8); rrect(78, 162, 90, 174, 2); rrect(108, 162, 120, 174, 2)
     for x in (-56, 56): q = sh_factory(); rect(q, x - 2.5, 30, x + 2.5, 45); paths.append(q)   # E 고리 홈
     b = sh_factory(); rect(b, -66, -90, 66, 0); paths.append(b)
     for x in (-20, 20):                                   # 리모컨 리브 F1·F2 홈
         for y1, y2 in ((30, 40), (66, 76)): q = sh_factory(); rect(q, x - 2.5, -y2, x + 2.5, -y1); paths.append(q)
     folds += [(-66, 0, -66, 182), (66, 0, 66, 178), (-66, 0, 66, 0)]
-    labs += [(0, 60, '대문 · 루모 창'), (-99, 125, '코스터'), (-99, 82, '네임태그'), (99, 100, '리모컨'), (0, -83, '바닥판 · F 리브 홈 4')]
+    labs += [(0, 60, '대문 · 루모 창'), (-99, 126, '코스터 포켓'), (-99, 84, '네임태그 포켓'), (98, 100, '리모컨 창'), (0, -83, '바닥판 · F 리브 홈 4')]
     return paths, labs, folds
 
 def kit_svg():

@@ -125,5 +125,92 @@ def check():
     ok(True, '리브 2장은 기대는 힘을 판 방향(in-plane)으로 받아 휘지 않음 — 접은 날개(경첩)는 힘을 못 받아 쓰러져서 바꿈')
     return rep
 
+# ───── 굿즈 · 트레이 포켓 (실측값이 오면 여기 숫자만 바꾸면 트레이·도면·점검이 같이 바뀌어요)
+ROBOT = dict(W=105, L=165, H=180)        # 상품 표기 치수 (폭 × 길이 × 높이)
+ROBOT_MODEL = dict(head_w=100, head_front=82, nose=87, paw=(30, 40), paw_x=32, paw_z=(58, -55))  # 3D 모형 가정값 — 실측 필요
+REMOTE = dict(W=50, L=110, T=22)         # 가정값 — 실측 필요
+COASTER = dict(r=9.5, T=4)               # 네잎 = 지름 19 원 4개 → 36.1 × 36.1, 코르크 4T
+BONE = dict(L=60, W=22, T=5, hole=3)     # 뼈 네임태그 폼보드 5T, 끈 구멍 Ø3
+PRESS = 0.2      # 코스터·네임태그 포켓은 0.2mm 작게 → 폼이 눌리며 잡아 줌 (세워도 안 빠짐)
+SLIP = 0.5       # 리모컨(딱딱한 플라스틱)은 0.5mm 크게 → 밴드로 잡음
+BACK_T = 1       # 날개 뒷판: 그레이보드 1T
+TRAY_Z, DOOR_Z, DOCK_Z = 168, 217, 80   # 배송 때 트레이 앞면 · 닫힌 문 안쪽 · 받침 블록 중심 (박스 z)
+COASTER_AT = [(-98, 150), (-98, 102)]; BONE_AT = (-98, 45); REMOTE_AT = (98, 97)
+
+def P_(o, h=()): return Polygon(o, [list(x) for x in h]).buffer(0)
+def clover_poly(cx, cy, r=None):
+    r = r or COASTER['r']; from shapely.geometry import Point
+    from shapely.ops import unary_union
+    return unary_union([Point(cx + a * r * .9, cy + b * r * .9).buffer(r, 64) for a, b in ((-1, 0), (1, 0), (0, -1), (0, 1))])
+def bone_poly(cx, cy, vertical=True):
+    from shapely.geometry import Point
+    from shapely.ops import unary_union
+    hl, hw = BONE['L'] / 2 - 6, BONE['W'] / 2 - 6     # 끝 원 r6
+    g = unary_union([sbox(-hl + 4, -5, hl - 4, 5)] + [Point(x, y).buffer(6, 48) for x in (-hl, hl) for y in (-hw, hw)])
+    g = affinity.rotate(g, 90, origin=(0, 0)) if vertical else g
+    return affinity.translate(g, cx, cy)
+def bone_hole(cx, cy, vertical=True):
+    from shapely.geometry import Point
+    hx = BONE['L'] / 2 - 14
+    return Point(cx, cy + hx).buffer(BONE['hole'] / 2, 24) if vertical else Point(cx + hx, cy).buffer(BONE['hole'] / 2, 24)
+def rrect_poly(x1, y1, x2, y2, r): return sbox(x1 + r, y1 + r, x2 - r, y2 - r).buffer(r, 32)
+def remote_window():
+    cx, cy = REMOTE_AT; w, l = REMOTE['W'] / 2 + SLIP, REMOTE['L'] / 2 + SLIP
+    return rrect_poly(cx - w, cy - l, cx + w, cy + l, 4)
+def band_slits():                       # 밴드 슬릿 12 × 2, 창에서 6.5mm 떨어짐
+    cx, cy = REMOTE_AT; e = REMOTE['L'] / 2 + SLIP + 6.5
+    return [sbox(cx - 6, cy - e - 2, cx + 6, cy - e), sbox(cx - 6, cy + e, cx + 6, cy + e + 2)]
+def deco_squares(): return [rrect_poly(78, 164, 90, 176, 2), rrect_poly(108, 164, 120, 176, 2)]
+def finger(cx, cy, r=6):
+    from shapely.geometry import Point
+    return Point(cx, cy).buffer(r, 32)
+def pockets():
+    """(이름, 물건 모양, 칼선 구멍 모양, 손가락 홈) — 트레이 좌표"""
+    out = []
+    for k, (x, y) in enumerate(COASTER_AT):
+        item = clover_poly(x, y); out.append((f'코스터 {k+1}', item, item.buffer(-PRESS, join_style=1), finger(x - 18.5, y)))
+    item = bone_poly(*BONE_AT); out.append(('네임태그', item, item.buffer(-PRESS, join_style=1), finger(BONE_AT[0] + 8.5, BONE_AT[1])))
+    out.append(('리모컨', sbox(REMOTE_AT[0] - REMOTE['W'] / 2, REMOTE_AT[1] - REMOTE['L'] / 2, REMOTE_AT[0] + REMOTE['W'] / 2, REMOTE_AT[1] + REMOTE['L'] / 2), remote_window(), None))
+    return out
+def tray_holes():
+    """트레이 날개에 뚫는 칼선 (포켓 + 손가락 홈 합침) + 밴드 슬릿 + 장식 창"""
+    hs = []
+    for _, _, cutp, notch in pockets(): hs.append(cutp.union(notch) if notch is not None else cutp)
+    return hs + band_slits() + deco_squares()
+def wing_L(): return P_([(-132, 0), (-66, 0), (-66, 182), (-74, 182), (-74, 192), (-84, 192), (-84, 203), (-94, 203), (-94, 213), (-104, 213), (-104, 203), (-114, 203), (-114, 192), (-124, 192), (-124, 182), (-132, 182)])
+def wing_R():
+    q = [(66, 0), (132, 0), (132, 178)]
+    def quad(p0, c, p1, n=12): return [((1-t)**2*p0[0]+2*(1-t)*t*c[0]+t*t*p1[0], (1-t)**2*p0[1]+2*(1-t)*t*c[1]+t*t*p1[1]) for t in [i/n for i in range(1, n+1)]]
+    q += quad((132, 178), (132, 196), (116, 198)) + quad((116, 198), (99, 216), (82, 198)) + quad((82, 198), (66, 196), (66, 178))
+    return P_(q)
+def backings():
+    """날개 뒷판 (그레이보드 1T) — 접는 선에서 2mm 띄움, 바깥 1mm 안쪽. 밴드 슬릿·장식 창은 뒷판에도 뚫어요."""
+    L = wing_L().buffer(-1, join_style=2).intersection(sbox(-140, -10, -68, 300))
+    R = wing_R().buffer(-1, join_style=2).intersection(sbox(68, -10, 140, 300))
+    for h in band_slits() + deco_squares(): R = R.difference(h)
+    return L, R
+
+def goods_check():
+    rep = []
+    def ok(c, msg): rep.append(('OK ' if c else '!! ') + msg); return c
+    for name, item, cutp, notch in pockets():
+        wing = wing_L() if item.centroid.x < 0 else wing_R()
+        hole = cutp.union(notch) if notch is not None else cutp
+        others = [h for h in tray_holes() if not h.equals(hole)]
+        m_edge = wing.exterior.distance(hole); m_other = min(hole.distance(h) for h in others)
+        bx = item.bounds
+        ok(m_edge >= 5, f'{name}: 날개 가장자리까지 폼 {m_edge:.1f}mm (≥5)')
+        ok(m_other >= 5, f'{name}: 옆 구멍까지 폼 {m_other:.1f}mm (≥5)')
+        fit = (cutp.bounds[2] - cutp.bounds[0]) - (bx[2] - bx[0])
+        ok(True, f'{name}: 물건 {bx[2]-bx[0]:.1f} × {bx[3]-bx[1]:.1f} · 구멍 {cutp.bounds[2]-cutp.bounds[0]:.1f} × {cutp.bounds[3]-cutp.bounds[1]:.1f} ({fit:+.1f})')
+    ok(COASTER['T'] <= KT, f"코스터 {COASTER['T']}T ≤ 포켓 깊이 {KT} → 1mm 들어가 앉아 문에 안 닿음")
+    ok(BONE['T'] <= KT, f"네임태그 {BONE['T']}T = 포켓 깊이 {KT} → 표면과 같은 높이")
+    out = REMOTE['T'] - KT
+    ok(TRAY_Z + out < DOOR_Z, f"리모컨은 뒷판에 닿고 앞으로 {out}mm 나옴 → {TRAY_Z+out} < 문 안쪽 {DOOR_Z} (여유 {DOOR_Z-TRAY_Z-out}mm), 밴드가 앞에서 잡음")
+    hf = DOCK_Z + ROBOT_MODEL['head_front']; tb = TRAY_Z - KT
+    ok(hf < tb, f"루모 얼굴 앞 z {hf} < 트레이 뒷면 {tb} (여유 {tb-hf}mm) · 머리 폭 {ROBOT_MODEL['head_w']} > 대문 창 92 → 앞으로 안 빠짐")
+    ok(min(s.distance(remote_window()) for s in band_slits()) >= 5, '밴드 슬릿 ↔ 리모컨 창 폼 6.5mm (≥5)')
+    return rep
+
 if __name__ == '__main__':
-    for line in check(): print(line)
+    for line in check() + goods_check(): print(line)
