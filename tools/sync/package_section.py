@@ -41,16 +41,16 @@ CSS = '''
 #package .pk-parts span{padding:14px 12px 14px 0;border-bottom:1px solid #232326;color:#a3a3a3;min-width:0}
 #package .pk-parts>div:first-child span{color:#6c6c74;font-size:13px;font-weight:600}
 #package .pk-parts>div span:first-child{color:#fff;font-weight:600}
-#package .pk-kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-#package .pk-k{border-radius:20px;background:#111113;padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
-#package .pk-ki{height:112px;border-radius:14px;background:#1c1c1e}
-#package .pk-kn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+#package .pk-kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:28px 12px}
+#package .pk-k{display:flex;flex-direction:column;gap:10px;min-width:0}
+#package .pk-ki{height:128px;border-radius:20px;background:#141416;margin-bottom:2px}
+#package .pk-kn,#package .pk-k p{padding:0 2px}#package .pk-kn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 #package .pk-kn b{font-size:17px;font-weight:600}
 #package .pk-kn span{font-size:13px;color:#8a8a90}
 #package .pk-k p{margin:0;display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:19px}
 #package .pk-k p span:first-child{color:#8a8a90}
 #package .pk-k p span:last-child{color:#d5ff44}
-@media (max-width:600px){#package .pk-kit{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#package .pk-ki{height:88px}}
+@media (max-width:600px){#package .pk-kit{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 10px}#package .pk-ki{height:104px;border-radius:16px}}
 #package .pk-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 @media (max-width:900px){
  #package .pk-card{grid-template-columns:minmax(0,1fr);border-radius:24px}
@@ -64,7 +64,7 @@ CSS = '''
  #package .pk-parts{font-size:13px;line-height:19px}
 }
 '''
-KIT = ''.join(f'<div class="pk-k"><div class="pk-ki">{svg}</div><div class="pk-kn"><b>{n}</b><span>× {c}</span></div><p><span>배송 · {a}</span><span>완성 · {b}</span></p></div>' for _, n, c, a, b, svg in kit_icons.ICONS)
+KIT = ''.join(f'<div class="pk-k"><div class="pk-ki">{svg}</div><div class="pk-kn"><b>{n}</b><span>× {c}</span></div><p><span>배송 · {a}</span><span>완성 · {b}</span></p></div>' for _, n, c, a, b, svg in kit_icons.ICONS) + '<div class="pk-k"><div class="pk-ki" style="background:#d5ff44;color:#050505;display:flex;flex-direction:column;justify-content:center;padding:0 18px"><b style="font-size:40px;line-height:1;font-weight:700">12</b><span style="font-size:14px;font-weight:600">단계 · 한 상자</span></div><div class="pk-kn"><b>받기 → 조립 → 완성</b></div><p><span>판지 3T 박스 · 폼보드 5T 키트</span></p></div>'
 HTML = '''<!-- package:start -->
   <style>''' + CSS + '''</style>
   <section id="package" class="sec"><div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
