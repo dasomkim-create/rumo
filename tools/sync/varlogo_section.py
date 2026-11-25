@@ -54,7 +54,7 @@ else:
     j = j2 + len('</script>') if 0 < j2 - j < 400 else j
     s = s[:j] + '\n' + SEC + s[j:]
 # Identity 섹션: 가이드 원을 꽃(중심 462, 50 · 지름 100)에 맞추고, 꽃은 원래 로고처럼 천천히 돌아요
-s = s.replace('d="M478 -11A61 61 0 1 1 477.9 -11"', 'd="M462 0A50 50 0 1 1 461.9 0"')
+s = s.replace('d="M478 -11A61 61 0 1 1 477.9 -11"', 'd="M468 -12.5A62.5 62.5 0 1 1 467.9 -12.5"')
 s = re.sub(r'(<g class="s-fill"><path fill="#ffffff" d="[^"]+"></path>)(<path fill="#ffc447" d="[^"]+"></path>)(</g>)',
            r'\1<g style="transform-box:fill-box;transform-origin:center;animation:vl-spin 14s linear infinite">\2</g>\3', s, count=1)
 # 꽃잎 스케치 선도 꽃과 함께 돌아요 (선과 채움이 어긋나지 않게)
@@ -100,7 +100,12 @@ h2{{margin:0 0 20px;font-size:24px;font-weight:600;letter-spacing:-.02em}}
 .card .lg svg{{width:100%;height:auto;display:block;margin-bottom:12px}}
 .card b{{font-size:15px;font-weight:600}} .card span{{font-size:13px;color:var(--sub);line-height:1.45}}
 .uses{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}}
-@media (max-width:820px){{.rules{{grid-template-columns:1fr}}.grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.uses{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+.files{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}}
+.file{{background:var(--panel);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:4px;color:var(--fg);text-decoration:none;min-width:0}}
+.file:hover{{box-shadow:inset 0 0 0 1.5px var(--lime)}}
+.file .pv{{display:grid;place-items:center;height:110px;border-radius:12px;margin-bottom:8px;padding:14px}} .file .pv.lt{{background:#fff}} .file .pv.dk{{background:#050505;box-shadow:inset 0 0 0 1px var(--line)}}
+.file img{{width:100%;height:82px;object-fit:contain;display:block}} .file b{{font-size:14px;font-weight:600}} .file span:last-child{{font-size:12px;color:var(--sub)}}
+@media (max-width:820px){{.files{{grid-template-columns:repeat(2,minmax(0,1fr))}}.rules{{grid-template-columns:1fr}}.grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.uses{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
 {V.css()}
 </style>
 <!--rumo-icons--><link rel="icon" href="../icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../apple-touch-icon.png"><!--/rumo-icons-->
@@ -115,6 +120,7 @@ h2{{margin:0 0 20px;font-size:24px;font-weight:600;letter-spacing:-.02em}}
 <div class="rule"><span class="n">03</span><b>한 화면에 o 하나</b><p>상황에 맞는 심볼 하나만 써요. 정할 게 없으면 기본인 꽃으로 돌아와요. 색은 심볼 원래 색, 또는 한 색.</p></div>
 </div></section>
 <section><h2>앱에서 이렇게 바뀌어요</h2><div class="uses">{''.join(f'<div class="card" data-vl-pick="{n}"><div class="lg">{V.static(n)}</div><b>{t}</b><span>{d}</span></div>' for n, t, d in V.USES)}</div></section>
+<section><h2>로고 파일</h2><div class="files">{''.join(f'<a class="file" href="{f}" download><span class="pv {bg}"><img src="{f}" alt=""></span><b>{t}</b><span>SVG</span></a>' for f, t, bg in [('rumo-lockup-light.svg', '로고 + 태그라인 · 밝은 바탕', 'lt'), ('rumo-lockup-dark.svg', '로고 + 태그라인 · 어두운 바탕', 'dk'), ('rumo-logo-light.svg', '로고 · 밝은 바탕', 'lt'), ('rumo-logo-dark.svg', '로고 · 어두운 바탕', 'dk'), ('rumo-flower.svg', '꽃 심볼', 'lt')])}</div></section>
 <section><h2>o 자리에 들어가는 심볼 {len(V.PICK)}</h2><div class="grid">{cards}</div></section>
 </div>{V.HOVER_JS}</body></html>
 '''

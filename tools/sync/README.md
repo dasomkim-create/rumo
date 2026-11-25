@@ -16,7 +16,9 @@
 패키지 3D 모형은 `RUMO 올인원 패키지 v8` 아티팩트(https://claude.ai/artifact/VYuXUBv8A7ntd73bgiQDoH)만 따라가요.
 1. v8을 Artifact read(path "index.html")로 받아요.
 2. `python3 tools/sync/package.py <받은 index.html>` → `docs/package/index.html` 갱신(전체 화면 3D + `?embed` 모드).
-3. 랜딩의 사용설명서 섹션은 단계 문구·구성품 표를 이 페이지에서 바로 읽어서 따로 손볼 필요 없어요. 섹션 모양을 바꿀 때만 `python3 tools/sync/package_section.py`.
+3. 인쇄 전개도를 일러스트에서 고쳤으면 `tools/sync/art/rumo-print-dieline.svg`를 갈아 끼우고 `python3 tools/sync/box_tex.py <받은 index.html>` → 박스 면마다 그림이 다시 구워져요(칼선·안내 글자는 빠짐). 이 파일을 v8 아티팩트에 다시 올린 뒤 2번.
+4. v8 페이지 오른쪽 패널의 **목업 렌더**: 장면(배송 상태·선물 개봉·완성) → 앵글·배경·크기·렌즈 → PNG. 콘솔에서는 `RUMO_RENDER({view:'hero',bg:'clear',size:'3840x2160'})`.
+5. 랜딩의 사용설명서 섹션은 단계 문구·구성품 표를 이 페이지에서 바로 읽어서 따로 손볼 필요 없어요. 섹션 모양을 바꿀 때만 `python3 tools/sync/package_section.py`.
 
 ## 장표 뷰어 · 랜딩 손질
 - `docs/deck.html`은 실제 장표(`docs/app/screens/Brand*.dc.html`)를 `dc-lite.js`로 바로 돌려서, 장표 안 인터랙션이 그대로 살아 있어요. 장표 순서가 바뀌면 `slides.txt`를 고치고 `python3 tools/sync/deck.py`.

@@ -10,12 +10,12 @@ _lg = _src[_src.find('class Component'):]
 _j = _lg.find('const S = ') + len('const S = '); _k = _lg.find('];\n', _j) + 1
 SYM = {s['name']: s for s in json.loads(_lg[_j:_k])}
 # 원래 로고의 꽃 (BrandLogo 장표와 같은 모양 · 같은 자리) — 히어로에서 스케치로 그려진 뒤 첫 o가 돼요
-FLOWER = re.search(r'class="spin" fill="#ffc447" d="(M425[^"]+)"', open(os.path.join(REPO, 'project', 'BrandLogo.dc.html')).read()).group(1)
+FLOWER = re.search(r'class="spin" fill="#ffc447" d="(M4[0-9][^"]+)"', open(os.path.join(REPO, 'project', 'BrandLogo.dc.html')).read()).group(1)
 LETTERS = ('M0 100V50A50 50 0 0 1 50 0H70V20H50A30 30 0 0 0 20 50V100ZM104 0H124V50A30 30 0 0 0 184 50V0H204V50A50 50 0 0 1 104 50Z'
            'M228 100V45A45 45 0 0 1 318 45V100H298V45A25 25 0 0 0 248 45V100ZM298 100V45A45 45 0 0 1 388 45V100H368V45A25 25 0 0 0 318 45V100Z')
 
 # o 자리: 글자 높이(100)보다 크게 잡아야 눈으로 같은 무게가 돼요 (시각 보정)
-SLOT_CX, SLOT_CY, SLOT = 478, 50, 122
+SLOT_CX, SLOT_CY, SLOT = 468, 50, 125   # 꽃 로고(중심 468 · 지름 125)와 같은 자리
 STEP = 3.0   # 심볼 하나가 머무는 시간(초) — 등장 0.6 · 머묾 · 퇴장
 # (이름, 시각 보정 배율) — 꽉 찬 원은 작게, 성긴 모양은 크게
 PICK = [('꽃', 1.0), ('링', .86), ('물결 원', .9), ('네잎', .9), ('선버스트', 1.02), ('햇빛', 1.04), ('여덟 잎', 1.06), ('여덟 꼭지 별', 1.02),
