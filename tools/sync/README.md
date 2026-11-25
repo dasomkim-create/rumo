@@ -17,7 +17,7 @@
 1. v8을 Artifact read(path "index.html")로 받아요.
 2. `python3 tools/sync/package.py <받은 index.html>` → `docs/package/index.html` 갱신(전체 화면 3D + `?embed` 모드).
 3. 인쇄 전개도를 일러스트에서 고쳤으면 `tools/sync/art/rumo-print-dieline.svg`를 갈아 끼우고 `python3 tools/sync/box_tex.py <받은 index.html>` → 박스 면마다 그림이 다시 구워져요(칼선·안내 글자는 빠짐). 이 파일을 v8 아티팩트에 다시 올린 뒤 2번.
-4. v8 페이지 오른쪽 패널의 **목업 렌더**: 장면(배송 상태·선물 개봉·완성) → 앵글·배경·크기·렌즈 → PNG. 콘솔에서는 `RUMO_RENDER({view:'hero',bg:'clear',size:'3840x2160'})`.
+4. v8 페이지 오른쪽 패널 맨 아래 **목업 렌더 · 조명**(접혀 있음): 조명(HDRI 프리셋 4종 또는 내 .hdr 파일) · 밝기 → 장면(배송 상태·선물 개봉·완성) → 앵글·배경(스튜디오 배경지 색)·크기·렌즈 → PNG. 렌더할 땐 외곽선을 숨기고 부드러운 그림자·2배 슈퍼샘플링으로 뽑아요. 콘솔에서는 `RUMO_RENDER({view:'hero',bg:'clear',size:'3840x2160'})`.
 5. 랜딩의 사용설명서 섹션은 단계 문구·구성품 표를 이 페이지에서 바로 읽어서 따로 손볼 필요 없어요. 섹션 모양을 바꿀 때만 `python3 tools/sync/package_section.py`.
 
 ## 장표 뷰어 · 랜딩 손질

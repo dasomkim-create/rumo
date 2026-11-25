@@ -53,8 +53,23 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:99px;ba
 .roles{font-size:13px;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:0}
 .rh,.rr{display:grid;grid-template-columns:82px minmax(0,1fr) 96px;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
 .rh{color:var(--muted);font-weight:600;padding-top:0}.rr span:first-child{font-weight:600}.rr span:nth-child(2){color:var(--muted)}
-.render{border-top:1px solid var(--line);padding-top:18px;display:flex;flex-direction:column;gap:12px}
-.render h2{font-size:17px;line-height:24px;font-weight:700;margin:0}
+.render{border-top:1px solid var(--line);padding-top:6px}
+.render summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;cursor:pointer;border-radius:14px;padding:6px 8px;margin:0 -8px}
+.render summary::-webkit-details-marker{display:none}
+.render summary:hover{background:var(--chip)}
+.render summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.render summary span{display:flex;flex-direction:column;gap:2px}.render summary b{font-size:17px;line-height:24px}.render summary small{font-size:13px;color:var(--muted)}
+.render summary svg{flex:none;transition:transform 200ms ease}.render[open] summary svg{transform:rotate(180deg)}
+.render .rbody{display:flex;flex-direction:column;gap:12px;padding:10px 0 4px}
+.ctl.sm{gap:4px}.ctl.sm label{font-size:13px;font-weight:600;color:var(--muted)}
+.file{display:flex;align-items:center;justify-content:center;height:40px;border-radius:999px;border:1.5px dashed var(--line);font-size:13px;font-weight:600;cursor:pointer;color:var(--fg)}
+.file:hover{background:var(--chip)}.file input{position:absolute;width:1px;height:1px;opacity:0}
+.file:focus-within{outline:2px solid var(--focus);outline-offset:2px}
+.sw-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sw-row button,.sw-row label{width:32px;height:32px;padding:0;border-radius:999px;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);cursor:pointer;position:relative}
+.sw-row button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--fg)}
+.sw-row label{background:conic-gradient(#ff6a32,#ffc447,#d5ff44,#72e5b5,#8ea8ea,#7960ff,#ff64cf,#ff6a32);overflow:hidden}
+.sw-row input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .render .rl{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:-4px}
 .seg{display:flex;flex-wrap:wrap;gap:6px}
 .seg button{height:34px;padding:0 12px;font-size:13px;font-weight:600}
@@ -103,20 +118,29 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:99px;ba
     </div>
     <div class="step" id="step"></div>
     <button id="play">▶ 처음부터 재생</button>
-    <div class="render" aria-labelledby="r-h">
-      <h2 id="r-h">목업 렌더</h2>
-      <div class="sub" style="margin:-6px 0 0;font-size:13px">위에서 장면(배송 상태 · 선물 개봉 · 완성)을 고른 뒤, 앵글과 배경을 정해 고해상도 PNG로 뽑아요.</div>
-      <span class="rl">앵글</span>
-      <div class="seg" id="r-view"><button data-v="hero" aria-pressed="true">3/4 앞</button><button data-v="front">정면</button><button data-v="side">옆</button><button data-v="back">뒤</button><button data-v="top">위</button><button data-v="low">낮은 앵글</button><button data-v="cur">지금 화면</button></div>
-      <span class="rl">배경</span>
-      <div class="seg" id="r-bg"><button data-v="clear" aria-pressed="true">투명</button><button data-v="white">흰색</button><button data-v="stage">연회색</button><button data-v="black">검정</button></div>
-      <span class="rl">크기</span>
-      <div class="seg" id="r-size"><button data-v="1920x1080">1920×1080</button><button data-v="2048x2048" aria-pressed="true">2048 정사각</button><button data-v="1600x2000">4:5 세로</button><button data-v="3840x2160">4K</button></div>
-      <span class="rl">렌즈</span>
-      <div class="seg" id="r-lens"><button data-v="32" aria-pressed="true">표준</button><button data-v="16">망원 (왜곡 적게)</button></div>
-      <label class="chk"><input type="checkbox" id="r-shadow" checked>바닥 그림자</label>
-      <button id="r-go">PNG로 렌더</button>
-    </div>
+    <details class="render" id="r-panel">
+      <summary><span><b>목업 렌더 · 조명</b><small>HDRI 조명, 스튜디오 배경, 고해상도 PNG</small></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <div class="rbody">
+        <span class="rl">조명 (HDRI) — 바로 3D 화면에도 적용돼요</span>
+        <div class="seg" id="r-env"><button data-v="warm" aria-pressed="true">따뜻한 스튜디오</button><button data-v="cool">쿨 스튜디오</button><button data-v="window">창가 햇살</button><button data-v="room">룸</button><button data-v="none">끄기</button></div>
+        <label class="file"><input type="file" id="r-hdr" accept=".hdr">내 HDRI 파일 불러오기 (.hdr)</label>
+        <div class="ctl sm"><label for="r-exp">밝기 <span id="v-exp">0.80</span></label><input id="r-exp" type="range" min="0.4" max="1.6" step="0.01" value="0.8"></div>
+        <div class="ctl sm"><label for="r-envi">반사 · 환경광 <span id="v-envi">0.70</span></label><input id="r-envi" type="range" min="0" max="2" step="0.01" value="0.7"></div>
+        <label class="chk"><input type="checkbox" id="r-glow">집 안에 따뜻한 조명 켜기</label>
+        <span class="rl">앵글</span>
+        <div class="seg" id="r-view"><button data-v="hero" aria-pressed="true">3/4 앞</button><button data-v="front">정면</button><button data-v="side">옆</button><button data-v="back">뒤</button><button data-v="top">위</button><button data-v="low">낮은 앵글</button><button data-v="cur">지금 화면</button></div>
+        <span class="rl">배경</span>
+        <div class="seg" id="r-bg"><button data-v="studio" aria-pressed="true">스튜디오 배경지</button><button data-v="clear">투명</button><button data-v="white">흰색</button><button data-v="black">검정</button></div>
+        <div class="sw-row" id="r-cove" aria-label="배경지 색"><button data-c="#e9e2df" aria-pressed="true" style="--c:#e9e2df" title="웜 그레이"></button><button data-c="#e3e5e9" style="--c:#e3e5e9" title="쿨 그레이"></button><button data-c="#f2f2f3" style="--c:#f2f2f3" title="라이트"></button><button data-c="#dfe7f7" style="--c:#dfe7f7" title="블루 그레이"></button><button data-c="#eef6cf" style="--c:#eef6cf" title="라임 틴트"></button><label title="직접 고르기"><input type="color" id="r-cove-c" value="#e9e2df"></label></div>
+        <span class="rl">크기</span>
+        <div class="seg" id="r-size"><button data-v="1920x1080">1920×1080</button><button data-v="2048x2048" aria-pressed="true">2048 정사각</button><button data-v="1600x2000">4:5 세로</button><button data-v="3840x2160">4K</button></div>
+        <span class="rl">렌즈</span>
+        <div class="seg" id="r-lens"><button data-v="32">표준</button><button data-v="18" aria-pressed="true">망원 (제품 사진처럼)</button></div>
+        <label class="chk"><input type="checkbox" id="r-shadow" checked>부드러운 바닥 그림자</label>
+        <label class="chk"><input type="checkbox" id="r-edges">판 외곽선 표시</label>
+        <button id="r-go">PNG로 렌더</button>
+      </div>
+    </details>
     <div class="roles">
       <div class="rh"><span>구성</span><span>배송 · 개봉 때</span><span>완성 후</span></div>
       <div class="rr"><span>동네 트레이</span><span>대문 창 · 창마다 굿즈</span><span>리모컨 받침대</span></div>
@@ -147,13 +171,15 @@ html.embed #view{height:100%;min-height:0;border-radius:0}
 <script>if(/[?&]embed\b/.test(location.search))document.documentElement.classList.add('embed');</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
 <script>
 (function(){
 const W=270,D=220,H=220,R=78,S=Math.hypot(135,78),FIN=70,PHI=Math.atan2(135,78),T=3,KT=5;
 const view=document.getElementById('view');
 const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; renderer.outputEncoding=THREE.sRGBEncoding; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1;
 view.prepend(renderer.domElement);
 const scene=new THREE.Scene();
 const cam=new THREE.PerspectiveCamera(/[?&]embed\b/.test(location.search)?(innerWidth/innerHeight<1.1?42:innerWidth/innerHeight<1.6?31:22):32,1,10,9000); cam.position.set(600,760,1650);
@@ -168,10 +194,11 @@ ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
 const grid=new THREE.GridHelper(2000,40,0xc3c8cf,0xdadde2); grid.material.transparent=true; grid.material.opacity=.5; grid.position.y=-.2; scene.add(grid);
 
 const C={board:0xf6f7f9, kit:0xfbfbfc, edge:0x7f8690, kedge:0xa6acb4};
-function mat(c,extra={}){return new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.82,metalness:0,transparent:true,side:THREE.DoubleSide},extra))}
-function edged(m,ec){const e=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry,25),new THREE.LineBasicMaterial({color:ec,transparent:true}));m.add(e);m.castShadow=m.receiveShadow=true;return m}
+function mat(c,extra={}){return new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.8,metalness:0,transparent:true,side:THREE.DoubleSide},extra))}
+function edged(m,ec,eg){const e=new THREE.LineSegments(new THREE.EdgesGeometry(eg||m.geometry,25),new THREE.LineBasicMaterial({color:ec,transparent:true}));e.userData.edge=true;m.add(e);m.castShadow=m.receiveShadow=true;return m}
 function B(w,h,d,c,x=0,y=0,z=0,ec){const m=edged(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),Array.isArray(c)?c:mat(c)),ec??C.edge);m.position.set(x,y,z);return m}
-function X(shape,depth,c,ec){return edged(new THREE.Mesh(new THREE.ExtrudeGeometry(shape,{depth,bevelEnabled:false,curveSegments:32}),mat(c)),ec??C.edge)}
+function X(shape,depth,c,ec){const b=Math.min(0.6,depth*0.2),g=new THREE.ExtrudeGeometry(shape,{depth:depth-2*b,bevelEnabled:true,bevelThickness:b,bevelSize:b,bevelOffset:-b,bevelSegments:2,curveSegments:32});g.translate(0,0,b);g.computeVertexNormals();
+  return edged(new THREE.Mesh(g,mat(c)),ec??C.edge,new THREE.ExtrudeGeometry(shape,{depth,bevelEnabled:false,curveSegments:32}))}
 function arch(cx,yb,w,h,P=THREE.Path){const r=w/2,p=new P();p.moveTo(cx-r,yb);p.lineTo(cx+r,yb);p.lineTo(cx+r,yb+h-r);p.absarc(cx,yb+h-r,r,0,Math.PI,false);p.lineTo(cx-r,yb);return p}
 function rect(x1,y1,x2,y2){const s=new THREE.Shape();s.moveTo(x1,y1);s.lineTo(x2,y1);s.lineTo(x2,y2);s.lineTo(x1,y2);s.closePath();return s}
 function slot(cx,cy,w,h){const r=h/2,p=new THREE.Path();p.moveTo(cx-w/2+r,cy-r);p.lineTo(cx+w/2-r,cy-r);p.absarc(cx+w/2-r,cy,r,-Math.PI/2,Math.PI/2,false);p.lineTo(cx-w/2+r,cy+r);p.absarc(cx-w/2+r,cy,r,Math.PI/2,Math.PI*1.5,false);return p}
@@ -188,7 +215,8 @@ const TXL=new THREE.TextureLoader();
 function artTex(key){const b=BOXTEX[key];const t=TXL.load(b.u,()=>{t.needsUpdate=true});t.encoding=THREE.sRGBEncoding;t.anisotropy=renderer.capabilities.getMaxAnisotropy();t.userData={r:b.r};return t}
 function face(par,shape,key,dx,dy,z){const t=artTex(key),[x0,y0,x1,y1]=t.userData.r,w=x1-x0,h=y1-y0;
   t.repeat.set(1/w,1/h);t.offset.set((dx-x0)/w,(dy-y0)/h);
-  const m=new THREE.Mesh(new THREE.ShapeGeometry(shape,32),new THREE.MeshStandardMaterial({map:t,transparent:true,roughness:.78,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2}));
+  const geo=new THREE.ShapeGeometry(shape,32);if(z<0){geo.scale(1,1,-1);const ix=geo.index.array;for(let i=0;i<ix.length;i+=3){const k=ix[i+1];ix[i+1]=ix[i+2];ix[i+2]=k}}
+  const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({map:t,transparent:true,roughness:.84,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2}));
   m.position.z=z;m.receiveShadow=true;par.add(m);return m}
 // ───────── 하우스 박스 (원래 구조 · 한 장 전개도) — box 좌표: 뒷벽 z=0, 앞 z=220
 const box=new THREE.Group(); box.position.z=-D/2; scene.add(box);
@@ -219,7 +247,7 @@ const wframe=new THREE.Group();{const s=arch(L.cx,89,70,82,THREE.Shape);s.holes.
   wframe.add(B(3,72,2,C.kit,L.cx,131,T+KT+1,C.kedge));wframe.add(B(56,3,2,C.kit,L.cx,128,T+KT+1,C.kedge))} L.door.add(wframe);
 
 function robotMesh(){ // 로봇 강아지 105W × 165D × 180H (원점: 발바닥 중앙, +z가 얼굴)
-  const g=new THREE.Group();const W_=()=>mat(0xf7f7f6,{roughness:.45}),K_=()=>mat(0x1c1d20,{roughness:.4});
+  const g=new THREE.Group();const W_=()=>mat(0xf7f7f6,{roughness:.3}),K_=()=>mat(0x1c1d20,{roughness:.28});
   const sp=new THREE.SphereGeometry(1,40,28);
   const add=(geo,m,p,s,r)=>{const o=new THREE.Mesh(geo,m);o.position.set(...p);if(s)o.scale.set(...s);if(r)o.rotation.set(...r);o.castShadow=true;g.add(o);return o};
   for(const[x,z]of[[-32,58],[32,58],[-32,-55],[32,-55]]){
@@ -478,48 +506,113 @@ document.getElementById('p-done').onclick=()=>{st.fold=1;animateTo({fold:1,door:
 document.getElementById('play').onclick=()=>{Object.assign(st,{fold:0,door:0,kit:0});sync();apply();
   animateTo({fold:1,door:0,kit:0},2400,()=>animateTo({fold:1,door:0.55,kit:0},1400,()=>animateTo({fold:1,door:0.55,kit:1},24000)))};
 
-// ───────── 목업 렌더 — 고른 앵글 · 배경 · 크기로 한 장 뽑기 (그리드는 숨기고, 그림자 맵은 잠깐 4096으로)
-const R_={view:'hero',bg:'clear',size:'2048x2048',lens:'32'};
+// ───────── 조명 (HDRI) — 환경맵으로 반사·부드러운 빛, 해(그림자)는 HDRI의 주광 방향에 맞춰요
+const pmrem=new THREE.PMREMGenerator(renderer); pmrem.compileEquirectangularShader();
+const ENV={cur:'warm',tex:null,cache:{}};
+// 위도·경도 HDR 한 장을 직접 만들어요: 바탕(위·지평선·바닥) + 소프트박스(밝기 >1 이라 진짜 HDR)
+function makeHDR(sp){const W=512,H=256,d=new Float32Array(W*H*4),L=sp.lights.map(l=>({v:new THREE.Vector3(...l.dir).normalize(),r:l.r,I:l.I,c:l.c}));
+  const mix=(a,b,t)=>a.map((x,i)=>x+(b[i]-x)*t),sm=(e0,e1,x)=>{const t=Math.min(1,Math.max(0,(x-e0)/(e1-e0)));return t*t*(3-2*t)};
+  for(let y=0;y<H;y++){const lat=((y+.5)/H-.5)*Math.PI,cl=Math.cos(lat),sy=Math.sin(lat);
+    const base=sy>0?mix(sp.horizon,sp.top,sm(0,1,sy)):mix(sp.horizon,sp.floor,sm(0,.35,-sy));
+    for(let x=0;x<W;x++){const ph=((x+.5)/W-.5)*2*Math.PI,dx=Math.cos(ph)*cl,dz=Math.sin(ph)*cl;let r=base[0],g=base[1],b=base[2];
+      for(const l of L){const ang=Math.acos(Math.min(1,dx*l.v.x+sy*l.v.y+dz*l.v.z));const k=l.I*sm(l.r*1.35,l.r*.75,ang);if(k>0){r+=k*l.c[0];g+=k*l.c[1];b+=k*l.c[2]}}
+      const o=(y*W+x)*4;d[o]=r;d[o+1]=g;d[o+2]=b;d[o+3]=1}}
+  const t=new THREE.DataTexture(d,W,H,THREE.RGBAFormat,THREE.FloatType);t.mapping=THREE.EquirectangularReflectionMapping;t.magFilter=t.minFilter=THREE.LinearFilter;t.needsUpdate=true;return t}
+const ENV_SPEC={
+  warm:{top:[0.287,0.272,0.266],horizon:[0.248,0.233,0.227],floor:[0.109,0.100,0.096],key:[-.55,.78,.62],lights:[{dir:[-.55,.78,.62],r:.42,I:2.66,c:[1,.95,.9]},{dir:[.95,.35,.35],r:.6,I:1.4,c:[1,.97,.95]},{dir:[.25,.6,-.95],r:.35,I:0.99,c:[1,.96,.93]},{dir:[0,1,0],r:.6,I:0.46,c:[1,1,1]}]},
+  cool:{top:[0.266,0.275,0.290],horizon:[0.230,0.239,0.254],floor:[0.091,0.096,0.109],key:[-.6,.75,.6],lights:[{dir:[-.6,.75,.6],r:.42,I:2.66,c:[.95,.97,1]},{dir:[.95,.3,.3],r:.6,I:1.5,c:[.95,.97,1]},{dir:[.2,.55,-.95],r:.35,I:1.06,c:[.94,.96,1]},{dir:[0,1,0],r:.6,I:0.46,c:[1,1,1]}]},
+  window:{top:[0.166,0.166,0.176],horizon:[0.151,0.145,0.142],floor:[0.073,0.066,0.063],key:[-.85,.45,.3],lights:[{dir:[-.85,.45,.3],r:.26,I:8.36,c:[1,.92,.8]},{dir:[.8,.4,.4],r:.7,I:0.34,c:[.9,.93,1]}]}};
+const KEY_DEF=[420,900,700];
+function applyEnvTex(t,key){ENV.tex=t;scene.environment=t;
+  const env=!!t;hemi.intensity=env?.12:.95;fill.intensity=env?.14:.42;sun.intensity=env?1.05:.75;
+  const k=key?new THREE.Vector3(...key).normalize().multiplyScalar(1300):new THREE.Vector3(...KEY_DEF);sun.position.copy(k);if(env)fill.position.set(700,320,600);else fill.position.set(-600,300,-200);fill.castShadow=false;setEnvI(+document.getElementById('r-envi').value)}
+function setEnv(name){document.querySelectorAll('#r-env button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===name?'true':'false'));ENV.cur=name;
+  if(name==='none')return applyEnvTex(null);
+  if(!ENV.cache[name]){if(name==='room'){ENV.cache[name]=THREE.RoomEnvironment?pmrem.fromScene(new THREE.RoomEnvironment(),.04).texture:null}
+    else{const h=makeHDR(ENV_SPEC[name]);ENV.cache[name]=pmrem.fromEquirectangular(h).texture;h.dispose()}}
+  applyEnvTex(ENV.cache[name],name==='room'?null:ENV_SPEC[name].key)}
+function setEnvI(v){scene.traverse(o=>{if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{if('envMapIntensity' in m)m.envMapIntensity=m.userData.envK!=null?v*m.userData.envK:v})});document.getElementById('v-envi').textContent=v.toFixed(2)}
+document.getElementById('r-env').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setEnv(b.dataset.v)});
+document.getElementById('r-exp').addEventListener('input',e=>{renderer.toneMappingExposure=+e.target.value;document.getElementById('v-exp').textContent=(+e.target.value).toFixed(2)});
+document.getElementById('r-envi').addEventListener('input',e=>setEnvI(+e.target.value));
+document.getElementById('r-hdr').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const lab=e.target.parentNode;
+  f.arrayBuffer().then(buf=>{const r=new THREE.RGBELoader().setDataType(THREE.FloatType).parse(buf);if(!r||!r.data)throw new Error('HDR을 읽지 못했어요');
+    const t=new THREE.DataTexture(r.data,r.width,r.height,r.format,r.type);t.mapping=THREE.EquirectangularReflectionMapping;t.flipY=true;t.magFilter=t.minFilter=THREE.LinearFilter;t.needsUpdate=true;
+    const env=pmrem.fromEquirectangular(t).texture;t.dispose();ENV.cache.custom=env;document.querySelectorAll('#r-env button').forEach(b=>b.setAttribute('aria-pressed','false'));ENV.cur='custom';applyEnvTex(env,null);
+    lab.lastChild.textContent='HDRI: '+f.name;lab.title=f.name})
+   .catch(err=>{lab.lastChild.textContent='읽지 못했어요 — 다른 .hdr 파일을 골라 주세요'})});
+
+// ───────── 스튜디오 배경지 — 바닥에서 벽으로 휘어 올라가는 종이(이음매 없는 사진 배경), 카메라 반대쪽에 세워요
+const cove=new THREE.Group();scene.add(cove);cove.visible=false;
+{const F=2600,Rc=700,Hw=2600,L=F+Math.PI/2*Rc+Hw,g=new THREE.PlaneGeometry(9000,L,1,160),p=g.attributes.position;
+  for(let i=0;i<p.count;i++){const s_=p.getY(i)+L/2;let y,z;
+    if(s_<F){y=0;z=1600-s_}else if(s_<F+Math.PI/2*Rc){const th=(s_-F)/Rc;z=1600-F-Rc*Math.sin(th);y=Rc-Rc*Math.cos(th)}else{z=1600-F-Rc;y=Rc+(s_-F-Math.PI/2*Rc)}
+    p.setXYZ(i,p.getX(i),y,z)}
+  g.computeVertexNormals();
+  const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0xe9e2df,roughness:1,metalness:0,side:THREE.DoubleSide}));m.material.userData.envK=.55;m.receiveShadow=true;cove.add(m);cove.userData.m=m}
+
+// ───────── 목업 렌더 — 고른 앵글 · 배경 · 크기로 한 장 뽑기
+const R_={view:'hero',bg:'studio',size:'2048x2048',lens:'18',cove:'#e9e2df'};
 const DIRS={hero:[.62,.42,.82],front:[0,.16,1],side:[1,.18,.06],back:[-.55,.38,-.85],top:[.35,1.25,.62],low:[.55,.06,.9]};
-document.querySelectorAll('.seg').forEach(g=>{const k=g.id.slice(2);g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+['r-view','r-bg','r-size','r-lens'].forEach(id=>{const g=document.getElementById(id),k=id.slice(2);g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));R_[k]=b.dataset.v;if(k==='view'&&R_.view!=='cur')previewView()})});
+function setCove(c){R_.cove=c;document.querySelectorAll('#r-cove button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===c?'true':'false'));document.getElementById('r-cove-c').value=c}
+document.getElementById('r-cove').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setCove(b.dataset.c)});
+document.getElementById('r-cove-c').addEventListener('input',e=>setCove(e.target.value));
 function sceneBounds(){const bb=new THREE.Box3(),tmp=new THREE.Box3();
   [box,ext].forEach(root=>root.traverseVisible(o=>{if(o.isMesh&&o.geometry&&!(o.material&&o.material.opacity<0.02)){if(!o.geometry.boundingBox)o.geometry.computeBoundingBox();tmp.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld);bb.union(tmp)}}));
   return bb}
-function fitPose(dirKey,aspect,fov){scene.updateMatrixWorld(true);const bb=sceneBounds(),sp=bb.getBoundingSphere(new THREE.Sphere());
+function fitPose(dirKey,aspect,fov,fillK){scene.updateMatrixWorld(true);const bb=sceneBounds(),sp=bb.getBoundingSphere(new THREE.Sphere());
   const d=new THREE.Vector3(...DIRS[dirKey]).normalize(),v=THREE.MathUtils.degToRad(fov),hh=2*Math.atan(Math.tan(v/2)*aspect);
   const dist=sp.radius/Math.sin(Math.min(v,hh)/2);let pos=sp.center.clone().addScaledVector(d,dist),tg=sp.center.clone();
-  // 박스 8꼭짓점을 실제로 투영해 가운데 맞추고 화면의 84%를 채우게 (여러 번 반복해 수렴)
-  const c=new THREE.PerspectiveCamera(fov,aspect,10,9000),pts=[];for(let i=0;i<8;i++)pts.push(new THREE.Vector3(i&1?bb.max.x:bb.min.x,i&2?bb.max.y:bb.min.y,i&4?bb.max.z:bb.min.z));
+  // 박스 8꼭짓점을 실제로 투영해 가운데 맞추고 화면을 채우게 (여러 번 반복해 수렴)
+  const c=new THREE.PerspectiveCamera(fov,aspect,10,20000),pts=[];for(let i=0;i<8;i++)pts.push(new THREE.Vector3(i&1?bb.max.x:bb.min.x,i&2?bb.max.y:bb.min.y,i&4?bb.max.z:bb.min.z));
   for(let it=0;it<10;it++){c.position.copy(pos);c.lookAt(tg);c.updateMatrixWorld();c.updateProjectionMatrix();
     let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;pts.forEach(p=>{const q=p.clone().project(c);x0=Math.min(x0,q.x);x1=Math.max(x1,q.x);y0=Math.min(y0,q.y);y1=Math.max(y1,q.y)});
     const D_=pos.distanceTo(tg),th=Math.tan(v/2),right=new THREE.Vector3().setFromMatrixColumn(c.matrixWorld,0),up=new THREE.Vector3().setFromMatrixColumn(c.matrixWorld,1);
     const sh=right.multiplyScalar((x0+x1)/2*th*aspect*D_).add(up.multiplyScalar((y0+y1)/2*th*D_));pos.add(sh);tg.add(sh);
-    const k=Math.max((x1-x0)/2,(y1-y0)/2)/0.84;pos=tg.clone().addScaledVector(pos.clone().sub(tg),k)}
+    const k=Math.max((x1-x0)/2,(y1-y0)/2)/(fillK||0.84);pos=tg.clone().addScaledVector(pos.clone().sub(tg),k)}
   return {pos,target:tg}}
 let camAnim=null;
 function previewView(){const r=view.getBoundingClientRect();const p=fitPose(R_.view,r.width/r.height,cam.fov);camAnim={p0:cam.position.clone(),t0:ctrl.target.clone(),p1:p.pos,t1:p.target,s:performance.now()}}
+function setShadowType(t){if(renderer.shadowMap.type===t)return;renderer.shadowMap.type=t;if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null}scene.traverse(o=>{if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.needsUpdate=true)})}
 function renderShot(){
-  const [w,h]=R_.size.split('x').map(Number),fov=+R_.lens;
-  const keep={pos:cam.position.clone(),tgt:ctrl.target.clone(),fov:cam.fov,pr:renderer.getPixelRatio(),grid:grid.visible,ground:ground.visible,ms:sun.shadow.mapSize.x,clr:renderer.getClearColor(new THREE.Color()),ca:renderer.getClearAlpha()};
+  const [w,h]=R_.size.split('x').map(Number),fov=+R_.lens,studio=R_.bg==='studio',soft=document.getElementById('r-shadow').checked;
+  const edges=document.getElementById('r-edges').checked,warm=document.getElementById('r-glow').checked;
+  const keep={pos:cam.position.clone(),tgt:ctrl.target.clone(),fov:cam.fov,near:cam.near,far:cam.far,pr:renderer.getPixelRatio(),grid:grid.visible,ground:ground.visible,ms:sun.shadow.mapSize.x,rad:sun.shadow.radius,
+    clr:renderer.getClearColor(new THREE.Color()),ca:renderer.getClearAlpha(),gl:{p:glow.position.clone(),i:glow.intensity,d:glow.distance},cam:{...sun.shadow.camera}};
   let pose;if(R_.view==='cur'){const dir=keep.pos.clone().sub(keep.tgt);const dist=dir.length()*Math.tan(THREE.MathUtils.degToRad(keep.fov)/2)/Math.tan(THREE.MathUtils.degToRad(fov)/2);pose={pos:keep.tgt.clone().addScaledVector(dir.normalize(),dist),target:keep.tgt.clone()}}
-  else pose=fitPose(R_.view,w/h,fov);
-  grid.visible=false;ground.visible=document.getElementById('r-shadow').checked;
+  else pose=fitPose(R_.view,w/h,fov,studio?0.9:0.92);
+  // 장면 준비: 그리드·외곽선 숨김, 배경지, 부드러운 그림자, 집 안 조명
+  const hidden=[];if(!edges)scene.traverse(o=>{if(o.userData.edge&&o.visible){o.visible=false;hidden.push(o)}});
+  grid.visible=false;
+  if(studio){const dd=pose.pos.clone().sub(pose.target);cove.rotation.y=Math.atan2(dd.x,dd.z);cove.userData.m.material.color.set(R_.cove);cove.visible=true;ground.visible=false}
+  else ground.visible=soft;
   sun.shadow.mapSize.set(4096,4096);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null}
-  const BG={clear:[0xffffff,0],white:[0xffffff,1],stage:[0xf3f4f6,1],black:[0x0b0b0c,1]}[R_.bg];renderer.setClearColor(BG[0],BG[1]);
-  renderer.setPixelRatio(1);renderer.setSize(w,h,false);cam.aspect=w/h;cam.fov=fov;cam.position.copy(pose.pos);cam.lookAt(pose.target);cam.updateProjectionMatrix();
-  renderer.render(scene,cam);const url=renderer.domElement.toDataURL('image/png');
+  if(soft){setShadowType(THREE.VSMShadowMap);sun.shadow.radius=14;sun.shadow.blurSamples=24}
+  if(warm){glow.position.set(0,H+20,D/2);glow.distance=600;glow.intensity=Math.max(glow.intensity,6)}
+  const BG={studio:[new THREE.Color(R_.cove),1],clear:[0xffffff,0],white:[0xffffff,1],black:[0x0b0b0c,1]}[R_.bg];renderer.setClearColor(BG[0],BG[1]);
+  // 1.5~2배로 그린 뒤 줄여서 가장자리를 매끈하게
+  const ss=w*h>5e6?1.5:2,W2=Math.round(w*ss),H2=Math.round(h*ss);
+  renderer.setPixelRatio(1);renderer.setSize(W2,H2,false);cam.aspect=w/h;cam.fov=fov;cam.near=20;cam.far=20000;cam.position.copy(pose.pos);cam.lookAt(pose.target);cam.updateProjectionMatrix();
+  renderer.render(scene,cam);
+  const out=document.createElement('canvas');out.width=w;out.height=h;const cx=out.getContext('2d');cx.imageSmoothingEnabled=true;cx.imageSmoothingQuality='high';cx.drawImage(renderer.domElement,0,0,w,h);
+  if(studio){const g=cx.createRadialGradient(w*.45,h*.38,Math.min(w,h)*.25,w*.5,h*.5,Math.hypot(w,h)*.62);g.addColorStop(0,'rgba(60,45,40,0)');g.addColorStop(1,'rgba(60,45,40,.16)');cx.fillStyle=g;cx.fillRect(0,0,w,h)}   // 사진 같은 비네팅
+  const url=out.toDataURL('image/png');
   // 되돌리기
-  grid.visible=keep.grid;ground.visible=keep.ground;sun.shadow.mapSize.set(keep.ms,keep.ms);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null}
-  renderer.setClearColor(keep.clr,keep.ca);renderer.setPixelRatio(keep.pr);cam.fov=keep.fov;cam.position.copy(keep.pos);ctrl.target.copy(keep.tgt);resize();ctrl.update();
+  hidden.forEach(o=>o.visible=true);cove.visible=false;grid.visible=keep.grid;ground.visible=keep.ground;
+  setShadowType(THREE.PCFSoftShadowMap);sun.shadow.radius=keep.rad;sun.shadow.mapSize.set(keep.ms,keep.ms);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null}
+  glow.position.copy(keep.gl.p);glow.intensity=keep.gl.i;glow.distance=keep.gl.d;
+  renderer.setClearColor(keep.clr,keep.ca);renderer.setPixelRatio(keep.pr);cam.fov=keep.fov;cam.near=keep.near;cam.far=keep.far;cam.position.copy(keep.pos);ctrl.target.copy(keep.tgt);resize();ctrl.update();
   return {url,w,h}}
 const shot=document.getElementById('shot'),goBtn=document.getElementById('r-go');
 goBtn.onclick=()=>{goBtn.disabled=true;goBtn.textContent='렌더 중…';
   setTimeout(()=>{try{const {url,w,h}=renderShot();const name=`rumo-mockup-${R_.view}-${w}x${h}.png`;
     document.getElementById('shot-img').src=url;const a=document.getElementById('shot-dl');a.href=url;a.download=name;
-    document.getElementById('shot-meta').textContent=`${w} × ${h}px · ${{clear:'투명 배경',white:'흰 배경',stage:'연회색 배경',black:'검정 배경'}[R_.bg]}`;
+    document.getElementById('shot-meta').textContent=`${w} × ${h}px · ${{studio:'스튜디오 배경지',clear:'투명 배경',white:'흰 배경',black:'검정 배경'}[R_.bg]}`;
     shot.classList.add('on');document.getElementById('shot-close').focus()}
-   catch(err){alert('렌더하지 못했어요: '+err.message)} finally{goBtn.disabled=false;goBtn.textContent='PNG로 렌더'}},30)};
+   catch(err){document.getElementById('shot-meta').textContent='렌더하지 못했어요: '+err.message;shot.classList.add('on')} finally{goBtn.disabled=false;goBtn.textContent='PNG로 렌더'}},30)};
+renderer.toneMappingExposure=0.8;setEnv('warm');
 document.getElementById('shot-close').onclick=()=>shot.classList.remove('on');
 // 저장: claude.ai 아티팩트 안에서는 downloads 기능으로, 일반 사이트에서는 링크 다운로드로
 let DL=null;try{window.claude&&claude.use&&claude.use('downloads').then(n=>{DL=n}).catch(()=>{})}catch(e){}
@@ -528,7 +621,7 @@ document.getElementById('shot-dl').addEventListener('click',e=>{if(!DL)return;e.
   DL.save({filename:a.download,data:dataURLBlob(a.href)}).catch(err=>{if(err&&err.code!=='declined')document.getElementById('shot-meta').textContent+=' · 저장이 막혀 있어요: 이미지를 오른쪽 클릭해서 저장하세요'})});
 shot.addEventListener('click',e=>{if(e.target===shot)shot.classList.remove('on')});
 addEventListener('keydown',e=>{if(e.key==='Escape')shot.classList.remove('on')});
-window.RUMO_RENDER=(o)=>{Object.assign(R_,o||{});return renderShot()};   // 콘솔에서도: RUMO_RENDER({view:'front',bg:'white',size:'3840x2160'})
+window.RUMO_RENDER=(o)=>{Object.assign(R_,o||{});if(o&&o.env)setEnv(o.env);return renderShot()};   // 콘솔에서도: RUMO_RENDER({view:'front',bg:'white',size:'3840x2160'})
 function resize(){const r=view.getBoundingClientRect();renderer.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix()}
 new ResizeObserver(resize).observe(view); resize();
 function loop(now){requestAnimationFrame(loop);
